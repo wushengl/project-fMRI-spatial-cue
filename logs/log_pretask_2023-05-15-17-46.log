@@ -1,0 +1,28 @@
+--------------------------------------------------------------
+Now start loudness matching...
+Matching pool: [300, 566, 1068, 3805, [220, 660], [440, 1320]]
+Now start matching round 1
+[-1.4999809414111844, -1.4999809414111844, -1.4999809414111844, -1.4999809414111844, -1.9999745885482458, -1.9999745885482458]
+Now start matching round 2
+[-0.49999364713706135, -1.4999809414111844, -1.9999745885482458, -1.9999745885482458, -1.9999745885482458, -0.9999872942741228]
+Now start matching round 3
+[-1.4999809414111844, -1.4999809414111844, -1.4999809414111844, -1.4999809414111844, -1.4999809414111844, -1.9999745885482458]
+Finished baseline matching, now start adaptive matching...
+----------------------- new matching -------------------------
+Current convergence status: [False False False False False False]
+This matching pool: [300 566 1068 3805 list([220, 660]) list([440, 1320])]
+New matched levels: [0.0, -0.9999872942741228, -1.4999809414111844, -1.4999809414111844, -1.4999809414111844, -3.999949177096491]
+Upper bounds: [-0.69525331 -1.49998094 -1.43094622 -1.43094622 -1.59761077 -1.19524696]
+Lower bounds: [-1.63805037 -1.49998094 -1.90234476 -1.90234476 -2.06900931 -2.13804402]
+Updated convergence status: [[ True  True  True  True  True  True]
+ [False  True False False  True False]
+ [ True  True  True  True False  True]
+ [False False  True  True False False]]
+--------------------------------------------------------------
+Matching finished!
+Averaged matched levels: [-0.87498888 -1.37498253 -1.62497935 -1.62497935 -1.74997776 -2.24997141]
+--------------------------------------------------------------
+Now start tonotopy task...
+cycles per run: 5
+run number: 4
+Now running round 1

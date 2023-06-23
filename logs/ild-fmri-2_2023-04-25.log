@@ -1,0 +1,730 @@
+# -*- coding: utf-8 -*-
+
+# A log file for Gustav
+
+
+Experiment ild-fmri-2 running subject test6 started at 10:33:23 on 2023-04-25
+
+Experiment ild-fmri-2 running subject test6 started at 10:47:42 on 2023-04-25
+
+  Block 1 of 8 started at 10:47:44; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 8 ended at 10:48:18; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+
+  Block 2 of 8 started at 10:48:18; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 8 ended at 10:48:49; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+
+  Block 3 of 8 started at 10:48:49; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 8 ended at 10:48:55; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+
+Experiment ild-fmri-2 running subject test6 ended at 10:48:55 on 2023-04-25
+
+Experiment ild-fmri-2 running subject p001-train started at 11:09:31 on 2023-04-25
+
+  Block 1 of 8 started at 11:09:38; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 8 ended at 11:10:12; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+
+  Block 2 of 8 started at 11:10:12; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 8 ended at 11:10:45; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+
+  Block 3 of 8 started at 11:10:45; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 8 ended at 11:11:20; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+
+  Block 4 of 8 started at 11:11:21; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+    Trial 4, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 4 of 8 ended at 11:11:56; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+
+  Block 5 of 8 started at 11:11:56; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+    Trial 5, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 5 of 8 ended at 11:12:29; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+
+  Block 6 of 8 started at 11:12:29; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+    Trial 6, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 6 of 8 ended at 11:13:01; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+
+  Block 7 of 8 started at 11:13:01; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+    Trial 7, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 7 of 8 ended at 11:13:33; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+
+  Block 8 of 8 started at 11:13:33; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+    Trial 8, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 8 of 8 ended at 11:14:05; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+
+Experiment ild-fmri-2 running subject p001-train ended at 11:14:05 on 2023-04-25
+
+Experiment ild-fmri-2 running subject debug started at 11:25:19 on 2023-04-25
+
+  Block 1 of 8 started at 11:26:41; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+
+Experiment ild-fmri-2 running subject p001 started at 11:28:23 on 2023-04-25
+
+  Block 1 of 8 started at 11:28:26; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 8 ended at 11:29:00; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 2 of 8 started at 11:29:00; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 8 ended at 11:31:01; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 3 of 8 started at 11:31:01; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 8 ended at 11:31:33; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 4 of 8 started at 11:31:33; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 4, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 4 of 8 ended at 11:32:04; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 5 of 8 started at 11:32:04; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+Experiment ild-fmri-2 running subject p001 started at 11:32:38 on 2023-04-25
+
+  Block 1 of 80 started at 11:32:40; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 11:33:14; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 2 of 80 started at 11:33:14; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 80 ended at 11:33:45; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 3 of 80 started at 11:33:45; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 80 ended at 11:34:18; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 4 of 80 started at 11:34:18; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 4, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 4 of 80 ended at 11:34:50; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 5 of 80 started at 11:34:50; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 5, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 5 of 80 ended at 11:35:22; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 6 of 80 started at 11:35:22; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 6, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 6 of 80 ended at 11:35:54; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 7 of 80 started at 11:35:54; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 7, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 7 of 80 ended at 11:36:27; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 8 of 80 started at 11:36:27; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 8, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 8 of 80 ended at 11:36:59; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 9 of 80 started at 11:37:00; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 9, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 9 of 80 ended at 11:37:31; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 10 of 80 started at 11:37:31; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 10, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 10 of 80 ended at 11:38:02; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 11 of 80 started at 11:38:02; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 11, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 11 of 80 ended at 11:38:33; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 12 of 80 started at 11:38:33; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 12, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 12 of 80 ended at 11:39:04; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 13 of 80 started at 11:39:04; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 13, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 13 of 80 ended at 11:39:36; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 14 of 80 started at 11:39:36; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 14, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 14 of 80 ended at 11:40:07; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 15 of 80 started at 11:40:07; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 15, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 15 of 80 ended at 11:40:39; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 16 of 80 started at 11:40:39; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 16, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 16 of 80 ended at 11:41:10; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 17 of 80 started at 11:41:10; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 17, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 17 of 80 ended at 11:41:41; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 18 of 80 started at 11:41:41; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 18, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 18 of 80 ended at 11:42:13; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 19 of 80 started at 11:42:13; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 19, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 19 of 80 ended at 11:42:45; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 20 of 80 started at 11:42:45; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 20, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 20 of 80 ended at 11:43:17; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 21 of 80 started at 11:43:17; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 21, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 21 of 80 ended at 11:43:49; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 22 of 80 started at 11:43:49; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 22, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 22 of 80 ended at 11:44:21; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 23 of 80 started at 11:44:21; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 23, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 23 of 80 ended at 11:45:16; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 24 of 80 started at 11:45:16; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 24, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 24 of 80 ended at 11:45:47; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 25 of 80 started at 11:45:47; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 25, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 25 of 80 ended at 11:46:19; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 26 of 80 started at 11:46:19; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 26, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 26 of 80 ended at 11:46:51; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 27 of 80 started at 11:46:51; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 27, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 27 of 80 ended at 11:47:23; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 28 of 80 started at 11:47:23; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 28, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 28 of 80 ended at 11:47:56; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 29 of 80 started at 11:47:56; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 29, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 29 of 80 ended at 11:48:29; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 30 of 80 started at 11:48:29; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 30, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 30 of 80 ended at 11:49:00; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 31 of 80 started at 11:49:00; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 31, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 31 of 80 ended at 11:49:32; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 32 of 80 started at 11:49:32; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 32, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 32 of 80 ended at 11:50:03; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 33 of 80 started at 11:50:03; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 33, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 33 of 80 ended at 11:51:05; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 34 of 80 started at 11:51:05; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 34, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 34 of 80 ended at 11:51:42; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 35 of 80 started at 11:51:42; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 35, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 35 of 80 ended at 11:52:13; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 36 of 80 started at 11:52:13; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 36, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 36 of 80 ended at 11:52:44; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 37 of 80 started at 11:52:44; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 37, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 37 of 80 ended at 11:53:17; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 38 of 80 started at 11:53:17; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 38, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 38 of 80 ended at 11:53:49; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 39 of 80 started at 11:53:49; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 39, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 39 of 80 ended at 11:54:21; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 40 of 80 started at 11:54:21; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 40, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 40 of 80 ended at 11:54:52; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 41 of 80 started at 11:54:52; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 41, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 41 of 80 ended at 11:55:24; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 42 of 80 started at 11:55:24; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 42, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 42 of 80 ended at 11:55:57; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 43 of 80 started at 11:55:57; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 43, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 43 of 80 ended at 11:56:32; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 44 of 80 started at 11:56:32; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 44, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 44 of 80 ended at 11:57:04; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 45 of 80 started at 11:57:04; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 45, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 45 of 80 ended at 11:57:36; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 46 of 80 started at 11:57:36; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 46, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 46 of 80 ended at 11:58:08; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 47 of 80 started at 11:58:08; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 47, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 47 of 80 ended at 11:58:39; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 48 of 80 started at 11:58:39; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 48, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 48 of 80 ended at 11:59:10; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 49 of 80 started at 11:59:10; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 49, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 49 of 80 ended at 11:59:44; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 50 of 80 started at 11:59:44; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 50, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 50 of 80 ended at 12:00:16; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 51 of 80 started at 12:00:16; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 51, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 51 of 80 ended at 12:00:48; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 52 of 80 started at 12:00:48; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 52, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 52 of 80 ended at 12:01:19; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 53 of 80 started at 12:01:19; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 53, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 53 of 80 ended at 12:01:50; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 54 of 80 started at 12:01:51; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 54, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 54 of 80 ended at 12:02:22; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 55 of 80 started at 12:02:22; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 55, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 55 of 80 ended at 12:02:54; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 56 of 80 started at 12:02:54; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 56, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 56 of 80 ended at 12:03:25; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 57 of 80 started at 12:03:25; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 57, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 57 of 80 ended at 12:03:56; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 58 of 80 started at 12:03:56; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 58, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 58 of 80 ended at 12:04:28; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 59 of 80 started at 12:04:28; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 59, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 59 of 80 ended at 12:04:59; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 60 of 80 started at 12:04:59; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 60, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 60 of 80 ended at 12:05:32; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 61 of 80 started at 12:05:32; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 61, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 61 of 80 ended at 12:06:04; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 62 of 80 started at 12:06:04; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 62, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 62 of 80 ended at 12:06:35; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 63 of 80 started at 12:06:35; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 63, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 63 of 80 ended at 12:07:07; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 64 of 80 started at 12:07:07; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 64, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 64 of 80 ended at 12:07:39; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 65 of 80 started at 12:07:39; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 65, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 65 of 80 ended at 12:08:19; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 66 of 80 started at 12:08:19; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 66, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 66 of 80 ended at 12:08:51; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 67 of 80 started at 12:08:51; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 67, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 67 of 80 ended at 12:09:23; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 68 of 80 started at 12:09:23; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 68, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 68 of 80 ended at 12:10:09; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 69 of 80 started at 12:10:09; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 69, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 69 of 80 ended at 12:10:41; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 70 of 80 started at 12:10:41; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 70, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 70 of 80 ended at 12:11:12; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 71 of 80 started at 12:11:12; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 71, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 71 of 80 ended at 12:11:44; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 72 of 80 started at 12:11:44; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 72, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 72 of 80 ended at 12:12:17; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 73 of 80 started at 12:12:17; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 73, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 73 of 80 ended at 12:12:49; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 74 of 80 started at 12:12:49; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 74, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 74 of 80 ended at 12:13:21; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 75 of 80 started at 12:13:21; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 75, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 75 of 80 ended at 12:13:52; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 76 of 80 started at 12:13:52; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 76, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 76 of 80 ended at 12:14:31; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 77 of 80 started at 12:14:31; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 77, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 77 of 80 ended at 12:15:04; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 78 of 80 started at 12:15:04; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 78, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 78 of 80 ended at 12:15:35; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 79 of 80 started at 12:15:36; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 79, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 79 of 80 ended at 12:16:08; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 80 of 80 started at 12:16:08; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 80, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 80 of 80 ended at 12:16:39; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject p001 ended at 12:16:39 on 2023-04-25
+
+Experiment ild-fmri-2 running subject p002 started at 12:19:08 on 2023-04-25
+
+  Block 1 of 80 started at 12:22:25; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 12:22:58; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 2 of 80 started at 12:22:58; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 80 ended at 12:23:31; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 3 of 80 started at 12:23:31; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 80 ended at 12:24:02; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 4 of 80 started at 12:24:02; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 4, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 4 of 80 ended at 12:25:54; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 5 of 80 started at 12:25:54; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 5, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 5 of 80 ended at 12:26:26; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 6 of 80 started at 12:26:26; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 6, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 6 of 80 ended at 12:26:58; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 7 of 80 started at 12:26:58; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 7, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 7 of 80 ended at 12:27:30; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 8 of 80 started at 12:27:30; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 8, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 8 of 80 ended at 12:28:01; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 9 of 80 started at 12:28:01; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 9, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 9 of 80 ended at 12:28:32; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 10 of 80 started at 12:28:32; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 10, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 10 of 80 ended at 12:29:04; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 11 of 80 started at 12:29:04; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 11, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 11 of 80 ended at 12:29:35; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 12 of 80 started at 12:29:35; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 12, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 12 of 80 ended at 12:30:07; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 13 of 80 started at 12:30:07; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 13, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 13 of 80 ended at 12:30:38; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 14 of 80 started at 12:30:38; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 14, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 14 of 80 ended at 12:31:10; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 15 of 80 started at 12:31:10; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 15, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 15 of 80 ended at 12:31:41; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 16 of 80 started at 12:31:41; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 16, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 16 of 80 ended at 12:32:12; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 17 of 80 started at 12:32:12; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 17, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 17 of 80 ended at 12:32:43; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 18 of 80 started at 12:32:44; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 18, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 18 of 80 ended at 12:33:15; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 19 of 80 started at 12:33:15; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 19, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 19 of 80 ended at 12:33:46; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 20 of 80 started at 12:33:46; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 20, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 20 of 80 ended at 12:34:17; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 21 of 80 started at 12:34:17; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 21, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 21 of 80 ended at 12:34:48; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 22 of 80 started at 12:34:48; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 22, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 22 of 80 ended at 12:35:20; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 23 of 80 started at 12:35:20; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 23, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 23 of 80 ended at 12:35:51; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 24 of 80 started at 12:35:51; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 24, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 24 of 80 ended at 12:36:23; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 25 of 80 started at 12:36:23; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 25, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 25 of 80 ended at 12:36:54; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 26 of 80 started at 12:36:54; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 26, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 26 of 80 ended at 12:37:25; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 27 of 80 started at 12:37:25; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 27, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 27 of 80 ended at 12:37:56; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 28 of 80 started at 12:37:56; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 28, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 28 of 80 ended at 12:38:27; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 29 of 80 started at 12:38:27; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 29, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 29 of 80 ended at 12:38:59; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 30 of 80 started at 12:38:59; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 30, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 30 of 80 ended at 12:39:30; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 31 of 80 started at 12:39:30; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 31, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 31 of 80 ended at 12:40:19; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 32 of 80 started at 12:40:19; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 32, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 32 of 80 ended at 12:40:50; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 33 of 80 started at 12:40:50; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 33, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 33 of 80 ended at 12:41:21; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 34 of 80 started at 12:41:21; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 34, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 34 of 80 ended at 12:41:53; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 35 of 80 started at 12:41:53; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 35, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 35 of 80 ended at 12:42:24; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 36 of 80 started at 12:42:24; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 36, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 36 of 80 ended at 12:42:56; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 37 of 80 started at 12:42:56; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 37, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 37 of 80 ended at 12:43:27; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 38 of 80 started at 12:43:27; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 38, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 38 of 80 ended at 12:43:59; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 39 of 80 started at 12:43:59; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 39, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 39 of 80 ended at 12:44:30; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 40 of 80 started at 12:44:30; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 40, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 40 of 80 ended at 12:45:01; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 41 of 80 started at 12:45:01; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 41, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 41 of 80 ended at 12:45:32; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 42 of 80 started at 12:45:32; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 42, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 42 of 80 ended at 12:46:03; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 43 of 80 started at 12:46:03; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 43, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 43 of 80 ended at 12:46:35; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 44 of 80 started at 12:46:35; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 44, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 44 of 80 ended at 12:47:06; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 45 of 80 started at 12:47:06; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 45, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 45 of 80 ended at 12:47:38; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 46 of 80 started at 12:47:38; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 46, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 46 of 80 ended at 12:48:09; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 47 of 80 started at 12:48:09; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 47, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 47 of 80 ended at 12:48:40; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 48 of 80 started at 12:48:40; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 48, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 48 of 80 ended at 12:49:11; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 49 of 80 started at 12:49:11; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 49, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 49 of 80 ended at 12:49:43; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 50 of 80 started at 12:49:43; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 50, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 50 of 80 ended at 12:50:14; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 51 of 80 started at 12:50:14; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 51, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 51 of 80 ended at 12:50:46; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 52 of 80 started at 12:50:46; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 52, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 52 of 80 ended at 12:51:17; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 53 of 80 started at 12:51:17; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 53, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 53 of 80 ended at 12:51:48; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 54 of 80 started at 12:51:49; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 54, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 54 of 80 ended at 12:52:20; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 55 of 80 started at 12:52:20; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 55, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 55 of 80 ended at 12:52:53; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 56 of 80 started at 12:52:53; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 56, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 56 of 80 ended at 12:53:25; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 57 of 80 started at 12:53:25; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 57, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 57 of 80 ended at 12:53:56; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 58 of 80 started at 12:53:56; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 58, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 58 of 80 ended at 12:54:28; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 59 of 80 started at 12:54:28; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 59, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 59 of 80 ended at 12:55:00; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 60 of 80 started at 12:55:00; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 60, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 60 of 80 ended at 12:55:35; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 61 of 80 started at 12:55:35; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 61, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 61 of 80 ended at 12:56:06; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 62 of 80 started at 12:56:06; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 62, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 62 of 80 ended at 12:56:38; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 63 of 80 started at 12:56:38; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 63, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 63 of 80 ended at 12:57:09; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 64 of 80 started at 12:57:10; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 64, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 64 of 80 ended at 12:57:47; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 65 of 80 started at 12:57:47; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 65, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 65 of 80 ended at 12:58:18; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 66 of 80 started at 12:58:18; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 66, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 66 of 80 ended at 12:58:50; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 67 of 80 started at 12:58:50; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 67, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 67 of 80 ended at 12:59:21; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 68 of 80 started at 12:59:21; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 68, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 68 of 80 ended at 12:59:53; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 69 of 80 started at 12:59:53; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 69, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 69 of 80 ended at 13:00:24; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 70 of 80 started at 13:00:24; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 70, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 70 of 80 ended at 13:00:55; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 71 of 80 started at 13:00:55; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 71, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 71 of 80 ended at 13:01:26; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 72 of 80 started at 13:01:26; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 72, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 72 of 80 ended at 13:01:57; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 73 of 80 started at 13:01:57; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 73, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 73 of 80 ended at 13:02:29; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 74 of 80 started at 13:02:29; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 74, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 74 of 80 ended at 13:03:00; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 75 of 80 started at 13:03:00; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 75, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 75 of 80 ended at 13:03:31; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 76 of 80 started at 13:03:31; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 76, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 76 of 80 ended at 13:04:03; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 77 of 80 started at 13:04:03; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 77, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 77 of 80 ended at 13:04:35; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 78 of 80 started at 13:04:35; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 78, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 78 of 80 ended at 13:05:06; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 79 of 80 started at 13:05:06; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 79, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 79 of 80 ended at 13:05:38; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 80 of 80 started at 13:05:38; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 80, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 80 of 80 ended at 13:06:09; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject p002 ended at 13:06:09 on 2023-04-25

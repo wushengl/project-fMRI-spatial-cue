@@ -1,0 +1,53 @@
+--------------------------------------------------------------
+Now start loudness matching...
+Matching pool: [300, 566, 1068, 3805, [220, 660], [440, 1320]]
+Now start matching round 1
+[-5.499930118507674, -7.49990470705592, -6.4999174127817945, -5.999923765644736, -7.999898354192981, -12.499841178426532]
+Now start matching round 2
+[-12.999834825563594, -7.49990470705592, -4.999936471370613, -7.499904707055918, -9.499879295604165, -11.499853884152412]
+Finished baseline matching, now start adaptive matching...
+----------------------- new matching -------------------------
+Current convergence status: [False False False False False False]
+This matching pool: [300 566 1068 3805 list([220, 660]) list([440, 1320])]
+New matched levels: [-13.99982211983772, -10.499866589878287, -7.499904707055914, -7.999898354192978, -7.49990470705592, -13.99982211983772]
+Upper bounds: [ -7.61691006  -5.86693229  -4.11695453  -5.11694182  -7.11691641
+ -10.36687512]
+Lower bounds: [-10.88285489  -9.13287712  -7.38289936  -8.38288665 -10.38286124
+ -13.63281994]
+Updated convergence status: [False False False  True  True False]
+----------------------- new matching -------------------------
+Current convergence status: [False False False  True  True False]
+This matching pool: [300 566 1068 list([440, 1320])]
+New matched levels: [-11.999847531289474, -10.499866589878287, -8.999885648467105, -13.99982211983772]
+Upper bounds: [ -9.01001451  -6.67671082  -4.51007169  -5.34339443  -6.51004628
+ -10.84332455]
+Lower bounds: [-12.65637687 -10.32307318  -8.15643404  -8.98975679 -10.15640863
+ -14.4896869 ]
+Updated convergence status: [ True False False  True  True  True]
+----------------------- new matching -------------------------
+Current convergence status: [ True False False  True  True  True]
+This matching pool: [566 1068]
+New matched levels: [-13.499828472700656, -9.499879295604165]
+Upper bounds: [ -9.41071356  -7.28574056  -5.28576597  -5.45243052  -6.61908236
+ -11.28568974]
+Lower bounds: [-12.83900374 -10.71403074  -8.71405615  -8.8807207  -10.04737254
+ -14.71397992]
+Updated convergence status: [ True False False  True  True  True]
+----------------------- new matching -------------------------
+Current convergence status: [ True False False  True  True  True]
+This matching pool: [566 1068]
+New matched levels: [-9.999872942741227, -6.4999174127817945]
+Upper bounds: [ -9.37634974  -8.1513653   -5.75139579  -5.4180667   -6.58471854
+ -11.25132591]
+Lower bounds: [-12.87336756 -11.64838313  -9.24841362  -8.91508452 -10.08173637
+ -14.74834374]
+Updated convergence status: [ True  True  True  True  True  True]
+--------------------------------------------------------------
+Matching finished!
+Averaged matched levels: [-11.12485865  -9.91654067  -7.33324016  -7.16657561  -8.33322745
+ -12.99983483]
+--------------------------------------------------------------
+Now start tonotopy task...
+cycles per run: 5
+run number: 4
+Now running round 1

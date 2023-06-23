@@ -1,0 +1,53 @@
+# -*- coding: utf-8 -*-
+
+# A log file for Gustav
+
+
+Experiment ild-fmri-2 running subject debug started at 13:07:26 on 2023-05-06
+
+  Block 1 of 80 started at 13:07:36; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+  Block 1 of 80 ended at 13:08:07; Target number: 1; Responses: 1.584,3.299,5.39,7.723,23.645; Valid responses: 
+
+  Block 2 of 80 started at 13:08:07; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+  Block 2 of 80 ended at 13:10:32; Target number: 2; Responses: 12.338,12.688; Valid responses: 
+
+  Block 3 of 80 started at 13:10:32; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+  Block 3 of 80 ended at 13:11:36; Target number: 2; Responses: 15.442; Valid responses: 
+
+  Block 4 of 80 started at 13:11:36; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+  Block 4 of 80 ended at 13:12:07; Target number: 3; Responses: 17.978,20.557; Valid responses: 17.978,20.557
+
+  Block 5 of 80 started at 13:12:07; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject debug started at 13:27:55 on 2023-05-06
+
+  Block 1 of 80 started at 13:27:58; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+  Block 1 of 80 ended at 13:28:29; Target number: 1; Responses: 1.637,4.849,7.497,16.016; Valid responses: 
+
+  Block 2 of 80 started at 13:28:29; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject debug started at 13:55:01 on 2023-05-06
+
+  Block 1 of 80 started at 13:55:03; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+Experiment ild-fmri-2 running subject debug started at 13:57:24 on 2023-05-06
+
+  Block 1 of 80 started at 13:57:29; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject debug started at 14:06:02 on 2023-05-06
+
+  Block 1 of 2 started at 14:06:07; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+  Block 1 of 2 ended at 14:06:35; Target number: 3; Responses: 1.387,2.486,3.516,4.555,5.585,6.624,7.604; Valid responses: 
+
+  Block 2 of 2 started at 14:06:35; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+  Block 2 of 2 ended at 14:07:10; Target number: 1; Responses: ; Valid responses: 
+
+Experiment ild-fmri-2 running subject debug ended at 14:07:10 on 2023-05-06; Overall hit rate: 0 / 4
+
+Experiment ild-fmri-2 running subject debug started at 14:22:22 on 2023-05-06
+
+  Block 1 of 2 started at 14:22:27; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+Experiment ild-fmri-2 running subject debug started at 14:22:59 on 2023-05-06
+
+  Block 1 of 80 started at 14:23:02; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes

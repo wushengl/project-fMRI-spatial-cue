@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+
+# A log file for Gustav
+
+
+Experiment ild-fmri-2 running subject 500 started at 13:57:52 on 2023-05-04
+
+  Block 1 of 80 started at 13:58:11; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 13:58:46; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 2 of 80 started at 13:58:46; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 80 ended at 13:59:22; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 3 of 80 started at 13:59:22; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+Experiment ild-fmri-2 running subject 500 started at 14:00:34 on 2023-05-04
+
+  Block 1 of 80 started at 14:00:37; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 14:01:07; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 2 of 80 started at 14:01:07; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+Experiment ild-fmri-2 running subject 500 started at 14:01:21 on 2023-05-04
+
+  Block 1 of 80 started at 14:01:23; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 14:01:51; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+  Block 2 of 80 started at 14:01:51; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+Experiment ild-fmri-2 running subject 500 started at 14:03:24 on 2023-05-04
+
+  Block 1 of 80 started at 14:03:26; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 14:03:54; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 2 of 80 started at 14:03:54; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject 500 started at 14:07:00 on 2023-05-04
+
+  Block 1 of 80 started at 14:07:01; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 14:07:31; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+  Block 2 of 80 started at 14:07:31; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject 500 started at 14:08:04 on 2023-05-04
+
+  Block 1 of 80 started at 14:08:05; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 14:08:33; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+  Block 2 of 80 started at 14:08:33; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject 500 started at 14:12:52 on 2023-05-04
+
+  Block 1 of 80 started at 14:12:53; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 80 ended at 14:13:24; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = yes
+
+  Block 2 of 80 started at 14:13:24; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = yes

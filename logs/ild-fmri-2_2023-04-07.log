@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+
+# A log file for Gustav
+
+
+Experiment ild-fmri-2 running subject 500 started at 10:44:49 on 2023-04-07
+
+  Block 1 of 6 started at 10:44:51; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject 500 started at 10:46:19 on 2023-04-07
+
+  Block 1 of 6 started at 10:46:20; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject 500 started at 10:46:41 on 2023-04-07
+
+  Block 1 of 6 started at 10:46:42; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject 500 started at 10:47:20 on 2023-04-07
+
+  Block 1 of 6 started at 10:47:21; Condition: 1 ; cue = ITD500
+Gustav cancelled at user request (Prompt to begin testing)
+Experiment ild-fmri-2 running subject 500 started at 10:49:00 on 2023-04-07
+
+  Block 1 of 6 started at 10:49:01; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject 500 started at 10:56:08 on 2023-04-07
+
+  Block 1 of 6 started at 10:56:08; Condition: 1 ; cue = ITD500
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 6 ended at 10:57:06; Condition: 1 ; cue = ITD500
+
+  Block 2 of 6 started at 10:57:06; Condition: 2 ; cue = ILD10

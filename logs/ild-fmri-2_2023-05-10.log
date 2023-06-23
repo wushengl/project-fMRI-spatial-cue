@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+
+# A log file for Gustav
+
+
+Experiment ild-fmri-2 running subject debug started at 08:57:12 on 2023-05-10
+
+  Block 1 of 2 started at 08:57:17; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+  Block 1 of 2 ended at 08:57:52; Target number: 3; Responses: ; Valid responses: 
+
+  Block 2 of 2 started at 08:57:52; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+
+Experiment ild-fmri-2 running subject debug started at 09:17:27 on 2023-05-10
+
+  Block 1 of 2 started at 09:17:32; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+Gustav cancelled at user request (Prompt to begin testing)Gustav cancelled at user request (Prompt to begin testing)Gustav cancelled at user request (Prompt to begin testing)
+Experiment ild-fmri-2 running subject debug started at 13:08:55 on 2023-05-10
+
+  Block 1 of 2 started at 13:09:00; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+  Block 1 of 2 ended at 13:09:28; Target number: 1; Responses: 8.441; Valid responses: 8.441
+
+  Block 2 of 2 started at 13:09:28; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = yes
+  Block 2 of 2 ended at 13:10:01; Target number: 1; Responses: 11.273,14.264; Valid responses: 
+
+Experiment ild-fmri-2 running subject debug ended at 13:10:01 on 2023-05-10; Overall hit rate: 1 / 2
+
+Experiment ild-fmri-2 running subject debug started at 13:13:18 on 2023-05-10
+
+  Block 1 of 2 started at 13:13:20; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+Gustav cancelled at user request (Prompt to begin testing)
+Experiment ild-fmri-2 running subject debug started at 13:43:19 on 2023-05-10
+
+  Block 1 of 2 started at 13:43:24; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+
+Experiment ild-fmri-2 running subject debug started at 16:00:34 on 2023-05-10
+
+  Block 1 of 2 started at 16:00:37; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = yes
+Gustav cancelled at user request (Prompt to begin testing)

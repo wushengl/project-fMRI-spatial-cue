@@ -1,0 +1,9 @@
+SubjectID,Trial,SpatialCond,isTargetLeft,isLowLeft,TargetNum,TargetTime,ResponseTime
+p001-train,ild-fmri-2,ITD500,True,True,3,        3.55,8.149999999999999,19.4,9.46,20.168
+p001-train,ild-fmri-2,ITD500,False,True,1,        12.5,13.501,20.774
+p001-train,ild-fmri-2,ITD500,True,False,1,        7.8999999999999995,23.087
+p001-train,ild-fmri-2,ITD500,False,False,2,        10.2,17.349999999999998,11.234,18.132
+p001-train,ild-fmri-2,ILD10,True,True,2,        3.55,19.65,4.822,21.094
+p001-train,ild-fmri-2,ILD10,False,True,3,        10.2,12.75,19.4,11.07,13.658
+p001-train,ild-fmri-2,ILD10,True,False,1,        8.149999999999999,8.765
+p001-train,ild-fmri-2,ILD10,False,False,2,        14.799999999999999,17.349999999999998,18.045

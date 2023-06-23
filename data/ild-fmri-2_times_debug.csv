@@ -1,0 +1,73 @@
+True,21.95
+True,3.3,7.8999999999999995,10.45
+debug,ild-fmri-2,ILD10,False,True,3,        10.2,17.349999999999998,19.65,
+
+debug,ild-fmri-2,ITD500,False,False,3,        3.55,17.099999999999998,21.7,5.497,18.203,23.502
+debug,ild-fmri-2,ILD10,True,False,3,        10.45,12.5,19.65,18.29,22.272
+debug,ild-fmri-2,ILD10,False,True,3,        10.45,17.099999999999998,19.4,4.974,8.188,12.188,15.918,18.59,20.389,22.778
+debug,ild-fmri-2,ITD500,True,True,2,        14.799999999999999,17.099999999999998,
+
+debug,ild-fmri-2,ITD500,False,False,2,        3.55,17.099999999999998,
+debug,ild-fmri-2,ITD500,True,False,3,        5.85,12.5,21.95,15.788,16.477,18.496
+debug,ild-fmri-2,ILD10,False,False,2,        1.0,7.8999999999999995,
+
+debug,ild-fmri-2,ILD10,False,True,1,        8.149999999999999,3.975,11.824,17.485
+debug,ild-fmri-2,ILD10,False,True,1,        3.3,12.838
+debug,ild-fmri-2,ITD500,False,False,3,        10.45,17.099999999999998,21.95,17.575
+debug,ild-fmri-2,ITD500,False,True,3,        14.799999999999999,19.4,21.95,
+
+debug,ild-fmri-2,ITD500,True,True,3,        1.0,19.4,21.95,
+debug,ild-fmri-2,ITD500,True,True,3,        10.45,17.099999999999998,19.4,
+debug,ild-fmri-2,ITD500,False,True,2,        3.55,12.5,
+debug,ild-fmri-2,ILD10,False,True,1,        10.45,
+debug,ild-fmri-2,ITD500,False,False,1,        10.45,
+
+debug,ild-fmri-2,ITD500,True,False,1,        15.049999999999999,1.584,3.299,5.39,7.723,23.645
+debug,ild-fmri-2,ITD500,False,True,2,        5.6,10.2,12.338,12.688
+debug,ild-fmri-2,ITD500,True,True,2,        19.65,21.7,15.442
+debug,ild-fmri-2,ITD500,False,False,3,        12.75,17.349999999999998,19.65,17.978,20.557
+debug,ild-fmri-2,ILD10,False,False,2,        3.55,14.799999999999999,
+
+debug,ild-fmri-2,ILD10,False,True,1,        10.2,1.637,4.849,7.497,16.016
+debug,ild-fmri-2,ITD500,False,False,2,        12.75,19.4,
+
+debug,ild-fmri-2,ILD10,True,False,1,        1.25,
+
+debug,ild-fmri-2,ITD500,False,True,3,        5.85,8.149999999999999,14.799999999999999,
+
+debug,ild-fmri-2,ITD500,True,True,3,        7.8999999999999995,10.45,15.049999999999999,1.387,2.486,3.516,4.555,5.585,6.624,7.604
+debug,ild-fmri-2,ITD500,False,True,1,        15.049999999999999,
+debug,ild-fmri-2,ITD500,True,True,2,        1.25,8.149999999999999,
+
+debug,ild-fmri-2,ILD10,False,True,1,        21.7,
+
+debug,ild-fmri-2,ITD500,True,True,3,        5.85,7.8999999999999995,15.049999999999999,
+debug,ild-fmri-2,ITD500,False,True,2,        7.8999999999999995,15.049999999999999,
+
+debug,ild-fmri-2,ITD500,True,True,1,        17.099999999999998,
+
+debug,ild-fmri-2,ITD500,True,True,1,        7.8999999999999995,8.441
+debug,ild-fmri-2,ITD500,False,True,1,        12.5,11.273,14.264
+debug,ild-fmri-2,ITD500,True,True,1,        12.75,
+
+debug,ild-fmri-2,ITD500,True,True,3,        3.3,10.45,14.799999999999999,
+
+debug,ild-fmri-2,ITD500,True,True,1,        15.049999999999999,
+
+debug,ild-fmri-2,ITD500,True,True,3,        1.0,7.8999999999999995,15.049999999999999,,09:55:49
+debug,ild-fmri-2,ITD500,False,True,2,        5.6,15.049999999999999,6.49,10.182,10:06:44
+
+
+
+
+debug,ild-fmri-2,ILD10,False,True,1,        15.049999999999999,,10:22:06.376913
+debug,ild-fmri-2,ILD10,True,False,3,        1.25,10.45,12.75,,10:22:15.857960
+debug,ild-fmri-2,ILD10,False,False,3,        7.8999999999999995,19.4,21.7,,10:23:23.330451
+debug,ild-fmri-2,ITD500,True,False,1,        14.799999999999999,,10:23:29.879592
+debug,ild-fmri-2,ITD500,True,True,2,        12.75,17.349999999999998,,10:23:36.078822
+debug,ild-fmri-2,ITD500,False,True,2,        3.55,19.4,,10:23:41.798601
+debug,ild-fmri-2,ITD500,False,False,2,        5.85,10.45,,10:23:47.849560
+debug,ild-fmri-2,ILD10,True,True,1,        10.45,,10:23:53.849454
+debug,ild-fmri-2,ILD10,False,False,3,        10.2,12.75,17.099999999999998,,10:24:02.028908
+debug,ild-fmri-2,ILD10,True,False,2,        3.55,8.149999999999999,,10:24:07.749436
+debug,ild-fmri-2,ITD500,False,False,1,        12.75,,10:24:13.801716

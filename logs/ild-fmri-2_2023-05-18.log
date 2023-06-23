@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+
+# A log file for Gustav
+
+
+Experiment ild-fmri-2 running subject debug started at 09:55:31 on 2023-05-18
+
+  Block 1 of 2 started at 09:55:36; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+  Block 1 of 2 ended at 09:56:17; Target number: 3; Responses: ; Valid responses: 
+
+  Block 2 of 2 started at 09:56:17; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+  Block 2 of 2 ended at 10:07:11; Target number: 2; Responses: 6.49,10.182; Valid responses: 6.49
+
+Experiment ild-fmri-2 running subject debug ended at 10:07:11 on 2023-05-18; Overall hit rate: 1 / 5
+Gustav cancelled at user request (Prompt to begin testing)
+Experiment ild-fmri-2 running subject debug started at 10:21:54 on 2023-05-18
+
+  Block 1 of 80 started at 10:21:58; Condition: 6 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+  Block 1 of 80 ended at 10:22:11; Target number: 1; Responses: ; Valid responses: 
+
+  Block 2 of 80 started at 10:22:11; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+  Block 2 of 80 ended at 10:22:21; Target number: 3; Responses: ; Valid responses: 
+
+  Block 3 of 80 started at 10:22:21; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+  Block 3 of 80 ended at 10:23:28; Target number: 3; Responses: ; Valid responses: 
+
+  Block 4 of 80 started at 10:23:28; Condition: 3 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+  Block 4 of 80 ended at 10:23:35; Target number: 1; Responses: ; Valid responses: 
+
+  Block 5 of 80 started at 10:23:35; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+  Block 5 of 80 ended at 10:23:41; Target number: 2; Responses: ; Valid responses: 
+
+  Block 6 of 80 started at 10:23:41; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = no
+  Block 6 of 80 ended at 10:23:47; Target number: 2; Responses: ; Valid responses: 
+
+  Block 7 of 80 started at 10:23:47; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+  Block 7 of 80 ended at 10:23:53; Target number: 2; Responses: ; Valid responses: 
+
+  Block 8 of 80 started at 10:23:53; Condition: 5 ; cue = ILD10 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+  Block 8 of 80 ended at 10:24:00; Target number: 1; Responses: ; Valid responses: 
+
+  Block 9 of 80 started at 10:24:00; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+  Block 9 of 80 ended at 10:24:07; Target number: 3; Responses: ; Valid responses: 
+
+  Block 10 of 80 started at 10:24:07; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+  Block 10 of 80 ended at 10:24:13; Target number: 2; Responses: ; Valid responses: 
+
+  Block 11 of 80 started at 10:24:13; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = no

@@ -1,0 +1,172 @@
+# -*- coding: utf-8 -*-
+
+# A log file for Gustav
+
+
+Experiment ild-fmri-2 running subject test started at 09:57:15 on 2023-04-24
+
+  Block 1 of 6 started at 09:58:06; Condition: 1 ; cue = ITD500
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 6 ended at 09:59:03; Condition: 1 ; cue = ITD500
+
+  Block 2 of 6 started at 09:59:03; Condition: 2 ; cue = ILD10
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 6 ended at 10:03:26; Condition: 2 ; cue = ILD10
+
+  Block 3 of 6 started at 10:03:26; Condition: 1 ; cue = ITD500
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 6 ended at 10:04:30; Condition: 1 ; cue = ITD500
+
+  Block 4 of 6 started at 10:04:30; Condition: 2 ; cue = ILD10
+    Trial 4, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 4 of 6 ended at 10:05:25; Condition: 2 ; cue = ILD10
+
+  Block 5 of 6 started at 10:05:25; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject test_zigzag started at 10:53:37 on 2023-04-24
+
+  Block 1 of 6 started at 10:53:51; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject test_zigzag_2 started at 10:57:11 on 2023-04-24
+
+  Block 1 of 6 started at 10:57:12; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject test_zigzag_3 started at 10:57:48 on 2023-04-24
+
+  Block 1 of 6 started at 10:57:49; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject debug started at 11:04:17 on 2023-04-24
+
+  Block 1 of 6 started at 11:04:18; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject debug started at 11:05:10 on 2023-04-24
+
+  Block 1 of 6 started at 11:05:10; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject debug started at 11:08:51 on 2023-04-24
+
+  Block 1 of 6 started at 11:08:51; Condition: 1 ; cue = ITD500
+
+Experiment ild-fmri-2 running subject debug started at 11:11:22 on 2023-04-24
+
+  Block 1 of 6 started at 11:11:23; Condition: 1 ; cue = ITD500
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 6 ended at 11:12:31; Condition: 1 ; cue = ITD500
+
+  Block 2 of 6 started at 11:12:31; Condition: 2 ; cue = ILD10
+
+Experiment ild-fmri-2 running subject test started at 11:19:27 on 2023-04-24
+
+  Block 1 of 6 started at 11:19:50; Condition: 1 ; cue = ITD500
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 6 ended at 11:20:47; Condition: 1 ; cue = ITD500
+
+  Block 2 of 6 started at 11:20:47; Condition: 2 ; cue = ILD10
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 6 ended at 11:22:14; Condition: 2 ; cue = ILD10
+
+  Block 3 of 6 started at 11:22:14; Condition: 1 ; cue = ITD500
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 6 ended at 11:24:24; Condition: 1 ; cue = ITD500
+
+  Block 4 of 6 started at 11:24:24; Condition: 2 ; cue = ILD10
+    Trial 4, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 4 of 6 ended at 11:25:25; Condition: 2 ; cue = ILD10
+
+  Block 5 of 6 started at 11:25:25; Condition: 1 ; cue = ITD500
+    Trial 5, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 5 of 6 ended at 11:26:35; Condition: 1 ; cue = ITD500
+
+  Block 6 of 6 started at 11:26:35; Condition: 2 ; cue = ILD10
+
+Experiment ild-fmri-2 running subject test started at 13:06:27 on 2023-04-24
+
+  Block 1 of 6 started at 13:06:28; Condition: 1 ; cue = ITD500 ; noise = no
+
+Experiment ild-fmri-2 running subject test started at 13:06:47 on 2023-04-24
+
+  Block 1 of 6 started at 13:06:48; Condition: 1 ; cue = ITD500 ; noise = no
+
+Experiment ild-fmri-2 running subject test started at 13:10:41 on 2023-04-24
+
+  Block 1 of 6 started at 13:10:41; Condition: 1 ; cue = ITD500 ; noise = no
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 6 ended at 13:11:13; Condition: 1 ; cue = ITD500 ; noise = no
+
+  Block 2 of 6 started at 13:11:13; Condition: 2 ; cue = ILD10 ; noise = no
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 6 ended at 13:11:45; Condition: 2 ; cue = ILD10 ; noise = no
+
+  Block 3 of 6 started at 13:11:45; Condition: 1 ; cue = ITD500 ; noise = no
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 6 ended at 13:11:53; Condition: 1 ; cue = ITD500 ; noise = no
+
+Experiment ild-fmri-2 running subject test ended at 13:11:53 on 2023-04-24
+
+Experiment ild-fmri-2 running subject test2 started at 13:15:34 on 2023-04-24
+
+  Block 1 of 6 started at 13:15:35; Condition: 1 ; cue = ITD500 ; noise = no
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 6 ended at 13:16:08; Condition: 1 ; cue = ITD500 ; noise = no
+
+  Block 2 of 6 started at 13:16:08; Condition: 2 ; cue = ILD10 ; noise = no
+
+Experiment ild-fmri-2 running subject test3 started at 13:22:17 on 2023-04-24
+
+  Block 1 of 6 started at 13:22:18; Condition: 1 ; cue = ITD500 ; noise = no
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 6 ended at 13:22:52; Condition: 1 ; cue = ITD500 ; noise = no
+
+  Block 2 of 6 started at 13:22:52; Condition: 2 ; cue = ILD10 ; noise = no
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 6 ended at 13:23:23; Condition: 2 ; cue = ILD10 ; noise = no
+
+  Block 3 of 6 started at 13:23:23; Condition: 1 ; cue = ITD500 ; noise = no
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 6 ended at 13:23:29; Condition: 1 ; cue = ITD500 ; noise = no
+
+Experiment ild-fmri-2 running subject test3 ended at 13:23:29 on 2023-04-24
+
+Experiment ild-fmri-2 running subject test4 started at 13:24:49 on 2023-04-24
+
+  Block 1 of 6 started at 13:24:55; Condition: 1 ; cue = ITD500 ; noise = no
+    Trial 1, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 1 of 6 ended at 13:25:28; Condition: 1 ; cue = ITD500 ; noise = no
+
+  Block 2 of 6 started at 13:25:28; Condition: 2 ; cue = ILD10 ; noise = no
+    Trial 2, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 2 of 6 ended at 13:26:12; Condition: 2 ; cue = ILD10 ; noise = no
+
+  Block 3 of 6 started at 13:26:12; Condition: 1 ; cue = ITD500 ; noise = no
+    Trial 3, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 3 of 6 ended at 13:26:44; Condition: 1 ; cue = ITD500 ; noise = no
+
+  Block 4 of 6 started at 13:26:44; Condition: 2 ; cue = ILD10 ; noise = no
+    Trial 4, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 4 of 6 ended at 13:27:15; Condition: 2 ; cue = ILD10 ; noise = no
+
+  Block 5 of 6 started at 13:27:15; Condition: 1 ; cue = ITD500 ; noise = no
+    Trial 5, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 5 of 6 ended at 13:27:50; Condition: 1 ; cue = ITD500 ; noise = no
+
+  Block 6 of 6 started at 13:27:50; Condition: 2 ; cue = ILD10 ; noise = no
+    Trial 6, target stimulus: $user[trial_stimbase], KWs correct:  / possible: $user[trial_kwp] (0 / 0: 0.0 %)
+  Block 6 of 6 ended at 13:28:22; Condition: 2 ; cue = ILD10 ; noise = no
+
+Experiment ild-fmri-2 running subject test4 ended at 13:28:22 on 2023-04-24
+
+Experiment ild-fmri-2 running subject test5-noise started at 13:31:04 on 2023-04-24
+
+  Block 1 of 6 started at 13:31:06; Condition: 1 ; cue = ITD500 ; noise = yes
+
+Experiment ild-fmri-2 running subject test5-noise started at 13:36:33 on 2023-04-24
+
+  Block 1 of 6 started at 13:36:34; Condition: 1 ; cue = ITD500 ; noise = yes
+
+Experiment ild-fmri-2 running subject test5-noise started at 13:39:23 on 2023-04-24
+
+  Block 1 of 6 started at 13:39:24; Condition: 1 ; cue = ITD500 ; noise = yes
+
+Experiment ild-fmri-2 running subject test5-noise started at 13:40:04 on 2023-04-24
+
+  Block 1 of 6 started at 13:40:05; Condition: 1 ; cue = ITD500 ; noise = yes

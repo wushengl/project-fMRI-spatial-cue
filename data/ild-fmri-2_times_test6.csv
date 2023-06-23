@@ -1,0 +1,4 @@
+SubjectID,Trial,SpatialCond,isTargetLeft,isLowLeft,TargetNum,TargetTime,ResponseTime
+test6,ild-fmri-2,ITD500,True,True,2,        7.8999999999999995,10.24.055,7.737,12.46,20.713
+test6,ild-fmri-2,ITD500,False,True,1,        5.852.348,5.477,14.555
+test6,ild-fmri-2,ITD500,True,False,3,        3.55,5.6,21.7

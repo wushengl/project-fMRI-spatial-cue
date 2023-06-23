@@ -1,0 +1,26 @@
+--------------------------------------------------------------
+Now start loudness matching...
+Matching pool: [300, 566, 1068, 3805, [220, 660], [440, 1320]]
+Now start matching round 1
+[-7.49990470705592, -5.499930118507674, -3.999949177096491, -3.499955529959429, -3.999949177096491, -3.499955529959429]
+Now start matching round 2
+[-5.499930118507674, -4.999936471370613, -4.499942824233552, -4.499942824233552, -4.499942824233552, -3.999949177096491]
+Now start matching round 3
+[-4.499942824233552, -3.499955529959429, -2.999961882822368, -3.999949177096491, -4.499942824233552, -4.999936471370613]
+Finished baseline matching, now start adaptive matching...
+----------------------- new matching -------------------------
+Current convergence status: [False False False False False False]
+This matching pool: [300 566 1068 3805 list([220, 660]) list([440, 1320])]
+New matched levels: [-5.999923765644736, -5.499930118507674, -4.999936471370613, -5.499930118507674, -5.499930118507674, -4.999936471370613]
+Upper bounds: [-4.58605593 -3.81678159 -3.20968299 -3.59170607 -4.09757901 -3.54301209]
+Lower bounds: [-7.0804625  -5.51643316 -4.45688627 -4.40819228 -4.56897754 -4.79021537]
+Updated convergence status: [ True  True False False False False]
+----------------------- new matching -------------------------
+Current convergence status: [ True  True False False False False]
+This matching pool: [1068 3805 list([220, 660]) list([440, 1320])]
+New matched levels: [-3.499955529959429, -4.999936471370611, -5.499930118507674, -6.499917412781797]
+Upper bounds: [-4.79240735 -4.05526866 -3.38544701 -3.63544384 -4.08008579 -3.72543361]
+Lower bounds: [-6.95744335 -5.69460746 -4.86444817 -5.11444499 -5.16979668 -5.02445521]
+Updated convergence status: [ True  True  True  True False False]
+----------------------- new matching -------------------------
+Current convergence status: [ True  True  True  True False False]
