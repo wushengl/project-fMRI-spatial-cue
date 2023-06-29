@@ -735,7 +735,7 @@ def present_trial(exp):
 
                 s = exp.stim.audiodev.open_array(exp.stim.out,exp.stim.fs)
 
-                # TODO: check if this is correct
+                # TODO: check if this is working correctly
                 mix_mat = np.zeros((2, 2))
                 if exp.stim.probe_ild > 0:
                     mix_mat[0, 0] = psylab.signal.atten(1, exp.stim.probe_ild)
