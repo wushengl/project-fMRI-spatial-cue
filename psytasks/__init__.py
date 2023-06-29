@@ -226,7 +226,7 @@ def get_comfortable_level(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_sta
     return probe_atten
 
 
-def get_centered_image(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_start=1, key_l=curses.KEY_LEFT, key_r=curses.KEY_RIGHT):
+def get_centered_image(sig, audio_dev, adj_step, fs=44100, tone_dur_s=1, tone_level_start=1, key_l=curses.KEY_LEFT, key_r=curses.KEY_RIGHT):
     """A task to allow a participant to center a stereo image in their head (using ILDs)
 
         Parameters
@@ -302,11 +302,11 @@ def get_centered_image(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_start=
             elif ord(ret) == key_l:                               # Left
                 response = True
                 interface.update_Status_Right('Left', redraw=True)
-                probe_ild -= 1
+                probe_ild -= adj_step
             elif ord(ret) == key_r:                               # Right
                 response = True
                 interface.update_Status_Right('Right', redraw=True)
-                probe_ild += 1
+                probe_ild += adj_step
 
             mix_mat = np.zeros((2,2))
             if probe_ild > 0:

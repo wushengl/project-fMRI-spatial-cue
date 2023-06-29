@@ -71,3 +71,17 @@ debug,ild-fmri-2,ILD10,True,True,1,        10.45,,10:23:53.849454
 debug,ild-fmri-2,ILD10,False,False,3,        10.2,12.75,17.099999999999998,,10:24:02.028908
 debug,ild-fmri-2,ILD10,True,False,2,        3.55,8.149999999999999,,10:24:07.749436
 debug,ild-fmri-2,ITD500,False,False,1,        12.75,,10:24:13.801716
+
+
+debug,ild-fmri-2,ITD500,False,False,1,        3.55,
+
+debug,ild-fmri-2,ILD10,True,False,2,        12.75,19.65,
+
+debug,ild-fmri-2,ITD500,True,True,3,        3.3,10.45,19.4,
+
+debug,ild-fmri-2,ILD10,False,False,2,        3.55,10.2,14.551,16:55:14.779122
+debug,ild-fmri-2,ITD500,False,False,3,        3.55,12.75,14.799999999999999,
+
+
+
+debug,ild-fmri-2,ITD500,False,True,3,        3.3,5.6,15.049999999999999,

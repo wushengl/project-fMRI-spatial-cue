@@ -49,6 +49,7 @@ import subprocess
 import glob
 import logging
 import pdb
+import pandas as pd
 
 def setup(exp):
 
@@ -103,6 +104,7 @@ def setup(exp):
         exp.subjID = exp.term.get_input(parent=None, title = "Gustav!", prompt = 'Enter a Subject ID: ')
 
     ret = exp.term.get_input(parent=None, title = "Gustav!", prompt = 'Session (1 | 2; 0 to choose tasks): ')
+    exp.sesNum = ret
     if ret == '1':
         run_mode = 'none'
         match_mode = 'y'
@@ -122,11 +124,29 @@ def setup(exp):
         if True:
             tonotopy_mode = exp.term.get_input(parent=None, title = "Gustav!", prompt = 'Run tonotopy task (y | n): ')
 
-    '''
-    do_loudness_match = True
-    do_adjust_level = True
-    do_run_tonotopy = True
-    '''
+    ret = exp.term.get_input(parent=None, title="Gustav!", prompt='Run volume adjust and get centered image? (y | n): ')
+    if ret == 'y':
+        do_get_comfortable_level = True
+        do_get_centered_image = True
+    elif ret == 'n':
+        do_get_comfortable_level = False
+        do_get_centered_image = False
+
+        # load existing files
+        try:
+            soundtest_file_path = "./logs/soundtest_sub-" + exp.subjID + "_ses-0" + exp.sesNum + ".csv"
+            df = pd.read_csv(soundtest_file_path)
+        except:
+            ret = exp.term.get_input(parent=None, title="Gustav!", prompt='Soundtest data not exist for this session, use data from ses-01? (y | n): ')
+            if ret == 'y':
+                soundtest_file_path = "./logs/soundtest_sub-" + exp.subjID + "_ses-01.csv"
+                df = pd.read_csv(soundtest_file_path)
+            else:
+                raise ValueError("No soundtest data saved for this session!")
+
+        exp.stim.ref_rms = df['ref_rms'][0]
+        exp.stim.probe_ild = df['probe_ild'][0]
+
 
 
     # -------------------------- fixed experiment setting --------------------------
@@ -165,9 +185,32 @@ def setup(exp):
 
 
     psytasks.test_keyboard_input(keys=[ord('b'), ord('y')], labels=["Blue", "Yellow"])
-    ret = psytasks.get_comfortable_level(2016, out_id, fs=44100, tone_dur_s=1, tone_level_start=1, atten_start=50, ear='both', key_up=ord('y'), key_dn=ord('b'))
-    exp.stim.ref_rms = psylab.signal.atten(.707, float(ret))
-    
+
+    soundtest_dict = {}
+    if do_get_comfortable_level:
+        ret = psytasks.get_comfortable_level(2016, out_id, fs=44100, tone_dur_s=1, tone_level_start=1, atten_start=50, ear='both', key_up=ord('y'), key_dn=ord('b'))
+        exp.stim.ref_rms = psylab.signal.atten(.707, float(ret))
+        soundtest_dict['ref_rms'] = [exp.stim.ref_rms]
+    if do_get_centered_image:
+        #sig = ""  # TODO: should we use pure tone or complex tone or maybe syllables? since tones are not that good for spatialiation?
+        exp.stim.probe_ild = psytasks.get_centered_image(2016, out_id, tone_level_start=exp.stim.ref_rms, adj_step=0.5, key_l=ord('y'), key_r=ord('b'))
+        soundtest_dict['probe_ild'] = [exp.stim.probe_ild]
+
+    if (do_get_comfortable_level and do_get_centered_image):
+        print(soundtest_dict)
+        soundtest_df = pd.DataFrame(data=soundtest_dict)
+
+        soundtest_file_path = "./logs/soundtest_sub-" + exp.subjID + "_ses-0" + exp.sesNum + ".csv"
+        soundtest_df.to_csv(soundtest_file_path)
+
+        ''' usage of prob_ild: 
+        if probe_ild > 0:
+            mix_mat[0,0] = psylab.signal.atten(1, probe_ild)
+            mix_mat[1,1] = 1
+        else:
+            mix_mat[1,1] = psylab.signal.atten(1, -probe_ild)
+            mix_mat[0,0] = 1
+        '''
 
     """EXPERIMENT VARIABLES
         There are 2 kinds of variables: factorial and covariable
@@ -311,8 +354,8 @@ def setup(exp):
         do_run_tonotopy = False
 
     do_adjust_level = True
-    loudness_match_times = 2
-    diff_thre = 25
+    loudness_match_times = 2  # baseline matching times, this means start adaptive matching after getting 2 matches
+    diff_thre = 25            # this is the threshold to throw away a match, common values are +- 10dB for largest diff
     tonotopy_f_pool = [300, 566, 1068, 2016, 3805]
     tonotopy_matching_pool = [300, 566, 1068, 3805]
     complextone_matching_pool = [[low_pitch_cf_1, low_pitch_cf_2], [high_pitch_cf_1, high_pitch_cf_2]]
@@ -672,11 +715,11 @@ def present_trial(exp):
             #time.sleep(1)
 
             if exp.stim.direction:
-                #exp.interface.update_Prompt('<- Listen Left', show=True, redraw=True)
-                exp.interface.update_Notify_Left('Listen Left', show=True, redraw=True)
+                exp.interface.update_Prompt('<- Listen Left', show=True, redraw=True)
+                #exp.interface.update_Notify_Left('Listen Left', show=True, redraw=True)
             else:
-                #exp.interface.update_Prompt('Listen Right ->', show=True, redraw=True)
-                exp.interface.update_Notify_Right('Listen Right', show=True, redraw=True)
+                exp.interface.update_Prompt('Listen Right ->', show=True, redraw=True)
+                #exp.interface.update_Notify_Right('Listen Right', show=True, redraw=True)
             time.sleep(2)
 
             exp.interface.update_Prompt("   ██   \n   ██   \n████████\n   ██   \n   ██   ", show=True, redraw=True)
@@ -691,6 +734,16 @@ def present_trial(exp):
                 target_times_end = target_times.copy() + exp.stim.rt_good_delay
 
                 s = exp.stim.audiodev.open_array(exp.stim.out,exp.stim.fs)
+
+                # TODO: check if this is correct
+                mix_mat = np.zeros((2, 2))
+                if exp.stim.probe_ild > 0:
+                    mix_mat[0, 0] = psylab.signal.atten(1, exp.stim.probe_ild)
+                    mix_mat[1, 1] = 1
+                else:
+                    mix_mat[1, 1] = psylab.signal.atten(1, -exp.stim.probe_ild)
+                    mix_mat[0, 0] = 1
+                s.mix_mat = mix_mat
 
                 dur_ms = len(exp.stim.out) / exp.stim.fs * 1000
                 this_wait_ms = 500

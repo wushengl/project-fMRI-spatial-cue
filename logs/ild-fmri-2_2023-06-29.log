@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+
+# A log file for Gustav
+
+
+Experiment ild-fmri-2 running subject debug started at 16:35:24 on 2023-06-29
+
+  Block 1 of 80 started at 16:35:28; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+
+Experiment ild-fmri-2 running subject debug started at 16:45:45 on 2023-06-29
+
+  Block 1 of 80 started at 16:45:47; Condition: 7 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = True ; noise = no
+
+Experiment ild-fmri-2 running subject debug started at 16:54:16 on 2023-06-29
+
+  Block 1 of 80 started at 16:54:18; Condition: 1 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = True ; noise = no
+
+Experiment ild-fmri-2 running subject debug started at 16:55:12 on 2023-06-29
+
+  Block 1 of 80 started at 16:55:13; Condition: 8 ; cue = ILD10 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+  Block 1 of 80 ended at 16:55:45; Target number: 2; Responses: 14.551; Valid responses: 
+
+  Block 2 of 80 started at 16:55:45; Condition: 4 ; cue = ITD500 ; isTargetLeft = False ; isLowLeft = False ; noise = no
+
+Experiment ild-fmri-2 running subject debug started at 16:58:09 on 2023-06-29
+
+  Block 1 of 80 started at 16:58:11; Condition: 2 ; cue = ITD500 ; isTargetLeft = True ; isLowLeft = False ; noise = no
