@@ -283,6 +283,16 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             target_times_end = target_times.copy() + exp.stim.rt_good_delay
 
             s = exp.stim.audiodev.open_array(trial, exp.stim.fs)
+
+            mix_mat = np.zeros((2, 2)) # TODO: check if this is correct 
+            if exp.stim.probe_ild > 0:
+                mix_mat[0, 0] = psylab.signal.atten(1, exp.stim.probe_ild)
+                mix_mat[1, 1] = 1
+            else:
+                mix_mat[1, 1] = psylab.signal.atten(1, -exp.stim.probe_ild)
+                mix_mat[0, 0] = 1
+            s.mix_mat = mix_mat
+
             dur_ms = len(trial) / exp.stim.fs * 1000
             this_wait_ms = 500
             s.play()
