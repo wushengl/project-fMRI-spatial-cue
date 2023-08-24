@@ -98,6 +98,8 @@ def setup(exp):
     no comments
     '''
 
+    # TODO: add eyetracker stuff here 
+
     # -------------------------- get experiment info from keyboard --------------------------
 
     if not exp.subjID:
