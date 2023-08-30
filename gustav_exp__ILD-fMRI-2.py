@@ -51,11 +51,60 @@ import logging
 import pdb
 import pandas as pd
 
+import pylink
+from screeninfo import get_monitors
+
 def setup(exp):
+    
+
+    # ----------------------- Eye tracker settings --------------------------
+    global do_add_eyetracker, el_tracker, results_folder, edf_file_name, LEFT_EYE, RIGHT_EYE, BINOCULAR
+    do_add_eyetracker = True
+    do_use_extend_monitor = True
+
+    if do_add_eyetracker:
+
+        # set up eye tracker display on extend screen 
+
+        if do_use_extend_monitor:
+            os.environ['SDL_VIDEO_FULLSCREEN_HEAD'] = '1'
+
+            if len(get_monitors()) >1:
+                extended_monitor = get_monitors()[1]
+            else:
+                print("No extended monitor founded!")
+
+        # some global constants
+
+        LEFT_EYE = 0
+        RIGHT_EYE = 1
+        BINOCULAR = 2
+
+        # show some task instructions
+
+        inst = "Press ENTER to show the camera image, C to calibrate, V to \n" + \
+                "validate the tracker."
+
+        #if sys.version_info > (3,0):
+        #    ok = input("\nPress 'Y' to continue, 'N' to quit: ")
+        #else: 
+        #    ok = raw_input("\nPress 'Y' to continue, 'N' to quit: ")
+        #if ok not in ['Y', 'y']:
+        #    sys.exit()
+
+        # set the screen size (0 for current defualt, which is primary screen size)
+        SCN_WIDTH = extended_monitor.width #0
+        SCN_HEIGHT = extended_monitor.height #0
+
+        # set up a folder to store the data files
+        results_folder = 'results'
+        if not os.path.exists(results_folder):
+            os.makedirs(results_folder)
+
 
     # ----------------------- Machine-specific settings --------------------------
 
-    machine = psylab.config.local_settings(conf_file='config/psylab.conf')
+    machine = psylab.config.local_settings(conf_file='config/psylab_booth3.conf')
     workdir = machine.get_path('workdir')
     dev_name = machine.get_str('audiodev_name')
     dev_ch = machine.get_int('audiodev_ch')
@@ -64,7 +113,7 @@ def setup(exp):
     for i,di in enumerate(devs):
         name = psylab.string.as_str(di.name)
         ch = di.maxOutputChannels
-        if name.startswith(dev_name) and ch == 8:
+        if name.startswith(dev_name) and ch == 2: #8
             dev_id = i,i,ch
             out_id = i
     if dev_id:
@@ -98,7 +147,7 @@ def setup(exp):
     no comments
     '''
 
-    # TODO: add eyetracker stuff here 
+    
 
     # -------------------------- get experiment info from keyboard --------------------------
 
@@ -149,6 +198,93 @@ def setup(exp):
         exp.stim.ref_rms = df['ref_rms'][0]
         exp.stim.probe_ild = df['probe_ild'][0]
 
+
+    # -------------------------- eye tracker stuff --------------------------
+
+    if do_add_eyetracker:
+
+        # Step 1: initialize a tracker object with a Host IP address
+        try:
+            el_tracker = pylink.EyeLink("100.1.1.1")
+        except RuntimeError as error:
+            print('ERROR:', error)
+            sys.exit()
+
+        # Step 2: Initializes the graphics (for calibration)
+        pylink.openGraphics((SCN_WIDTH, SCN_HEIGHT), 32)
+
+        # Step 3: open EDF file on Host PC
+        edf_file_name = exp.subjID + time.strftime("%H%M") + ".EDF" # "TEST.EDF"
+        el_tracker.openDataFile(edf_file_name)
+
+        # add a preamble text (data file header)
+        preamble_text = 'RECORDED BY %s' % os.path.basename(__file__)
+        el_tracker.sendCommand("add_file_preamble_text '%s'" % preamble_text)
+
+        # Step 4: setting up tracking, recording and calibration options
+        pylink.flushGetkeyQueue()
+        el_tracker.setOfflineMode() 
+
+        # send resolution of the screen to tracker
+        pix_msg = "screen_pixel_coords 0 0 %d %d" % (SCN_WIDTH - 1, SCN_HEIGHT - 1)
+        el_tracker.sendCommand(pix_msg)
+
+        # send resolution of the screen to data viewer
+        dv_msg = "DISPLAY_COORDS  0 0 %d %d" % (SCN_WIDTH - 1, SCN_HEIGHT - 1)
+        el_tracker.sendMessage(dv_msg)
+
+        # Get the software version
+        vstr = el_tracker.getTrackerVersionString()
+        eyelink_ver = int(vstr.split()[-1].split('.')[0])
+        # print out some version info in the shell
+        print('Running experiment on %s, version %d' % (vstr, eyelink_ver))
+
+        # Select what data to save in the EDF file, for a detailed discussion
+        # of the data flags, see the EyeLink User Manual, "Setting File Contents"
+        file_event_flags = 'LEFT,RIGHT,FIXATION,SACCADE,BLINK,MESSAGE,BUTTON,INPUT'
+        file_sample_flags = 'LEFT,RIGHT,GAZE,HREF,RAW,AREA,HTARGET,GAZERES,BUTTON,STATUS,INPUT'
+        if eyelink_ver < 4:
+            file_sample_flags = 'LEFT,RIGHT,GAZE,HREF,RAW,AREA,GAZERES,BUTTON,STATUS,INPUT'
+        el_tracker.sendCommand("file_event_filter = %s" % file_event_flags)
+        el_tracker.sendCommand("file_sample_data = %s" % file_sample_flags)
+
+        # Select what data is available over the link (for online data accessing)
+        link_event_flags = 'LEFT,RIGHT,FIXATION,SACCADE,BLINK,BUTTON,FIXUPDATE,INPUT'
+        link_sample_flags = 'LEFT,RIGHT,GAZE,GAZERES,AREA,HTARGET,STATUS,INPUT'
+        if eyelink_ver < 4:
+            link_sample_flags = 'LEFT,RIGHT,GAZE,GAZERES,AREA,STATUS,INPUT'
+        el_tracker.sendCommand("link_event_filter = %s" % link_event_flags)
+        el_tracker.sendCommand("link_sample_data = %s" % link_sample_flags)
+
+        # Set the calibration target and background color
+        pylink.setCalibrationColors((0, 0, 0), (128, 128, 128))
+
+        # select best size for calibration target
+        pylink.setTargetSize(int(SCN_WIDTH/70.0), int(SCN_WIDTH/300.))
+
+        # Set the calibraiton and drift correction sound
+        pylink.setCalibrationSounds("", "", "")
+        pylink.setDriftCorrectSounds("", "", "")
+
+        # Step 5: Do the tracker setup at the beginning of the experiment.
+        el_tracker.doTrackerSetup()
+
+        # TODO: the following code would raise error saying "eyelink not initiated" wherever I put it
+        # determine which eye(s) is/are available
+        #el_tracker = pylink.getEYELINK()
+        #eye_used = el_tracker.eyeAvailable()
+        #if eye_used == RIGHT_EYE:
+        #    el_tracker.sendMessage("EYE_USED 1 RIGHT")
+        #elif eye_used == LEFT_EYE or eye_used == BINOCULAR:
+        #    el_tracker.sendMessage("EYE_USED 0 LEFT")
+        #    eye_used = LEFT_EYE
+        #else:
+        #    print("Error in getting the eye information!")
+        #    return pylink.TRIAL_ERROR
+
+
+        # TODO: I might need to close the graphics to allow our task to show on screen 
+        pylink.closeGraphics()
 
 
     # -------------------------- fixed experiment setting --------------------------
@@ -552,6 +688,7 @@ def setup(exp):
             mri_tones.run_tonotopy_task(this_pool, dev_id[0], exp, do_adjust_level,matched_levels_ave[5:], cycle_per_run=cycle_per_run_ctone,round_idx=(i+j+1))
 
 
+
     # -------------------- create minisequence ------------------------
 
     if do_adjust_level:
@@ -691,6 +828,24 @@ def pre_trial(exp):
 
         exp.stim.out = test_trial
 
+        if do_add_eyetracker:
+            el_tracker = pylink.getEYELINK()
+
+            # show some info about the current trial on the Host PC screen
+            pars_to_show = ('main', 1, 99) # TODO: add current trial/trial number from gustav exp variable
+            status_message = 'Link event example, %s, Trial %d/%d' % pars_to_show
+            el_tracker.sendCommand("record_status_message '%s'" % status_message)
+
+            # log a TRIALID message to mark trial start, before starting to record.
+            # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
+            el_tracker.sendMessage("TRIALID %d" % 1)
+
+            # clear tracker display to black
+            el_tracker.sendCommand("clear_screen 0")
+
+            # switch tracker to idle mode
+            el_tracker.setOfflineMode()
+
     except Exception as e:
         exp.interface.destroy()
         raise e
@@ -707,6 +862,9 @@ def present_trial(exp):
         if ret in ['t', exp.quitKey]:
             trial_start_time = datetime.now()
             wait = False
+    if do_add_eyetracker:
+        # log a message to mark the time at which the initial display came on
+        el_tracker.sendMessage("SYNCTIME")
 
     if ret == exp.quitKey:
         exp.run.gustav_is_go = False
@@ -747,11 +905,15 @@ def present_trial(exp):
                     mix_mat[0, 0] = 1
                 s.mix_mat = mix_mat
 
+                if do_add_eyetracker:
+                    # log a message to mark the time at which the initial display came on
+                    el_tracker.sendMessage("SYNCTIME")
+
                 dur_ms = len(exp.stim.out) / exp.stim.fs * 1000
                 this_wait_ms = 500
                 this_elapsed_ms = 0
                 resp_percent = []
-                s.play()
+                #s.play()
 
                 start_ms = exp.interface.timestamp_ms()
                 while s.is_playing:
@@ -831,6 +993,13 @@ def post_trial(exp):
         time.sleep(5)
         exp.interface.update_Prompt("", show=False, redraw=True)
 
+    if do_add_eyetracker:
+        el_active = pylink.getEYELINK()
+        pylink.endRealTimeMode()
+        el_active.stopRecording()
+        el_active.sendMessage("!V TRIAL_VAR trial %d" % 1)
+
+
 def post_block(exp):
     pass
 #    exp.interface.updateInfo_BlockScore(f"Prev Condition # {exp.run.condition+1}\nScore: {exp.user.block_kwc:.1f} / {exp.user.block_kwp:.1f} ({exp.user.block_pc} %%)")
@@ -839,6 +1008,24 @@ def post_exp(exp):
 #    pass
 #    exp.interface.dialog.isPlaying.setText("Finished")
 #    exp.interface.showPlaying(True)
+
+    if el_tracker is not None:
+        el_tracker.setOfflineMode()
+
+        # Close the edf data file on the Host
+        el_tracker.closeDataFile()
+
+        # transfer the edf file to the Display PC and rename it
+        local_file_name = os.path.join(results_folder, edf_file_name)
+
+        try:
+            el_tracker.receiveDataFile(edf_file_name, local_file_name)
+        except RuntimeError as error:
+            print('ERROR:', error)
+
+        # Step 8: close EyeLink connection and quit display-side graphics
+        el_tracker.close()
+
     exp.interface.destroy()
 
 if __name__ == '__main__':

@@ -20,6 +20,8 @@ import psylab
 from gustav.forms import rt as theForm
 from datetime import datetime
 
+import pylink
+
 ###########################################################
 # run_loudness_match and run_tonotopy
 ###########################################################
@@ -231,6 +233,28 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
     for c in range(cycle_per_run):
 
+        if do_add_eyetracker:
+            el_tracker = pylink.getEYELINK()
+
+            if(not el_tracker.isConnected() or el_tracker.breakPressed()):
+                break
+
+            # show some info about the current trial on the Host PC screen
+            pars_to_show = ('tonotopy', c+1, cycle_per_run)
+            status_message = 'Link event example, %s, Trial %d/%d' % pars_to_show
+            el_tracker.sendCommand("record_status_message '%s'" % status_message)
+
+            # log a TRIALID message to mark trial start, before starting to record.
+            # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
+            el_tracker.sendMessage("TRIALID %d" % c)
+
+            # clear tracker display to black
+            el_tracker.sendCommand("clear_screen 0")
+
+            # switch tracker to idle mode
+            el_tracker.setOfflineMode()
+
+
         interface.update_Prompt("Now starting cycle " + str(c + 1) + "...", show=True,redraw=True)
         #ret = interface.get_resp()
         time.sleep(2)
@@ -271,12 +295,27 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                     trial_start_time = datetime.now()
                     wait = False
 
+            if do_add_eyetracker:
+                # start recording samples and events; save them to the EDF file and
+                # make them available over the link
+                error = el_tracker.startRecording(1, 1, 1, 1)
+                if error:
+                    return error
+
+                # begin the real-time mode
+                pylink.beginRealTimeMode(100)
+
             responses = []
             valid_responses = []
             valid_response_count = 0
 
+            if do_add_eyetracker:
+                # log a message to mark the time at which the initial display came on
+                el_tracker.sendMessage("SYNCTIME")
+
             interface.update_Prompt("Hit a key when you hear a repeating melody",show=True, redraw=True)
             time.sleep(0.8)
+
             interface.update_Prompt("   ██   \n   ██   \n████████\n   ██   \n   ██   ", show=True, redraw=True)
 
             target_times = trial_info['target_time']
@@ -293,9 +332,13 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                 mix_mat[0, 0] = 1
             s.mix_mat = mix_mat
 
+            if do_add_eyetracker:
+                # log a message to mark the time at which the initial display came on
+                el_tracker.sendMessage("SYNCTIME")
+
             dur_ms = len(trial) / exp.stim.fs * 1000
             this_wait_ms = 500
-            s.play()
+            # s.play()
 
             start_ms = interface.timestamp_ms()
             while s.is_playing:
@@ -325,7 +368,15 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             interface.update_Prompt("Waiting...", show=True, redraw=True)
             time.sleep(0.8)
 
+            if do_add_eyetracker:
+                el_active = pylink.getEYELINK()
+                pylink.endRealTimeMode()
+                el_active.stopRecording()
+                el_active.sendMessage("!V TRIAL_VAR trial %d" % c)
+
     interface.destroy()
+
+    
 
     # no return for this task, data saved in file
 

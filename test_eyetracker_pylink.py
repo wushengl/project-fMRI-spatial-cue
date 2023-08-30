@@ -92,7 +92,7 @@ if do_use_extend_monitor:
         print("No extended monitor founded!")
 
 # so resource stimuli like images and sounds can be located with relative paths
-script_path = os.path.dirname(sys.argv[0])
+script_path = os.path.dirname(sys.argv[0]) # argv[0] is the 0th input in command line, which is the script name 
 if len(script_path) != 0:
     os.chdir(script_path)
 
