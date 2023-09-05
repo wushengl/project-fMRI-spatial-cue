@@ -369,7 +369,7 @@ else:
 
 # Step 2: Initializes the graphics (for calibration & stimulus presentation)
 # INSERT THIRD PARTY GRAPHICS (e.g., Pygame) INITIALIZATION HERE IF NEEDED
-pylink.openGraphics((SCN_WIDTH, SCN_HEIGHT), 32)
+pylink.openGraphics((SCN_WIDTH, SCN_HEIGHT), 32) # 32 bits
 
 #query the current display info. I we started with 0 for SCN_WIDTH and SCN_HEIGHT,
 #we will have updated values. Otherwise, we should have same values. unless
