@@ -832,7 +832,7 @@ def pre_trial(exp):
             el_tracker = pylink.getEYELINK()
 
             # show some info about the current trial on the Host PC screen
-            pars_to_show = ('main', 1, 99) # TODO: add current trial/trial number from gustav exp variable
+            pars_to_show = ('main', exp.run.trials_exp, exp.var.constant['total_trial_num']) # TODO: check current trial number
             status_message = 'Link event example, %s, Trial %d/%d' % pars_to_show
             el_tracker.sendCommand("record_status_message '%s'" % status_message)
 
