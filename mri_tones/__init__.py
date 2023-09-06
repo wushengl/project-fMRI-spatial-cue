@@ -231,28 +231,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
     # -------------------- start the experiment--------------------------
 
-    for c in range(cycle_per_run):
-
-        if do_add_eyetracker:
-            el_tracker = pylink.getEYELINK()
-
-            if(not el_tracker.isConnected() or el_tracker.breakPressed()):
-                break
-
-            # show some info about the current trial on the Host PC screen
-            pars_to_show = ('tonotopy', c+1, cycle_per_run)
-            status_message = 'Link event example, %s, Trial %d/%d' % pars_to_show
-            el_tracker.sendCommand("record_status_message '%s'" % status_message)
-
-            # log a TRIALID message to mark trial start, before starting to record.
-            # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
-            el_tracker.sendMessage("TRIALID %d" % c)
-
-            # clear tracker display to black
-            el_tracker.sendCommand("clear_screen 0")
-
-            # switch tracker to idle mode
-            el_tracker.setOfflineMode()
+    for c in range(cycle_per_run): # e.g. 5 frequencies/cycle, 8 cycles/run, 4 runs
 
 
         interface.update_Prompt("Now starting cycle " + str(c + 1) + "...", show=True,redraw=True)
@@ -261,7 +240,35 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
         seqs_keys = all_seqs.keys()
 
-        for cf_key in seqs_keys:
+        for i_f, cf_key in enumerate(seqs_keys):
+
+            if do_add_eyetracker:
+
+                # TODO: currently saving tonotopy to the same file as main task, not sure if this is easy for later analysis
+
+                el_tracker = pylink.getEYELINK()
+
+                if(not el_tracker.isConnected() or el_tracker.breakPressed()):
+                    raise RuntimeError("Eye tracker is not connected!")
+
+                # show some info about the current trial on the Host PC screen
+                pars_to_show = ('tonotopy', i_f, len(seqs_keys), c, cycle_per_run, round_idx+1)
+                status_message = 'Link event example, %s, Trial %d/%d, Cycle %d/%d, Round number %d' % pars_to_show
+                el_tracker.sendCommand("record_status_message '%s'" % status_message)
+
+                # log a TRIALID message to mark trial start, before starting to record.
+                # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
+                el_tracker.sendMessage("TRIALID %d" % i_f)
+
+                # clear tracker display to black
+                el_tracker.sendCommand("clear_screen 0")
+
+                # switch tracker to idle mode
+                el_tracker.setOfflineMode()
+
+                error = el_tracker.startRecording(1, 1, 1, 1)
+                if error:
+                    return error
 
             if 'c' in cf_key:
                 cf = int(cf_key[:-1])
@@ -295,15 +302,6 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                     trial_start_time = datetime.now()
                     wait = False
 
-            if do_add_eyetracker:
-                # start recording samples and events; save them to the EDF file and
-                # make them available over the link
-                error = el_tracker.startRecording(1, 1, 1, 1)
-                if error:
-                    return error
-
-                # begin the real-time mode
-                pylink.beginRealTimeMode(100)
 
             responses = []
             valid_responses = []
@@ -335,6 +333,17 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             if do_add_eyetracker:
                 # log a message to mark the time at which the initial display came on
                 el_tracker.sendMessage("SYNCTIME")
+
+                # determine which eye(s) is/are available
+                eye_used = el_tracker.eyeAvailable()
+                if eye_used == RIGHT_EYE:
+                    el_tracker.sendMessage("EYE_USED 1 RIGHT")
+                elif eye_used == LEFT_EYE or eye_used == BINOCULAR:
+                    el_tracker.sendMessage("EYE_USED 0 LEFT")
+                    eye_used = LEFT_EYE
+                else:
+                    print("Error in getting the eye information!")
+                    return pylink.TRIAL_ERROR
 
             dur_ms = len(trial) / exp.stim.fs * 1000
             this_wait_ms = 500
@@ -370,9 +379,18 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
             if do_add_eyetracker:
                 el_active = pylink.getEYELINK()
-                pylink.endRealTimeMode()
                 el_active.stopRecording()
-                el_active.sendMessage("!V TRIAL_VAR trial %d" % c)
+
+                el_active.sendMessage("!V TRIAL_VAR trial %d" % i_f)
+                el_active.sendMessage("!V TRIAL_VAR cf %d" % cf)
+                el_active.sendMessage("!V TRIAL_VAR trial_per_cycle %d" % len(cf_pool))
+                el_active.sendMessage("!V TRIAL_VAR cycle %d" % c)
+                el_active.sendMessage("!V TRIAL_VAR cycle_per_run %d" % cycle_per_run)
+                el_active.sendMessage("!V TRIAL_VAR run_number %d" % round_idx+1)
+
+                ret_value = el_active.getRecordingStatus()
+                if (ret_value == pylink.TRIAL_OK):
+                    el_active.sendMessage("TRIAL OK")
 
     interface.destroy()
 

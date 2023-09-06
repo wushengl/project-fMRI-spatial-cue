@@ -83,7 +83,7 @@ def setup(exp):
         # show some task instructions
 
         inst = "Press ENTER to show the camera image, C to calibrate, V to \n" + \
-                "validate the tracker."
+                "validate the tracker. Press Esc to quit eyetracker GUI."
 
         #if sys.version_info > (3,0):
         #    ok = input("\nPress 'Y' to continue, 'N' to quit: ")
@@ -269,21 +269,6 @@ def setup(exp):
         # Step 5: Do the tracker setup at the beginning of the experiment.
         el_tracker.doTrackerSetup()
 
-        # TODO: the following code would raise error saying "eyelink not initiated" wherever I put it
-        # determine which eye(s) is/are available
-        #el_tracker = pylink.getEYELINK()
-        #eye_used = el_tracker.eyeAvailable()
-        #if eye_used == RIGHT_EYE:
-        #    el_tracker.sendMessage("EYE_USED 1 RIGHT")
-        #elif eye_used == LEFT_EYE or eye_used == BINOCULAR:
-        #    el_tracker.sendMessage("EYE_USED 0 LEFT")
-        #    eye_used = LEFT_EYE
-        #else:
-        #    print("Error in getting the eye information!")
-        #    return pylink.TRIAL_ERROR
-
-
-        # TODO: I might need to close the graphics to allow our task to show on screen 
         pylink.closeGraphics()
 
 
@@ -831,6 +816,9 @@ def pre_trial(exp):
         if do_add_eyetracker:
             el_tracker = pylink.getEYELINK()
 
+            if(not el_tracker.isConnected() or el_tracker.breakPressed()):
+                raise RuntimeError("Eye tracker is not connected!")
+
             # show some info about the current trial on the Host PC screen
             pars_to_show = ('main', exp.run.trials_exp, exp.var.constant['total_trial_num']) # TODO: check current trial number
             status_message = 'Link event example, %s, Trial %d/%d' % pars_to_show
@@ -838,13 +826,17 @@ def pre_trial(exp):
 
             # log a TRIALID message to mark trial start, before starting to record.
             # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
-            el_tracker.sendMessage("TRIALID %d" % 1)
+            el_tracker.sendMessage("TRIALID %d" % exp.run.trials_exp)
 
             # clear tracker display to black
             el_tracker.sendCommand("clear_screen 0")
 
             # switch tracker to idle mode
             el_tracker.setOfflineMode()
+
+            error = el_tracker.startRecording(1, 1, 1, 1)
+            if error:
+                return error
 
     except Exception as e:
         exp.interface.destroy()
@@ -909,6 +901,17 @@ def present_trial(exp):
                     # log a message to mark the time at which the initial display came on
                     el_tracker.sendMessage("SYNCTIME")
 
+                    # determine which eye(s) is/are available
+                    eye_used = el_tracker.eyeAvailable()
+                    if eye_used == RIGHT_EYE:
+                        el_tracker.sendMessage("EYE_USED 1 RIGHT")
+                    elif eye_used == LEFT_EYE or eye_used == BINOCULAR:
+                        el_tracker.sendMessage("EYE_USED 0 LEFT")
+                        eye_used = LEFT_EYE
+                    else:
+                        print("Error in getting the eye information!")
+                        return pylink.TRIAL_ERROR
+
                 dur_ms = len(exp.stim.out) / exp.stim.fs * 1000
                 this_wait_ms = 500
                 this_elapsed_ms = 0
@@ -917,6 +920,14 @@ def present_trial(exp):
 
                 start_ms = exp.interface.timestamp_ms()
                 while s.is_playing:
+
+                    if do_add_eyetracker:
+                        error = el_tracker.isRecording()
+                        if error != pylink.TRIAL_OK:
+                            el_active = pylink.getEYELINK()
+                            el_active.stopRecording()
+                            return error
+
                     ret = exp.interface.get_resp(timeout=this_wait_ms/1000)
                     this_current_ms = exp.interface.timestamp_ms()
                     this_elapsed_ms = this_current_ms - start_ms
@@ -994,10 +1005,19 @@ def post_trial(exp):
         exp.interface.update_Prompt("", show=False, redraw=True)
 
     if do_add_eyetracker:
+
         el_active = pylink.getEYELINK()
-        pylink.endRealTimeMode()
         el_active.stopRecording()
-        el_active.sendMessage("!V TRIAL_VAR trial %d" % 1)
+
+        # record the trial variable in a message recognized by Data Viewer
+        el_active.sendMessage("!V TRIAL_VAR trial %d" % exp.run.trials_exp)
+        # TODO: if want to add more variables, e.g. spaCond, could add here as "!V TRIAL_VAR spaCond %s" % spaCond
+
+        ret_value = el_active.getRecordingStatus()
+        if (ret_value == pylink.TRIAL_OK):
+                el_tracker.sendMessage("TRIAL OK")
+
+        
 
 
 def post_block(exp):
@@ -1009,22 +1029,22 @@ def post_exp(exp):
 #    exp.interface.dialog.isPlaying.setText("Finished")
 #    exp.interface.showPlaying(True)
 
-    if el_tracker is not None:
-        el_tracker.setOfflineMode()
+    if do_add_eyetracker:
 
+        el_active = pylink.getEYELINK()
+        el_active.setOfflineMode()
+        
         # Close the edf data file on the Host
-        el_tracker.closeDataFile()
+        el_active.closeDataFile()
 
-        # transfer the edf file to the Display PC and rename it
         local_file_name = os.path.join(results_folder, edf_file_name)
-
         try:
-            el_tracker.receiveDataFile(edf_file_name, local_file_name)
+            el_active.receiveDataFile(edf_file_name, local_file_name)
         except RuntimeError as error:
             print('ERROR:', error)
 
-        # Step 8: close EyeLink connection and quit display-side graphics
-        el_tracker.close()
+        # close EyeLink connection and quit display-side graphics
+        el_active.close()
 
     exp.interface.destroy()
 
