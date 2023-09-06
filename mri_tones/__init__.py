@@ -263,7 +263,9 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
                 # log a TRIALID message to mark trial start, before starting to record.
                 # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
-                el_tracker.sendMessage("TRIALID %d" % i_f)
+                print("exp.user.el_trial = %d" % exp.user.el_trial)
+                el_tracker.sendMessage("TRIALID %d" % exp.user.el_trial)
+                exp.user.el_trial += 1
 
                 # clear tracker display to black
                 el_tracker.sendCommand("clear_screen 0")
@@ -352,8 +354,8 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
             dur_ms = len(trial) / exp.stim.fs * 1000
             this_wait_ms = 500
-            # s.play()
-            time.sleep(5)
+            s.play()
+            #time.sleep(1)
 
             start_ms = interface.timestamp_ms()
             while s.is_playing:
@@ -387,18 +389,22 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                 el_active = pylink.getEYELINK()
                 el_active.stopRecording()
 
+                el_active.sendMessage("!V TRIAL_VAR el_trial %d" % exp.user.el_trial)
+                el_active.sendMessage("!V TRIAL_VAR task tonotopy") 
                 el_active.sendMessage("!V TRIAL_VAR trial %d" % i_f)
                 el_active.sendMessage("!V TRIAL_VAR cf %d" % cf)
                 el_active.sendMessage("!V TRIAL_VAR trial_per_cycle %d" % len(cf_pool))
                 el_active.sendMessage("!V TRIAL_VAR cycle %d" % c)
                 el_active.sendMessage("!V TRIAL_VAR cycle_per_run %d" % cycle_per_run)
-                el_active.sendMessage("!V TRIAL_VAR run_number %d" % round_idx+1)
+                el_active.sendMessage("!V TRIAL_VAR run_number %d" % (round_idx+1))
+
+                el_active.sendMessage('TRIAL_RESULT %d' % pylink.TRIAL_OK)
 
                 ret_value = el_active.getRecordingStatus()
                 if (ret_value == pylink.TRIAL_OK):
                     el_active.sendMessage("TRIAL OK")
 
-    interface.destroy()
+    #interface.destroy()
 
     
 

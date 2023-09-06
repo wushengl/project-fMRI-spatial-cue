@@ -62,11 +62,11 @@ def setup(exp):
 
     do_add_eyetracker = True
     do_use_extend_monitor = True
+    el_trial = 1 
 
     exp.user.do_add_eyetracker = do_add_eyetracker
-    exp.user.LEFT_EYE = LEFT_EYE
-    exp.user.RIGHT_EYE = RIGHT_EYE
-    exp.user.BINOCULAR = BINOCULAR
+    exp.user.el_trial = el_trial
+    
 
     if do_add_eyetracker:
 
@@ -85,6 +85,10 @@ def setup(exp):
         LEFT_EYE = 0
         RIGHT_EYE = 1
         BINOCULAR = 2
+
+        exp.user.LEFT_EYE = LEFT_EYE
+        exp.user.RIGHT_EYE = RIGHT_EYE
+        exp.user.BINOCULAR = BINOCULAR
 
         # show some task instructions
 
@@ -662,6 +666,11 @@ def setup(exp):
         logger.info("cycles per run: " + str(cycle_per_run_puretone))
         logger.info("run number: " + str(run_num_puretone))
 
+        if do_add_eyetracker:
+            el_active = pylink.getEYELINK()
+            if not el_active.isConnected():
+                raise RuntimeError("Eye tracker is not connected!")
+
         for i in range(run_num_puretone):
 
             logger.info("Now running pure tone round "+str(i+1))
@@ -676,6 +685,12 @@ def setup(exp):
         logger.info("Now start complex tone...")
         logger.info("cycles per run: " + str(cycle_per_run_ctone))
         logger.info("run number: " + str(run_num_ctone))
+
+        if do_add_eyetracker:
+            el_active = pylink.getEYELINK()
+            if not el_active.isConnected():
+                raise RuntimeError("Eye tracker is not connected!")
+
         for j in range(run_num_ctone):
 
             logger.info("Now running complex tone round "+str(j+1))
@@ -840,7 +855,9 @@ def pre_trial(exp):
 
             # log a TRIALID message to mark trial start, before starting to record.
             # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
-            el_tracker.sendMessage("TRIALID %d" % exp.run.trials_exp)
+            print("exp.user.el_trial = %d" % exp.user.el_trial)
+            el_tracker.sendMessage("TRIALID %d" % exp.user.el_trial) # exp.run.trials_exp
+            exp.user.el_trial += 1
 
             # clear tracker display to black
             el_tracker.sendCommand("clear_screen 0")
@@ -930,8 +947,8 @@ def present_trial(exp):
                 this_wait_ms = 500
                 this_elapsed_ms = 0
                 resp_percent = []
-                #s.play()
-                time.sleep(5)
+                s.play()
+                #time.sleep(1)
 
                 start_ms = exp.interface.timestamp_ms()
                 while s.is_playing:
@@ -941,7 +958,7 @@ def present_trial(exp):
                         if error != pylink.TRIAL_OK:
                             el_active = pylink.getEYELINK()
                             el_active.stopRecording()
-                            return error
+                            raise RuntimeError("Recording stopped!")
 
                     ret = exp.interface.get_resp(timeout=this_wait_ms/1000)
                     this_current_ms = exp.interface.timestamp_ms()
@@ -1015,8 +1032,8 @@ def post_trial(exp):
                 wait = False
     else:
         #if not exp.gustav_is_go:
-        exp.interface.update_Prompt("Waiting 5 sec...", show=True, redraw=True)
-        time.sleep(5)
+        exp.interface.update_Prompt("Waiting 3 sec...", show=True, redraw=True)
+        time.sleep(3)
         exp.interface.update_Prompt("", show=False, redraw=True)
 
     if do_add_eyetracker:
@@ -1025,8 +1042,11 @@ def post_trial(exp):
         el_active.stopRecording()
 
         # record the trial variable in a message recognized by Data Viewer
+        el_active.sendMessage("!V TRIAL_VAR el_trial %d" % exp.user.el_trial)
         el_active.sendMessage("!V TRIAL_VAR trial %d" % exp.run.trials_exp)
-        # TODO: if want to add more variables, e.g. spaCond, could add here as "!V TRIAL_VAR spaCond %s" % spaCond
+        el_active.sendMessage("!V TRIAL_VAR task main") 
+
+        el_active.sendMessage('TRIAL_RESULT %d' % pylink.TRIAL_OK)
 
         ret_value = el_active.getRecordingStatus()
         if (ret_value == pylink.TRIAL_OK):
