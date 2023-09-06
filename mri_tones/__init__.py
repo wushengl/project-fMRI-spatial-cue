@@ -179,6 +179,8 @@ def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_leve
 
 def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_addnoise=False, cycle_per_run=8, round_idx=1):
 
+    do_add_eyetracker = exp.user.do_add_eyetracker
+
     tone_duration = 0.14
     ramp_duration = 0.04
     tone_interval = 0
@@ -348,6 +350,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             dur_ms = len(trial) / exp.stim.fs * 1000
             this_wait_ms = 500
             # s.play()
+            time.sleep(5)
 
             start_ms = interface.timestamp_ms()
             while s.is_playing:

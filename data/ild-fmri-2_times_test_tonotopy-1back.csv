@@ -1,2 +1,6 @@
 SubjectID,Trial,frequency,toneDur,seqPerTrial,TargetNum,TargetTime,ResponseTime,TrialStartTime
 test,ild-fmri-2,300,0.14,14,1,                    10.020000000000001,
+
+
+
+test,ild-fmri-2,300,0.14,14,1,                    3.62,

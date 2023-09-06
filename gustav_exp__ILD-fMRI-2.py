@@ -61,6 +61,7 @@ def setup(exp):
     global do_add_eyetracker, el_tracker, results_folder, edf_file_name, LEFT_EYE, RIGHT_EYE, BINOCULAR
     do_add_eyetracker = True
     do_use_extend_monitor = True
+    exp.user.do_add_eyetracker = do_add_eyetracker
 
     if do_add_eyetracker:
 
@@ -630,11 +631,19 @@ def setup(exp):
         fid.write("\n\n")
         fid.flush()
 
-    cycle_per_run_puretone = 8
-    run_num_puretone = 1
 
-    cycle_per_run_ctone = 16
-    run_num_ctone = 2
+    if  run_mode == 'debug':
+        cycle_per_run_puretone = 1
+        run_num_puretone = 1
+        cycle_per_run_ctone = 1
+        run_num_ctone = 1
+    else:
+
+        cycle_per_run_puretone = 8
+        run_num_puretone = 4
+
+        cycle_per_run_ctone = 16
+        run_num_ctone = 2
 
     switch_step_puretone = [0,0,1,1] # control whether shift steps for each run
     switch_step_ctone = [0,1]
@@ -917,6 +926,7 @@ def present_trial(exp):
                 this_elapsed_ms = 0
                 resp_percent = []
                 #s.play()
+                time.sleep(5)
 
                 start_ms = exp.interface.timestamp_ms()
                 while s.is_playing:
