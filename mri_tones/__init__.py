@@ -180,6 +180,9 @@ def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_leve
 def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_addnoise=False, cycle_per_run=8, round_idx=1):
 
     do_add_eyetracker = exp.user.do_add_eyetracker
+    LEFT_EYE = exp.user.LEFT_EYE
+    RIGHT_EYE = exp.user.RIGHT_EYE
+    BINOCULAR = exp.user.BINOCULAR
 
     tone_duration = 0.14
     ramp_duration = 0.04

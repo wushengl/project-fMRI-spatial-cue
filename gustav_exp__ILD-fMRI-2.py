@@ -59,9 +59,14 @@ def setup(exp):
 
     # ----------------------- Eye tracker settings --------------------------
     global do_add_eyetracker, el_tracker, results_folder, edf_file_name, LEFT_EYE, RIGHT_EYE, BINOCULAR
+
     do_add_eyetracker = True
     do_use_extend_monitor = True
+
     exp.user.do_add_eyetracker = do_add_eyetracker
+    exp.user.LEFT_EYE = LEFT_EYE
+    exp.user.RIGHT_EYE = RIGHT_EYE
+    exp.user.BINOCULAR = BINOCULAR
 
     if do_add_eyetracker:
 
