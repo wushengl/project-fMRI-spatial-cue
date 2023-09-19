@@ -54,3 +54,9 @@ test,ild-fmri-2,ITD500,False,True,1,        10.45,,14:19:10.832110
 
 test,ild-fmri-2,ITD500,True,True,1,        12.75,,14:24:19.016434
 test,ild-fmri-2,ITD500,False,True,3,        1.25,15.049999999999999,17.099999999999998,,14:24:25.993837
+
+
+test,ild-fmri-2,ITD500,True,True,2,        12.5,21.95,
+
+test,ild-fmri-2,ITD500,True,True,1,        1.0,
+

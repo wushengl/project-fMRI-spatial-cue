@@ -234,6 +234,16 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
         if ret in [' ', exp.quitKey]:
             wait = False
 
+
+    interface.update_Prompt("Waiting for trigger (t)\nto start new trial...", show=True,
+                            redraw=True)  # Hit a key to start this trial
+    wait = True
+    while wait:
+        ret = interface.get_resp()
+        if ret in ['t']:
+            trial_start_time = datetime.now()
+            wait = False
+
     # -------------------- start the experiment--------------------------
 
     for c in range(cycle_per_run): # e.g. 5 frequencies/cycle, 8 cycles/run, 4 runs
@@ -301,13 +311,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
             # ------------ run this trial -------------
 
-            interface.update_Prompt("Waiting for trigger (t)\nto start new trial...", show=True, redraw=True)  # Hit a key to start this trial
-            wait = True
-            while wait:
-                ret = interface.get_resp()
-                if ret in ['t']:
-                    trial_start_time = datetime.now()
-                    wait = False
+
 
 
             responses = []
