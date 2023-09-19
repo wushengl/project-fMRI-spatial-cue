@@ -51,31 +51,24 @@ import logging
 import pdb
 import pandas as pd
 
+import pylink
 from screeninfo import get_monitors
 
 def setup(exp):
     
 
-    try:
-        import pylink
-        exp.user.pylink = pylink
-        exp.user.do_eyetracker = True
-    except ImportError:
-        exp.user.do_eyetracker = False
-
     # ----------------------- Eye tracker settings --------------------------
-    #global do_add_eyetracker, el_tracker, results_folder, edf_file_name, LEFT_EYE, RIGHT_EYE, BINOCULAR
-    global el_tracker, results_folder, edf_file_name, LEFT_EYE, RIGHT_EYE, BINOCULAR
+    global do_add_eyetracker, el_tracker, results_folder, edf_file_name, LEFT_EYE, RIGHT_EYE, BINOCULAR
 
-    #do_add_eyetracker = True
+    do_add_eyetracker = True
     do_use_extend_monitor = True
     el_trial = 1 
 
-    #exp.user.do_add_eyetracker = do_add_eyetracker
+    exp.user.do_add_eyetracker = do_add_eyetracker
     exp.user.el_trial = el_trial
     
 
-    if exp.user.do_eyetracker:
+    if do_add_eyetracker:
 
         # set up eye tracker display on extend screen 
 
@@ -83,7 +76,7 @@ def setup(exp):
             os.environ['SDL_VIDEO_FULLSCREEN_HEAD'] = '1'
 
             if len(get_monitors()) >1:
-                extended_monitor = get_monitors()[0] # BRIDGE center: display 1 (left) is mirrored into the scanner
+                extended_monitor = get_monitors()[1]
             else:
                 print("No extended monitor founded!")
 
@@ -121,7 +114,7 @@ def setup(exp):
 
     # ----------------------- Machine-specific settings --------------------------
 
-    machine = psylab.config.local_settings(conf_file='config/psylab.conf')
+    machine = psylab.config.local_settings(conf_file='config/psylab_booth3.conf')
     workdir = machine.get_path('workdir')
     dev_name = machine.get_str('audiodev_name')
     dev_ch = machine.get_int('audiodev_ch')
@@ -218,17 +211,17 @@ def setup(exp):
 
     # -------------------------- eye tracker stuff --------------------------
 
-    if exp.user.do_eyetracker:
+    if do_add_eyetracker:
 
         # Step 1: initialize a tracker object with a Host IP address
         try:
-            el_tracker = exp.user.pylink.EyeLink("100.1.1.1")
+            el_tracker = pylink.EyeLink("100.1.1.1")
         except RuntimeError as error:
             print('ERROR:', error)
             sys.exit()
 
         # Step 2: Initializes the graphics (for calibration)
-        exp.user.pylink.openGraphics((SCN_WIDTH, SCN_HEIGHT), 32)
+        pylink.openGraphics((SCN_WIDTH, SCN_HEIGHT), 32)
 
         # Step 3: open EDF file on Host PC
         edf_file_name = exp.subjID + time.strftime("%H%M") + ".EDF" # "TEST.EDF"
@@ -239,7 +232,7 @@ def setup(exp):
         el_tracker.sendCommand("add_file_preamble_text '%s'" % preamble_text)
 
         # Step 4: setting up tracking, recording and calibration options
-        exp.user.pylink.flushGetkeyQueue()
+        pylink.flushGetkeyQueue()
         el_tracker.setOfflineMode() 
 
         # send resolution of the screen to tracker
@@ -274,19 +267,19 @@ def setup(exp):
         el_tracker.sendCommand("link_sample_data = %s" % link_sample_flags)
 
         # Set the calibration target and background color
-        exp.user.pylink.setCalibrationColors((0, 0, 0), (128, 128, 128))
+        pylink.setCalibrationColors((0, 0, 0), (128, 128, 128))
 
         # select best size for calibration target
-        exp.user.pylink.setTargetSize(int(SCN_WIDTH/70.0), int(SCN_WIDTH/300.))
+        pylink.setTargetSize(int(SCN_WIDTH/70.0), int(SCN_WIDTH/300.))
 
         # Set the calibraiton and drift correction sound
-        exp.user.pylink.setCalibrationSounds("", "", "")
-        exp.user.pylink.setDriftCorrectSounds("", "", "")
+        pylink.setCalibrationSounds("", "", "")
+        pylink.setDriftCorrectSounds("", "", "")
 
         # Step 5: Do the tracker setup at the beginning of the experiment.
         el_tracker.doTrackerSetup()
 
-        exp.user.pylink.closeGraphics()
+        pylink.closeGraphics()
 
 
     # -------------------------- fixed experiment setting --------------------------
@@ -673,8 +666,8 @@ def setup(exp):
         logger.info("cycles per run: " + str(cycle_per_run_puretone))
         logger.info("run number: " + str(run_num_puretone))
 
-        if exp.user.do_eyetracker:
-            el_active = exp.user.pylink.getEYELINK()
+        if do_add_eyetracker:
+            el_active = pylink.getEYELINK()
             if not el_active.isConnected():
                 raise RuntimeError("Eye tracker is not connected!")
 
@@ -693,8 +686,8 @@ def setup(exp):
         logger.info("cycles per run: " + str(cycle_per_run_ctone))
         logger.info("run number: " + str(run_num_ctone))
 
-        if exp.user.do_eyetracker:
-            el_active = exp.user.pylink.getEYELINK()
+        if do_add_eyetracker:
+            el_active = pylink.getEYELINK()
             if not el_active.isConnected():
                 raise RuntimeError("Eye tracker is not connected!")
 
@@ -767,8 +760,7 @@ def pre_exp(exp):
             exp.gustav_is_go = False
 
     except Exception as e:
-        #exp.interface.destroy()
-        post_exp(exp)
+        exp.interface.destroy()
         raise e
 
 
@@ -780,8 +772,7 @@ def pre_block(exp):
         exp.user.pract = 1
         exp.interface.update_Status_Left(f"Block {exp.run.block+1} of {exp.run.nblocks}")
     except Exception as e:
-        #exp.interface.destroy()
-        post_exp(exp)
+        exp.interface.destroy()
         raise e
 
 """PRE_TRIAL
@@ -851,8 +842,8 @@ def pre_trial(exp):
 
         exp.stim.out = test_trial
 
-        if exp.user.do_eyetracker:
-            el_tracker = exp.user.pylink.getEYELINK()
+        if do_add_eyetracker:
+            el_tracker = pylink.getEYELINK()
 
             if(not el_tracker.isConnected() or el_tracker.breakPressed()):
                 raise RuntimeError("Eye tracker is not connected!")
@@ -879,133 +870,130 @@ def pre_trial(exp):
                 return error
 
     except Exception as e:
-        #exp.interface.destroy()
-        post_exp(exp)
+        exp.interface.destroy()
         raise e
 
 
 def present_trial(exp):
     # This is a custom present_trial that records keypress times during playback
-    try:
-        if exp.run.trials_exp%8 == 0:
 
-            exp.interface.update_Prompt("Waiting for trigger\n\nHit a key when you hear a zig-zag melody", show=True, redraw=True)
+    exp.interface.update_Prompt("Waiting for trigger\n\nHit a key when you hear a zig-zag melody", show=True, redraw=True)
     
-            wait = True
-            while wait:
-                ret = exp.interface.get_resp()
-                if ret in ['t', exp.quitKey]:
-                    trial_start_time = datetime.now()
-                    wait = False
-            if exp.user.do_eyetracker:
-                # log a message to mark the time at which the initial display came on
-                el_tracker.sendMessage("SYNCTIME")
-        else:
-            trial_start_time = None
+    wait = True
+    while wait:
+        ret = exp.interface.get_resp()
+        if ret in ['t', exp.quitKey]:
+            trial_start_time = datetime.now()
+            wait = False
+    if do_add_eyetracker:
+        # log a message to mark the time at which the initial display came on
+        el_tracker.sendMessage("SYNCTIME")
 
-        #exp.user.side = yb
-        #exp.interface.update_Prompt("Hit a key when you hear a reversal melody", show=True, redraw=True)
-        #time.sleep(1)
-
-        if exp.stim.direction:
-            exp.interface.update_Prompt('<- Listen Left', show=True, redraw=True)
-            #exp.interface.update_Notify_Left('Listen Left', show=True, redraw=True)
-        else:
-            exp.interface.update_Prompt('Listen Right ->', show=True, redraw=True)
-            #exp.interface.update_Notify_Right('Listen Right', show=True, redraw=True)
-        time.sleep(2)
-
-        exp.interface.update_Prompt("   ██   \n   ██   \n████████\n   ██   \n   ██   ", show=True, redraw=True)
-        #time.sleep(.5)
-
-        responses = []
-        valid_responses = []
-
-        if not exp.debug:
-
-            target_times = exp.stim.trial_info['target_time']
-            target_times_end = target_times.copy() + exp.stim.rt_good_delay
-
-            s = exp.stim.audiodev.open_array(exp.stim.out,exp.stim.fs)
-
-            # TODO: check if this is working correctly
-            mix_mat = np.zeros((2, 2))
-            if exp.stim.probe_ild > 0:
-                mix_mat[0, 0] = psylab.signal.atten(1, exp.stim.probe_ild)
-                mix_mat[1, 1] = 1
-            else:
-                mix_mat[1, 1] = psylab.signal.atten(1, -exp.stim.probe_ild)
-                mix_mat[0, 0] = 1
-            s.mix_mat = mix_mat
-
-            if exp.user.do_eyetracker:
-                # log a message to mark the time at which the initial display came on
-                el_tracker.sendMessage("SYNCTIME")
-
-                # determine which eye(s) is/are available
-                eye_used = el_tracker.eyeAvailable()
-                if eye_used == RIGHT_EYE:
-                    el_tracker.sendMessage("EYE_USED 1 RIGHT")
-                elif eye_used == LEFT_EYE or eye_used == BINOCULAR:
-                    el_tracker.sendMessage("EYE_USED 0 LEFT")
-                    eye_used = LEFT_EYE
-                else:
-                    print("Error in getting the eye information!")
-                    return exp.user.pylink.TRIAL_ERROR
-
-            dur_ms = len(exp.stim.out) / exp.stim.fs * 1000
-            this_wait_ms = 500
-            this_elapsed_ms = 0
-            resp_percent = []
-            s.play()
+    if ret == exp.quitKey:
+        exp.run.gustav_is_go = False
+    else:
+        try:
+            exp.user.side = ret
+            #exp.interface.update_Prompt("Hit a key when you hear a reversal melody", show=True, redraw=True)
             #time.sleep(1)
 
-            start_ms = exp.interface.timestamp_ms()
-            while s.is_playing:
+            if exp.stim.direction:
+                exp.interface.update_Prompt('<- Listen Left', show=True, redraw=True)
+                #exp.interface.update_Notify_Left('Listen Left', show=True, redraw=True)
+            else:
+                exp.interface.update_Prompt('Listen Right ->', show=True, redraw=True)
+                #exp.interface.update_Notify_Right('Listen Right', show=True, redraw=True)
+            time.sleep(2)
 
-                if exp.user.do_eyetracker:
-                    error = el_tracker.isRecording()
-                    if error != exp.user.pylink.TRIAL_OK:
-                        el_active = exp.user.pylink.getEYELINK()
-                        el_active.stopRecording()
-                        raise RuntimeError("Recording stopped!")
+            exp.interface.update_Prompt("   ██   \n   ██   \n████████\n   ██   \n   ██   ", show=True, redraw=True)
+            #time.sleep(.5)
 
-                ret = exp.interface.get_resp(timeout=this_wait_ms/1000)
-                this_current_ms = exp.interface.timestamp_ms()
-                this_elapsed_ms = this_current_ms - start_ms
-                this_elapsed_percent = this_elapsed_ms / dur_ms * 100
-                if ret in ['b','y']:
-                    resp = np.round(this_elapsed_ms/1000, 3)
-                    responses.append(str(resp))
-                    resp_percent.append(this_elapsed_ms / dur_ms * 100)
+            responses = []
+            valid_responses = []
 
-                    # valid responses
-                    bool_1 = (resp > target_times)
-                    bool_2 = (resp <= target_times_end)
-                    bool_valid = bool_1 * bool_2   # same as "AND"
+            if not exp.debug:
 
-                    if bool_valid.any():
-                        valid_responses.append(str(resp))
-                        exp.user.valid_response_count += 1
-                        this_tar_idx = np.where(bool_valid)[0][0]   # index of first valid target
-                        target_times = np.delete(target_times,this_tar_idx)
-                        target_times_end = np.delete(target_times_end,this_tar_idx)
+                target_times = exp.stim.trial_info['target_time']
+                target_times_end = target_times.copy() + exp.stim.rt_good_delay
 
-                progress = psylab.string.prog(this_elapsed_percent, width=50, char_done="=", spec_locs=resp_percent, spec_char="X")
-                #exp.interface.update_Prompt(progress, show=True, redraw=True)
+                s = exp.stim.audiodev.open_array(exp.stim.out,exp.stim.fs)
 
-            exp.user.response = ",".join(responses)
-            exp.user.valid_response = ",".join(valid_responses)
+                # TODO: check if this is working correctly
+                mix_mat = np.zeros((2, 2))
+                if exp.stim.probe_ild > 0:
+                    mix_mat[0, 0] = psylab.signal.atten(1, exp.stim.probe_ild)
+                    mix_mat[1, 1] = 1
+                else:
+                    mix_mat[1, 1] = psylab.signal.atten(1, -exp.stim.probe_ild)
+                    mix_mat[0, 0] = 1
+                s.mix_mat = mix_mat
 
-            if trial_start_time:
+                if do_add_eyetracker:
+                    # log a message to mark the time at which the initial display came on
+                    el_tracker.sendMessage("SYNCTIME")
+
+                    # determine which eye(s) is/are available
+                    eye_used = el_tracker.eyeAvailable()
+                    if eye_used == RIGHT_EYE:
+                        el_tracker.sendMessage("EYE_USED 1 RIGHT")
+                    elif eye_used == LEFT_EYE or eye_used == BINOCULAR:
+                        el_tracker.sendMessage("EYE_USED 0 LEFT")
+                        eye_used = LEFT_EYE
+                    else:
+                        print("Error in getting the eye information!")
+                        return pylink.TRIAL_ERROR
+
+                dur_ms = len(exp.stim.out) / exp.stim.fs * 1000
+                this_wait_ms = 500
+                this_elapsed_ms = 0
+                resp_percent = []
+                s.play()
+                #time.sleep(1)
+
+                start_ms = exp.interface.timestamp_ms()
+                while s.is_playing:
+
+                    if do_add_eyetracker:
+                        error = el_tracker.isRecording()
+                        if error != pylink.TRIAL_OK:
+                            el_active = pylink.getEYELINK()
+                            el_active.stopRecording()
+                            raise RuntimeError("Recording stopped!")
+
+                    ret = exp.interface.get_resp(timeout=this_wait_ms/1000)
+                    this_current_ms = exp.interface.timestamp_ms()
+                    this_elapsed_ms = this_current_ms - start_ms
+                    this_elapsed_percent = this_elapsed_ms / dur_ms * 100
+                    if ret in ['b','y']:
+                        resp = np.round(this_elapsed_ms/1000, 3)
+                        responses.append(str(resp))
+                        resp_percent.append(this_elapsed_ms / dur_ms * 100)
+
+                        # valid responses
+                        bool_1 = (resp > target_times)
+                        bool_2 = (resp <= target_times_end)
+                        bool_valid = bool_1 * bool_2   # same as "AND"
+
+                        if bool_valid.any():
+                            valid_responses.append(str(resp))
+                            exp.user.valid_response_count += 1
+                            this_tar_idx = np.where(bool_valid)[0][0]   # index of first valid target
+                            target_times = np.delete(target_times,this_tar_idx)
+                            target_times_end = np.delete(target_times_end,this_tar_idx)
+
+                    progress = psylab.string.prog(this_elapsed_percent, width=50, char_done="=", spec_locs=resp_percent, spec_char="X")
+                    #exp.interface.update_Prompt(progress, show=True, redraw=True)
+
+                exp.user.response = ",".join(responses)
+                exp.user.valid_response = ",".join(valid_responses)
+
                 fid = open(exp.stim.times_fname, 'a')
                 word_line = f"{','.join(responses)}" + "," + trial_start_time.strftime("%H:%M:%S.%f")
                 fid.write(word_line+"\n")
-
-    except Exception as e:
-        post_exp(exp)
-        #exp.interface.destroy()
-        raise e
+#            exp.interface.showPlaying(False)
+        except Exception as e:
+            exp.interface.destroy()
+            raise e
 
 
 """CUSTOM PROMPT
@@ -1044,13 +1032,13 @@ def post_trial(exp):
                 wait = False
     else:
         #if not exp.gustav_is_go:
-        exp.interface.update_Prompt("Waiting 2 sec...", show=True, redraw=True)
-        time.sleep(2)
+        exp.interface.update_Prompt("Waiting 3 sec...", show=True, redraw=True)
+        time.sleep(3)
         exp.interface.update_Prompt("", show=False, redraw=True)
 
-    if exp.user.do_eyetracker:
+    if do_add_eyetracker:
 
-        el_active = exp.user.pylink.getEYELINK()
+        el_active = pylink.getEYELINK()
         el_active.stopRecording()
 
         # record the trial variable in a message recognized by Data Viewer
@@ -1058,10 +1046,10 @@ def post_trial(exp):
         el_active.sendMessage("!V TRIAL_VAR trial %d" % exp.run.trials_exp)
         el_active.sendMessage("!V TRIAL_VAR task main") 
 
-        el_active.sendMessage('TRIAL_RESULT %d' % exp.user.pylink.TRIAL_OK)
+        el_active.sendMessage('TRIAL_RESULT %d' % pylink.TRIAL_OK)
 
         ret_value = el_active.getRecordingStatus()
-        if (ret_value == exp.user.pylink.TRIAL_OK):
+        if (ret_value == pylink.TRIAL_OK):
                 el_tracker.sendMessage("TRIAL OK")
 
         
@@ -1076,9 +1064,9 @@ def post_exp(exp):
 #    exp.interface.dialog.isPlaying.setText("Finished")
 #    exp.interface.showPlaying(True)
 
-    if exp.user.do_eyetracker:
+    if do_add_eyetracker:
 
-        el_active = exp.user.pylink.getEYELINK()
+        el_active = pylink.getEYELINK()
         el_active.setOfflineMode()
         
         # Close the edf data file on the Host

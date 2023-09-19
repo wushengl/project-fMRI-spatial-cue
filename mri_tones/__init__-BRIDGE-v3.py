@@ -20,7 +20,7 @@ import psylab
 from gustav.forms import rt as theForm
 from datetime import datetime
 
-#import pylink
+import pylink
 
 ###########################################################
 # run_loudness_match and run_tonotopy
@@ -179,7 +179,7 @@ def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_leve
 
 def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_addnoise=False, cycle_per_run=8, round_idx=1):
 
-    do_eyetracker = exp.user.do_eyetracker
+    do_add_eyetracker = exp.user.do_add_eyetracker
     LEFT_EYE = exp.user.LEFT_EYE
     RIGHT_EYE = exp.user.RIGHT_EYE
     BINOCULAR = exp.user.BINOCULAR
@@ -247,11 +247,11 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
         for i_f, cf_key in enumerate(seqs_keys):
 
-            if do_eyetracker:
+            if do_add_eyetracker:
 
                 # TODO: currently saving tonotopy to the same file as main task, not sure if this is easy for later analysis
 
-                el_tracker = exp.user.pylink.getEYELINK()
+                el_tracker = pylink.getEYELINK()
 
                 if(not el_tracker.isConnected() or el_tracker.breakPressed()):
                     raise RuntimeError("Eye tracker is not connected!")
@@ -314,7 +314,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             valid_responses = []
             valid_response_count = 0
 
-            if do_eyetracker:
+            if do_add_eyetracker:
                 # log a message to mark the time at which the initial display came on
                 el_tracker.sendMessage("SYNCTIME")
 
@@ -337,7 +337,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                 mix_mat[0, 0] = 1
             s.mix_mat = mix_mat
 
-            if do_eyetracker:
+            if do_add_eyetracker:
                 # log a message to mark the time at which the initial display came on
                 el_tracker.sendMessage("SYNCTIME")
 
@@ -350,7 +350,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                     eye_used = LEFT_EYE
                 else:
                     print("Error in getting the eye information!")
-                    return exp.user.pylink.TRIAL_ERROR
+                    return pylink.TRIAL_ERROR
 
             dur_ms = len(trial) / exp.stim.fs * 1000
             this_wait_ms = 500
@@ -385,8 +385,8 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             interface.update_Prompt("Waiting...", show=True, redraw=True)
             time.sleep(0.8)
 
-            if do_eyetracker:
-                el_active = exp.user.pylink.getEYELINK()
+            if do_add_eyetracker:
+                el_active = pylink.getEYELINK()
                 el_active.stopRecording()
 
                 el_active.sendMessage("!V TRIAL_VAR el_trial %d" % exp.user.el_trial)
@@ -398,10 +398,10 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                 el_active.sendMessage("!V TRIAL_VAR cycle_per_run %d" % cycle_per_run)
                 el_active.sendMessage("!V TRIAL_VAR run_number %d" % (round_idx+1))
 
-                el_active.sendMessage('TRIAL_RESULT %d' % exp.user.pylink.TRIAL_OK)
+                el_active.sendMessage('TRIAL_RESULT %d' % pylink.TRIAL_OK)
 
                 ret_value = el_active.getRecordingStatus()
-                if (ret_value == exp.user.pylink.TRIAL_OK):
+                if (ret_value == pylink.TRIAL_OK):
                     el_active.sendMessage("TRIAL OK")
 
     #interface.destroy()
