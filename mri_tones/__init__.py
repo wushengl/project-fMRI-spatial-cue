@@ -222,7 +222,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
     interface = theForm.Interface()
 
-    interface.update_Prompt("Now starting tonotopy scan task round "+str(round_idx+1)+"\n\nHit a key when you hear a repeating pattern\n\nHit Space to start",show=True, redraw=True)
+    interface.update_Prompt("Now starting tonotopy scan task run "+str(round_idx+1)+"\n\nHit a key when you hear a repeating pattern\n\nHit Space to start",show=True, redraw=True)
     interface.update_Title_Center("Tonotopy scan task")
 
     #interface.update_Prompt("Hit a key when you hear a repeating pattern\n\nHit Space to continue",show=True, redraw=True)
@@ -268,7 +268,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
                 # show some info about the current trial on the Host PC screen
                 pars_to_show = ('tonotopy', i_f, len(seqs_keys), c, cycle_per_run, round_idx+1)
-                status_message = 'Link event example, %s, Trial %d/%d, Cycle %d/%d, Round number %d' % pars_to_show
+                status_message = 'Link event example, %s, Trial %d/%d, Cycle %d/%d, Run number %d' % pars_to_show
                 el_tracker.sendCommand("record_status_message '%s'" % status_message)
 
                 # log a TRIALID message to mark trial start, before starting to record.
