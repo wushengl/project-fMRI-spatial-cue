@@ -80,17 +80,23 @@ def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_leve
     ret = interface.get_resp()
 
     interface.update_Title_Center("Loudness Matching")
-    interface.update_Prompt("Match the loudness of tone 2 to tone 1\n\nHit a key to continue\n(q or / to quit)",
+    interface.update_Prompt("Now you will match the loudness of 2 tones\n\nPress your button to continue\n(q or / to quit)",
                             show=True, redraw=True)
     ret = interface.get_resp()
 
     responses = []
 
     if ret not in ['q', '/']:
-        for probe in probes:
 
+        listen_moveon = True
+        while listen_moveon:
+            ret = interface.get_resp()
+            if ret in ['b', 'y', 'g']:
+                listen_moveon = False
+
+        for probe in probes:
             interface.update_Prompt(
-                "Use up & down to match\nthe loudness of tone 2 to tone 1\n\nHit enter when finished\n(q or / to quit)",
+                "Use up (button which?) & down (button which?) to match\nthe loudness of tone 2 to tone 1,\nuntil they sound samely loud to you\n\nPress (button which?) when finished\n(q or / to quit)",
                 show=True, redraw=True)
             if isinstance(probe, (int, float, complex, list)):
                 if isinstance(probe,list):
@@ -153,7 +159,7 @@ def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_leve
                 if ret == 'q' or ret == '/':
                     quit = True
                     quit_request = True
-                elif ord(ret) in (curses.KEY_ENTER, 10, 13):
+                elif ord(ret) in (curses.KEY_ENTER, 10, 13, ord('g')):
                     interface.update_Status_Right('Enter', redraw=True)
                     quit = True
                 elif ord(ret) == key_dn:  # Down

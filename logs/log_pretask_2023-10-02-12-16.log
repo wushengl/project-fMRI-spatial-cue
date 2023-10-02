@@ -1,0 +1,10 @@
+--------------------------------------------------------------
+Now start loudness matching...
+Matching pool: [300, 566, 1068, 3805, [220, 660], [440, 1320]]
+Now start matching round 1
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Now start matching round 2
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Finished baseline matching, now start adaptive matching...
+----------------------- new adaptive matching -------------------------
+Current convergence status: [False False False False False False]

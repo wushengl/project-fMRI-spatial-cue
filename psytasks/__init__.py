@@ -96,7 +96,7 @@ def do_breathing(blocks=11, breaths_per_block=5, inhale_dur=5, exhale_dur=5, hol
                         time.sleep(.2)
 
 
-def test_keyboard_input(keys=[curses.KEY_UP, curses.KEY_DOWN], labels=["Up", "Down"]):
+def test_keyboard_input(keys=[curses.KEY_UP, curses.KEY_DOWN, curses.KEY_ENTER], labels=["Up", "Down","Enter"]):
 
     interface = theForm.Interface()
     interface.update_Title_Center("Input Test")
@@ -165,13 +165,19 @@ def get_comfortable_level(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_sta
 
     interface = theForm.Interface()
     interface.update_Title_Center("MCL1")
-    interface.update_Prompt("Adjust the volume so that it is comfortable\n\nHit a key to continue\n(q or / to quit)", show=True, redraw=True)
+    interface.update_Prompt("Now you will adjust the volume so that it's at a comfortable level\n\nPress your button to continue\n(q or / to quit)", show=True, redraw=True)
     ret = interface.get_resp()
 
     response = False
 
     if ret not in ['q', '/']:
-        interface.update_Prompt("Adjust the volume so that it is comfortable\n\nHit enter when finished\n(q or / to quit)", show=True, redraw=True)
+        #if ret not in ['t']: # the problem is ret only listen for 1 input?
+        listen_moveon = True
+        while listen_moveon:
+            ret = interface.get_resp()
+            if ret in ['b','y','g']:
+                listen_moveon = False
+        interface.update_Prompt("Adjust the volume with your buttons to \nincrease (button which?) or decrease (button which?) the volume,\nuntil it's at a comfortable level.\n\nPress (button which?) when finished\n(q or / to quit)", show=True, redraw=True)
         if isinstance(sig, (int, float, complex)):
             # Assume tone
             probe_sig = psylab.signal.tone(sig, fs, tone_dur_s*1000, amp=tone_level_start)
@@ -205,7 +211,7 @@ def get_comfortable_level(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_sta
             interface.update_Status_Left(f'Enter: {ord(ret)}; {curses.KEY_ENTER}', redraw=True)
             if ret == 'q' or ret == '/':
                 quit = True
-            elif ord(ret) in (curses.KEY_ENTER, 10, 13):
+            elif ord(ret) in (curses.KEY_ENTER, 10, 13, ord('g')):
                 interface.update_Status_Right('Enter', redraw=True)
                 quit = True
             elif ord(ret) == key_up:                               # Volume up
@@ -268,13 +274,19 @@ def get_centered_image(sig, audio_dev, adj_step, fs=44100, tone_dur_s=1, tone_le
 
     interface = theForm.Interface()
     interface.update_Title_Center("Stereo Centering")
-    interface.update_Prompt("Adjust the image so that it is centered in your head\n\nHit a key to continue\n(q or / to quit)", show=True, redraw=True)
+    interface.update_Prompt("Now you will move the sound image to the center\n\nPress your button to continue\n(q or / to quit)", show=True, redraw=True)
     ret = interface.get_resp()
 
     response = False
 
     if ret not in ['q', '/']:
-        interface.update_Prompt("Adjust the image so that it is centered in your head\n\nHit enter when finished\n(q or / to quit)", show=True, redraw=True)
+        #if ret not in ['t']:
+        listen_moveon = True
+        while listen_moveon:
+            ret = interface.get_resp()
+            if ret in ['b','y','g']:
+                listen_moveon = False
+        interface.update_Prompt("Use your buttons to shift the location of the sound\nto the left (button which?) or to the right (button which?),\nadjust to make the sound centered in your head\n\nPress (button which?) when finished\n(q or / to quit)", show=True, redraw=True)
         if isinstance(sig, (int, float, complex)):
             # Assume tone
             probe_sig = psylab.signal.tone(sig, fs, tone_dur_s*1000, amp=tone_level_start)
@@ -296,7 +308,7 @@ def get_centered_image(sig, audio_dev, adj_step, fs=44100, tone_dur_s=1, tone_le
             interface.update_Status_Left(f'Enter: {ord(ret)}; {curses.KEY_ENTER}', redraw=True)
             if ret == 'q' or ret == '/':
                 quit = True
-            elif ord(ret) in (curses.KEY_ENTER, 10, 13):
+            elif ord(ret) in (curses.KEY_ENTER, 10, 13, ord('g')):
                 interface.update_Status_Right('Enter', redraw=True)
                 quit = True
             elif ord(ret) == key_l:                               # Left

@@ -1,0 +1,25 @@
+--------------------------------------------------------------
+Now start loudness matching...
+Matching pool: [300, 566, 1068, 3805, [220, 660], [440, 1320]]
+Now start matching round 1
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Now start matching round 2
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Finished baseline matching, now start adaptive matching...
+----------------------- new adaptive matching -------------------------
+Current convergence status: [False False False False False False]
+This matching pool: [300 566 1068 3805 list([220, 660]) list([440, 1320])]
+New matched levels: [0. 0. 0. 0. 0. 0.]
+Upper bounds: [0. 0. 0. 0. 0. 0.]
+Lower bounds: [0. 0. 0. 0. 0. 0.]
+Updated convergence status: [ True  True  True  True  True  True]
+--------------------------------------------------------------
+Matching finished!
+Averaged matched levels: [0. 0. 0. 0. 0. 0. 0.]
+--------------------------------------------------------------
+Now start tonotopy task...
+--------------------------------------------------------------
+Now start pure tone...
+cycles per run: 1
+run number: 1
+Now running pure tone round 1

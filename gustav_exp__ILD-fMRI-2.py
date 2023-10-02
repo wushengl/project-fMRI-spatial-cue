@@ -52,9 +52,9 @@ import pdb
 import pandas as pd
 
 from screeninfo import get_monitors
+from tkinter import messagebox
 
 def setup(exp):
-    
 
     try:
         import pylink
@@ -69,7 +69,7 @@ def setup(exp):
 
     #do_add_eyetracker = True
     do_use_extend_monitor = True
-    el_trial = 1 
+    el_trial = 1  # initiate trial number for eye tracker data
 
     #exp.user.do_add_eyetracker = do_add_eyetracker
     exp.user.el_trial = el_trial
@@ -97,17 +97,6 @@ def setup(exp):
         exp.user.RIGHT_EYE = RIGHT_EYE
         exp.user.BINOCULAR = BINOCULAR
 
-        # show some task instructions
-
-        inst = "Press ENTER to show the camera image, C to calibrate, V to \n" + \
-                "validate the tracker. Press Esc to quit eyetracker GUI."
-
-        #if sys.version_info > (3,0):
-        #    ok = input("\nPress 'Y' to continue, 'N' to quit: ")
-        #else: 
-        #    ok = raw_input("\nPress 'Y' to continue, 'N' to quit: ")
-        #if ok not in ['Y', 'y']:
-        #    sys.exit()
 
         # set the screen size (0 for current defualt, which is primary screen size)
         SCN_WIDTH = extended_monitor.width #0
@@ -121,7 +110,7 @@ def setup(exp):
 
     # ----------------------- Machine-specific settings --------------------------
 
-    machine = psylab.config.local_settings(conf_file='config/psylab.conf')
+    machine = psylab.config.local_settings(conf_file='config/psylab_booth3.conf')
     workdir = machine.get_path('workdir')
     dev_name = machine.get_str('audiodev_name')
     dev_ch = machine.get_int('audiodev_ch')
@@ -215,6 +204,8 @@ def setup(exp):
         exp.stim.ref_rms = df['ref_rms'][0]
         exp.stim.probe_ild = df['probe_ild'][0]
 
+    messagebox.showinfo("Volume adjust reminder", "Make sure the system volume is set to a safe level! (30~45)")
+
 
     # -------------------------- eye tracker stuff --------------------------
 
@@ -229,6 +220,8 @@ def setup(exp):
 
         # Step 2: Initializes the graphics (for calibration)
         exp.user.pylink.openGraphics((SCN_WIDTH, SCN_HEIGHT), 32)
+
+        # Press ENTER to show the camera image, C to calibrate, V to validate the tracker. Press Esc to quit eyetracker GUI.
 
         # Step 3: open EDF file on Host PC
         edf_file_name = exp.subjID + time.strftime("%H%M") + ".EDF" # "TEST.EDF"
@@ -275,6 +268,7 @@ def setup(exp):
 
         # Set the calibration target and background color
         exp.user.pylink.setCalibrationColors((0, 0, 0), (128, 128, 128))
+        el_tracker.sendCommand("calibration_area_proportion = 0.5 0.5")
 
         # select best size for calibration target
         exp.user.pylink.setTargetSize(int(SCN_WIDTH/70.0), int(SCN_WIDTH/300.))
@@ -324,7 +318,7 @@ def setup(exp):
     #exp.stim.ref_rms = 0.3      # Set this to the desired rms and all tones will be matched in loudness
 
 
-    psytasks.test_keyboard_input(keys=[ord('b'), ord('y')], labels=["Blue", "Yellow"])
+    psytasks.test_keyboard_input(keys=[ord('b'), ord('y'), ord('g')], labels=["Blue (Right)", "Yellow (Left)", "Enter (TODO)"])
 
     soundtest_dict = {}
     if do_get_comfortable_level:
