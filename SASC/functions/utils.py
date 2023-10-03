@@ -16,6 +16,17 @@ config_file = 'config/config.json'
 def computeRMS(sig):
     return np.sqrt(np.mean(sig**2))
 
+
+def attenuate_db(sig,db):
+    '''attenuate sig by db'''
+    out = sig * np.exp(np.float32(-db)/8.6860)
+    return out
+
+
+def ask_task_mode():
+    task_mode = simpledialog.askstring("SASC-fMRI", "Enter task mode (task / debug): ")
+    return task_mode
+
 def ask_subject_id():
     subject = simpledialog.askstring("SASC-fMRI", "Enter subject ID: ")
     return subject
@@ -24,8 +35,8 @@ def ask_session_num():
     ses_num = simpledialog.askstring("SASC-fMRI", "Enter session number: ")
     return ses_num
 
-def ask_run_num():
-    run_num = simpledialog.askstring("SASC-fMRI", "Enter run number: ")
+def ask_start_run_num():
+    run_num = simpledialog.askstring("SASC-fMRI", "Enter run number to start: \n(1 if not skipping runs)")
     return run_num
 
 def ask_tone_type():

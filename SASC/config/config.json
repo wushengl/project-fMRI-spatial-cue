@@ -1,26 +1,38 @@
 {
-    "debug-setting":{
-        "tonotopy":{
-            "puretone_run_num": 1,
-            "puretone_cycle_per_run": 1,
-            "complextone_run_num": 1,
-            "complextone_cycle_per_run": 1
+    "run-setting":{
+        "debug":{
+            "do_eyetracker": 1,
+            "tonotopy":{
+                "pure":{
+                    "run_num": 1,
+                    "cycle_per_run": 1
+                },
+                "complex":{
+                    "run_num": 1,
+                    "cycle_per_run": 1
+                }
+            },
+            "zigzagtask":{
+                "run_num": 2,
+                "trial_per_run": 2
+            }
         },
-        "zigzagtask":{
-            "run_num": 2,
-            "trial_per_run": 2
-        }
-    },
-    "task-setting":{
-        "tonotopy":{
-            "puretone_run_num": 4,
-            "puretone_cycle_per_run": 8,
-            "complextone_run_num": 2,
-            "complextone_cycle_per_run": 16
-        },
-        "zigzagtask":{
-            "run_num": 10,
-            "trial_per_run": 8
+        "task":{
+            "do_eyetracker": 1,
+            "tonotopy":{
+                "pure":{
+                    "run_num": 4,
+                    "cycle_per_run": 8
+                },
+                "complex":{
+                    "run_num": 2,
+                    "cycle_per_run": 16
+                }
+            },
+            "zigzagtask":{
+                "run_num": 10,
+                "trial_per_run": 8
+            }
         }
     },
     "path":{
@@ -53,6 +65,11 @@
         "extreme_threshold": 25
     },
     "tonotopy": {
+        "cycles":{
+            "pure": [300,566,1068,2016,3805],
+            "complex": [[220,660],[440,1320]]
+        },
+        "freq_step_direction": [0,0,1,1],
         "puretone_pool": [300,566,1068,2016,3805],
         "complextone_pool": [[220,660],[440,1320]]
     },
