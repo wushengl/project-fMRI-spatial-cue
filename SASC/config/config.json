@@ -71,7 +71,13 @@
         },
         "freq_step_direction": [0,0,1,1],
         "puretone_pool": [300,566,1068,2016,3805],
-        "complextone_pool": [[220,660],[440,1320]]
+        "complextone_pool": [[220,660],[440,1320]],
+
+        "tone_duration": 0.14,
+        "ramp_duration": 0.04,
+        "tone_interval": 0,
+        "seq_interval": 0.24,
+        "seq_per_trial": 14
     },
     "zigzagtask": {
         "f0": 220,
@@ -89,5 +95,10 @@
 
         "itd": 500e-6,
         "ild": 10
+    },
+    "eyetracker": {
+        "LEFT_EYE": 0,
+        "RIGHT_EYE": 1,
+        "BINOCULAR": 2
     }
 }

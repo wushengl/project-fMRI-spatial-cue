@@ -3,7 +3,9 @@ import psylab
 import medussa as m
 import pandas as pd
 import os
+import pylink
 from functions import func_tonotopy
+from functions import func_eyetracker
 from functions import utils
 
 test_location = 'booth3'  # 'booth3' or 'scanner' to switch audio devices
@@ -69,6 +71,19 @@ if dev_id:
 else:
     raise Exception(f"The audio device {dev_name} was not found")
 
+# initialize eyetracker 
+
+if do_eyetracker:
+    el_tracker = func_eyetracker.init_eyetracker()
+    SCN_WIDTH, SCN_HEIGHT = func_eyetracker.init_eyetracker_graphics()
+
+    edf_file_name = subject + tone_type[0] + 'tt.EDF'
+    el_tracker.openDataFile(edf_file_name)
+    func_eyetracker.send_initial_info(el_tracker, SCN_WIDTH, SCN_HEIGHT)
+
+    el_tracker.doTrackerSetup()
+    pylink.closeGraphics()
+
 # initialize logger and open log in powershell
 
 logger = utils.init_logger(subject, task_name, save_folder)
@@ -90,7 +105,7 @@ for current_run_num in range(start_run_num, total_run_num+1):
     do_switch_step = freq_step_direction[current_run_num-1]
     if do_switch_step:
         this_cycle.reverse()
-        
-    func_tonotopy.run_tonotopy_task(this_cycle, dev_id[0], exp, do_adjust_level,matched_levels_ave[:-2], cycle_per_run=cycle_per_run,round_idx=i)
 
-    # TODO: exp variables 
+    func_tonotopy.run_tonotopy_task(this_cycle, dev_id, ref_rms, probe_ild, matched_levels_ave, cycle_per_run, current_run_num, task_mode, save_folder)
+
+# TODO: add more logging info for tonotopy

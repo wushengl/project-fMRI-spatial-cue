@@ -1,67 +1,208 @@
 import utils
+import func_toneseq
+import medussa as m
+from gustav.forms import rt as theForm
+from datetime import datetime
+import time
+import numpy as np
+import random
+import psylab
+import pylink
+import func_eyetracker
+
+
+config_file = 'config/config.json'
+config = utils.get_config(config_file)
 
 
 
+def generate_all_seqs(freq_cycle, matched_levels, ref_rms):
 
+    '''
+    This function is used for generating all possible 4-tone minisequences, 
+    it will return a dictionary storing all minisequences.
+    '''
 
-
-def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_addnoise=False, cycle_per_run=8, round_idx=1):
-
-    do_eyetracker = exp.user.do_eyetracker
-    LEFT_EYE = exp.user.LEFT_EYE
-    RIGHT_EYE = exp.user.RIGHT_EYE
-    BINOCULAR = exp.user.BINOCULAR
-
-    tone_duration = 0.14
-    ramp_duration = 0.04
-    tone_interval = 0
-    seq_interval = 0.24
-    seq_per_trial = 14
-
+    semitone_step =  2**(1/12)
+    tone_duration = config['tonotopy']['tone_duration']
+    ramp_duration = config['tonotopy']['ramp_duration']
+    tone_interval = config['tonotopy']['tone_interval']
+    fs = config['sound']['fs']
+    
     all_seqs = dict()
 
-    for i, cf in enumerate(cf_pool):
-        if do_adjust_level:
-            this_level_adjust = matched_dbs[i]
-            if isinstance(cf, list):
-                cf_ratio = 3  # complex tone 
-                cf = cf[0]
-                cf_key = str(cf)+'c'
-            else:
-                cf_ratio = None  # pure tone
-                cf_key = str(cf)
-            desired_rms = utils.attenuate_db(exp.stim.ref_rms,-this_level_adjust)
-        else: # not adjusting level
-            if isinstance(cf, list):
-                cf_ratio = 3  # complex tone
-                cf = cf[0]
-                cf_key = str(cf)+'c'
-            else:
-                cf_ratio = None  # pure tone
-                cf_key = str(cf)
-            desired_rms = exp.stim.desired_rms
-        this_cf_seqs = generate_miniseq_4tone(cf,exp.stim.semitone_step,cf_ratio,tone_interval,tone_duration,ramp_duration,desired_rms,exp.stim.fs)
+    for i, cf in enumerate(freq_cycle):
+        this_level_adjust = matched_levels[i]
+        if isinstance(cf, list):
+            cf_low = cf[0]
+            cf_ratio = cf[1]/cf[0]
+            cf_key = str(cf_low)+'c'
+        else:
+            cf_ratio = None
+            cf_key = str(cf)
+
+        # apply level adjustment to reference rms to get desired rms for current frequency
+        desired_rms = utils.attenuate_db(ref_rms, -this_level_adjust)
+
+        this_cf_seqs = func_toneseq.generate_miniseq_4tone(cf,semitone_step,cf_ratio,tone_interval,tone_duration,ramp_duration,desired_rms,fs)
         all_seqs[cf_key] = this_cf_seqs
 
+    return all_seqs
 
-    # -------------------- initialize GUI --------------------------
 
-    d = m.open_device(audio_dev, audio_dev, 2) 
+def get_repeat_idxs(pool,tarN):
 
+    '''
+    Return an array of repeat start index. 
+    The input pool has removed the last element, so can choose randomly from the entire pool.
+    After each sample, the index itself is removed from the pool to avoid repeat.
+    The index before it is removed, so that next repeat onset before it is at least 1 element away. 
+    The index after it is also removed, so that next repeat onset after it is at least 1 element away.  
+    '''
+
+    repeat_idxs = []
+    indicator = np.ones(len(pool))
+
+    for i in range(tarN):
+
+        idx_i = np.random.choice(pool[indicator.astype(bool)])
+        repeat_idxs.append(idx_i)
+
+        indicator[idx_i] = 0
+        if idx_i-1 >= 0:
+            indicator[idx_i-1] = 0 
+        if idx_i+1 <= len(pool)-1:
+            indicator[idx_i+1] = 0
+
+    return np.array(repeat_idxs)
+
+
+def generate_trial_tonotopy_1back(params,seq_dict):
+
+    '''
+    This function is used for generating a tonotopy trial with task finding 1-back repeating pattern. 
+    Each miniseq has 4 tones.  
+    
+    Each trial contains 1 stream. The number and locations of targets (and distractors) are randomly selected. 
+
+    ====================
+    Inputs:
+    - params: a dictionary containing all parameters needed to customize a trial, except cue related variables
+    - seq_dict: a dictionary containing all sequences with center frequency cf, key example: "up_seq_1" (non-spatialized)
+
+    Outputs:
+    - trial: a N*2 numpy array containing the trial 
+    - trial_info: an dictionary include all information about one trial 
+    '''
+
+    # -------------- preparation ----------------
+
+    # read parameters from params
+
+    cf = params["cf"]
+    tone_duration = params["tone_duration"]
+    tone_interval = params["tone_interval"]
+    seq_interval = params["seq_interval"]
+    seq_per_trial = params["seq_per_trial"]
+    tarN_T = params["target_number_T"]
+    fs = params["fs"]
+    
+    # get sequence pool for this center frequency 
+
+    seq_pool = np.array(['seq'+str(n+1) for n in range(len(seq_dict))])  # 81
+
+    # -------------- create trial without cue ----------------
+
+    # target stream
+    repeat_seq_keys_T = np.random.choice(seq_pool, size=3, replace=False)               # get tarN_T keys for target sequence                    
+    repeat_loc_idxs_T = get_repeat_idxs(np.arange(seq_per_trial-1),tarN_T)              # get indexes for where the repeating pattern starts 
+
+    nonrepeat_pool_T = [n for n in seq_pool if n not in repeat_seq_keys_T]              # get seq pool except those selected to be target 
+    nonrepeat_seq_idxs_T = random.sample(nonrepeat_pool_T,seq_per_trial-2*tarN_T)       # get indexes for non-target sequence index 
+
+    target_stream_order = (np.ones(seq_per_trial).astype(int)*99).astype('U21')
+    for t in range(tarN_T):
+        t_loc = repeat_loc_idxs_T[t]
+        target_stream_order[t_loc:t_loc+2] = repeat_seq_keys_T[t] 
+    
+    target_stream_order[target_stream_order=='99'] = nonrepeat_seq_idxs_T
+
+    # padding between intervals 
+    seq_interval_padding = np.zeros((int(seq_interval*fs),2)) 
+
+    # start generating the trial 
+    target_stream = np.empty((0,2))
+    target_seq_dict = seq_dict
+
+    for i in range(seq_per_trial):
+
+        this_target_key = target_stream_order[i]
+        this_target = np.tile(target_seq_dict[this_target_key].reshape(-1,1),(1, 2)) # mono to stereo
+
+        # concatenate this target to the stream
+        target_stream = np.concatenate((target_stream,this_target),axis=0) 
+
+        # add interval between mini-sequences 
+        target_stream = np.concatenate((target_stream,seq_interval_padding),axis=0)
+
+    trial = target_stream 
+
+    # -------------- get target time ----------------
+
+    # also initialize target time 
+    target_index = np.sort(repeat_loc_idxs_T) 
+
+    # seq_block_time is the time per mini-seq block (all time between 2 seq-intervals), here only 4 tone_duration 
+    seq_block_time = tone_duration*4 
+    target_time = (target_index+1)*(seq_block_time + seq_interval) + tone_duration*3 # target_index is the first mini-seq in repeat, add 1 for the second mini-seq
+
+    # test for target time 
+    target_time_testing = np.zeros(trial.shape[0])
+    target_time_testing[(target_time*fs).astype(int)] = 1
+    #plt.plot(trial);plt.plot(target_time_testing);plt.show()  # TODO: test target time 
+
+    trial_info = {"cf": cf,\
+                  "tone_dur":tone_duration,\
+                  "seq_per_trial":seq_per_trial,\
+                  "tarN_T": tarN_T,\
+                  "target_index":target_index,\
+                  "target_time":target_time} # onset of last tone in target seq, 0 as first tone onset 
+    
+    return trial, trial_info
+
+
+def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle_per_run, round_idx, task_mode, save_path):
+
+    do_eyetracker = config[task_mode]['do_eyetracker']
+    tone_duration = config['tonotopy']['tone_duration']
+    ramp_duration = config['tonotopy']['ramp_duration']
+    tone_interval = config['tonotopy']['tone_interval']
+    seq_interval = config['tonotopy']['seq_interval']
+    seq_per_trial = config['tonotopy']['seq_per_trial']
+    fs = config['sound']['fs']
+    subject = save_path.split('/')[-2]
+    
+    
+    LEFT_EYE = config['eyetracker']['LEFT_EYE'] 
+    RIGHT_EYE = config['eyetracker']['RIGHT_EYE'] 
+    BINOCULAR = config['eyetracker']['BINOCULAR'] 
+    el_trial = 1 + (round_idx-1)*cycle_per_run*len(freq_cycle)
+
+
+    # -------------------- initialization --------------------------
+
+    # generate all mini sequences to use later
+
+    all_seqs = generate_all_seqs(freq_cycle, matched_dbs, ref_rms)
+
+    # initialize window and show instruction
+
+    d = m.open_device(dev_id[0], dev_id[0], 2) 
     interface = theForm.Interface()
 
-    interface.update_Prompt("Now starting tonotopy scan task run "+str(round_idx+1)+"\n\nHit a key when you hear a repeating pattern\n\nHit Space to start",show=True, redraw=True)
+    interface.update_Prompt("Now starting tonotopy task run "+str(round_idx)+"\n\nHit a key when you hear a repeating pattern\n\nPress your button to start",show=True, redraw=True)
     interface.update_Title_Center("Tonotopy scan task")
-
-    #interface.update_Prompt("Hit a key when you hear a repeating pattern\n\nHit Space to continue",show=True, redraw=True)
-    #ret = interface.get_resp()
-
-    wait = True
-    while wait:
-        ret = interface.get_resp()
-        if ret in [' ', exp.quitKey]:
-            wait = False
-
+    utils.wait_for_subject(interface)
 
     interface.update_Prompt("Waiting for trigger (t)\nto start new trial...", show=True,
                             redraw=True)  # Hit a key to start this trial
@@ -72,13 +213,11 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             trial_start_time = datetime.now()
             wait = False
 
-    # -------------------- start the experiment--------------------------
+    # -------------------- start the experiment --------------------------
 
     for c in range(cycle_per_run): # e.g. 5 frequencies/cycle, 8 cycles/run, 4 runs
 
-
         interface.update_Prompt("Now starting cycle " + str(c + 1) + "...", show=True,redraw=True)
-        #ret = interface.get_resp()
         time.sleep(2)
 
         seqs_keys = all_seqs.keys()
@@ -87,12 +226,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
             if do_eyetracker:
 
-                # TODO: currently saving tonotopy to the same file as main task, not sure if this is easy for later analysis
-
-                el_tracker = exp.user.pylink.getEYELINK()
-
-                if(not el_tracker.isConnected() or el_tracker.breakPressed()):
-                    raise RuntimeError("Eye tracker is not connected!")
+                el_tracker = func_eyetracker.get_eyetracker()
 
                 # show some info about the current trial on the Host PC screen
                 pars_to_show = ('tonotopy', i_f, len(seqs_keys), c, cycle_per_run, round_idx+1)
@@ -101,9 +235,9 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
 
                 # log a TRIALID message to mark trial start, before starting to record.
                 # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
-                print("exp.user.el_trial = %d" % exp.user.el_trial)
-                el_tracker.sendMessage("TRIALID %d" % exp.user.el_trial)
-                exp.user.el_trial += 1
+                print("exp.user.el_trial = %d" % el_trial)
+                el_tracker.sendMessage("TRIALID %d" % el_trial)
+                el_trial += 1
 
                 # clear tracker display to black
                 el_tracker.sendCommand("clear_screen 0")
@@ -128,19 +262,18 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                 "seq_interval": seq_interval,
                 "seq_per_trial": seq_per_trial,
                 "target_number_T": np.random.choice(np.arange(3)+1),
-                "fs": exp.stim.fs
+                "fs": fs
             }
             trial, trial_info = generate_trial_tonotopy_1back(params,all_seqs[cf_key])
 
-            fid = open(f"data/{exp.name}_times_{exp.subjID}_tonotopy-1back.csv", 'a')
-            word_line = f"{exp.subjID},{exp.name},{trial_info['cf']},{trial_info['tone_dur']},{trial_info['seq_per_trial']},{trial_info['tarN_T']},\
+            # ------------ open a file -------------
+            file_path = save_path + subject + '-tonotopy.csv'
+            fid = open(file_path, 'a')
+            word_line = f"{subject},{'tonotopy'},{trial_info['cf']},{trial_info['tone_dur']},{trial_info['seq_per_trial']},{trial_info['tarN_T']},\
                     {','.join(trial_info['target_time'].astype(str))}"
             fid.write(word_line + ',')
 
             # ------------ run this trial -------------
-
-
-
 
             responses = []
             valid_responses = []
@@ -158,14 +291,15 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             target_times = trial_info['target_time']
             target_times_end = target_times.copy() + exp.stim.rt_good_delay
 
-            s = exp.stim.audiodev.open_array(trial, exp.stim.fs)
+            audiodev = m.open_device(*dev_id)
+            s = audiodev.open_array(trial, fs)
 
             mix_mat = np.zeros((2, 2)) # TODO: check if this is correct 
-            if exp.stim.probe_ild > 0:
-                mix_mat[0, 0] = psylab.signal.atten(1, exp.stim.probe_ild)
+            if probe_ild > 0:
+                mix_mat[0, 0] = psylab.signal.atten(1, probe_ild)
                 mix_mat[1, 1] = 1
             else:
-                mix_mat[1, 1] = psylab.signal.atten(1, -exp.stim.probe_ild)
+                mix_mat[1, 1] = psylab.signal.atten(1, -probe_ild)
                 mix_mat[0, 0] = 1
             s.mix_mat = mix_mat
 
@@ -182,9 +316,9 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                     eye_used = LEFT_EYE
                 else:
                     print("Error in getting the eye information!")
-                    return exp.user.pylink.TRIAL_ERROR
+                    return pylink.TRIAL_ERROR
 
-            dur_ms = len(trial) / exp.stim.fs * 1000
+            dur_ms = len(trial) / fs * 1000
             this_wait_ms = 500
             s.play()
             #time.sleep(1)
@@ -210,7 +344,7 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
                         target_times = np.delete(target_times, this_tar_idx)
                         target_times_end = np.delete(target_times_end, this_tar_idx)
 
-            fid = open(f"data/{exp.name}_times_{exp.subjID}_tonotopy-1back.csv", 'a')
+            fid = open(file_path,'a')
             word_line = f"{','.join(responses)}" + "," + trial_start_time.strftime("%H:%M:%S.%f")
             fid.write(word_line + "\n")
 
@@ -218,27 +352,25 @@ def run_tonotopy_task(cf_pool, audio_dev, exp, do_adjust_level, matched_dbs, do_
             time.sleep(0.8)
 
             if do_eyetracker:
-                el_active = exp.user.pylink.getEYELINK()
+                el_active = pylink.getEYELINK()
                 el_active.stopRecording()
 
-                el_active.sendMessage("!V TRIAL_VAR el_trial %d" % exp.user.el_trial)
+                el_active.sendMessage("!V TRIAL_VAR el_trial %d" % el_trial)
                 el_active.sendMessage("!V TRIAL_VAR task tonotopy") 
                 el_active.sendMessage("!V TRIAL_VAR trial %d" % i_f)
                 el_active.sendMessage("!V TRIAL_VAR cf %d" % cf)
-                el_active.sendMessage("!V TRIAL_VAR trial_per_cycle %d" % len(cf_pool))
+                el_active.sendMessage("!V TRIAL_VAR trial_per_cycle %d" % len(freq_cycle))
                 el_active.sendMessage("!V TRIAL_VAR cycle %d" % c)
                 el_active.sendMessage("!V TRIAL_VAR cycle_per_run %d" % cycle_per_run)
                 el_active.sendMessage("!V TRIAL_VAR run_number %d" % (round_idx+1))
 
-                el_active.sendMessage('TRIAL_RESULT %d' % exp.user.pylink.TRIAL_OK)
+                el_active.sendMessage('TRIAL_RESULT %d' % pylink.TRIAL_OK)
 
                 ret_value = el_active.getRecordingStatus()
-                if (ret_value == exp.user.pylink.TRIAL_OK):
+                if (ret_value == pylink.TRIAL_OK):
                     el_active.sendMessage("TRIAL OK")
 
     #interface.destroy()
-
-    
 
     # no return for this task, data saved in file
 
