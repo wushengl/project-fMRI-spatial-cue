@@ -1,4 +1,7 @@
-
+import numpy as np
+import utils
+from scipy.signal import windows
+import itertools
 
 def generate_tone(f_l,f_h,duration,ramp,desired_rms,fs):
 
@@ -13,7 +16,7 @@ def generate_tone(f_l,f_h,duration,ramp,desired_rms,fs):
         samples = samples_low
 
     # adjust rms
-    samples = samples*desired_rms/computeRMS(samples) # np.max(samples)
+    samples = samples*desired_rms/utils.computeRMS(samples) # np.max(samples)
     
     # add linear ramp
     ramp_len = int(fs * ramp/2)
@@ -29,6 +32,76 @@ def generate_tone(f_l,f_h,duration,ramp,desired_rms,fs):
     #pdb.set_trace()
 
     return samples
+
+
+def generate_miniseq(cf,step,cf_ratio,interval,duration,ramp,volume,fs):
+    '''
+    return a dictionary with all types of mini-sequences
+    - up 7 conditions 
+    - down 7 conditions 
+    - zigzag up 5 conditions 
+    - zigzag down 5 conditions 
+    '''
+    
+    tone_1_low = cf / step
+    tone_2_low = cf
+    tone_3_low = cf * step
+
+    if cf_ratio:
+        tone_1_high = tone_1_low * cf_ratio
+        tone_2_high = tone_2_low * cf_ratio
+        tone_3_high = tone_3_low * cf_ratio
+    else:
+        tone_1_high = None
+        tone_2_high = None
+        tone_3_high = None
+
+    tone_1 = generate_tone(tone_1_low,tone_1_high,duration,ramp,volume,fs)
+    tone_2 = generate_tone(tone_2_low,tone_2_high,duration,ramp,volume,fs)
+    tone_3 = generate_tone(tone_3_low,tone_3_high,duration,ramp,volume,fs)
+    
+    interval_samps = np.zeros((int(fs * interval)))
+
+    up_seq_1 = np.concatenate((tone_1,interval_samps,tone_1,interval_samps,tone_2))
+    up_seq_2 = np.concatenate((tone_1,interval_samps,tone_1,interval_samps,tone_3))
+    up_seq_3 = np.concatenate((tone_1,interval_samps,tone_2,interval_samps,tone_2))
+    up_seq_4 = np.concatenate((tone_1,interval_samps,tone_2,interval_samps,tone_3))
+    up_seq_5 = np.concatenate((tone_1,interval_samps,tone_3,interval_samps,tone_3))
+    up_seq_6 = np.concatenate((tone_2,interval_samps,tone_2,interval_samps,tone_3))
+    up_seq_7 = np.concatenate((tone_2,interval_samps,tone_3,interval_samps,tone_3))
+
+    down_seq_1 = np.concatenate((tone_3,interval_samps,tone_1,interval_samps,tone_1))
+    down_seq_2 = np.concatenate((tone_3,interval_samps,tone_2,interval_samps,tone_1))
+    down_seq_3 = np.concatenate((tone_3,interval_samps,tone_2,interval_samps,tone_2))
+    down_seq_4 = np.concatenate((tone_3,interval_samps,tone_3,interval_samps,tone_1))
+    down_seq_5 = np.concatenate((tone_3,interval_samps,tone_3,interval_samps,tone_2))
+    down_seq_6 = np.concatenate((tone_2,interval_samps,tone_1,interval_samps,tone_1))
+    down_seq_7 = np.concatenate((tone_2,interval_samps,tone_2,interval_samps,tone_1))
+
+    zigzag_seq_1 = np.concatenate((tone_2,interval_samps,tone_1,interval_samps,tone_2))
+    zigzag_seq_2 = np.concatenate((tone_2,interval_samps,tone_1,interval_samps,tone_3))
+    zigzag_seq_3 = np.concatenate((tone_3,interval_samps,tone_1,interval_samps,tone_2))
+    zigzag_seq_4 = np.concatenate((tone_3,interval_samps,tone_1,interval_samps,tone_3))
+    zigzag_seq_5 = np.concatenate((tone_3,interval_samps,tone_2,interval_samps,tone_3))
+
+    zigzag_seq_6 = np.concatenate((tone_1,interval_samps,tone_3,interval_samps,tone_1))
+    zigzag_seq_7 = np.concatenate((tone_1,interval_samps,tone_3,interval_samps,tone_2))
+    zigzag_seq_8 = np.concatenate((tone_2,interval_samps,tone_3,interval_samps,tone_1))
+    zigzag_seq_9 = np.concatenate((tone_2,interval_samps,tone_3,interval_samps,tone_2))
+    zigzag_seq_10 = np.concatenate((tone_1,interval_samps,tone_2,interval_samps,tone_1))
+
+    seq_dict = {
+        "up_seq_1": up_seq_1, "up_seq_2":up_seq_2, "up_seq_3": up_seq_3, "up_seq_4": up_seq_4,
+        "up_seq_5": up_seq_5, "up_seq_6": up_seq_6, "up_seq_7": up_seq_7,
+        "down_seq_1": down_seq_1, "down_seq_2": down_seq_2, "down_seq_3": down_seq_3, "down_seq_4": down_seq_4, 
+        "down_seq_5": down_seq_5, "down_seq_6": down_seq_6, "down_seq_7": down_seq_7,
+        "zigzag_seq_1": zigzag_seq_1, "zigzag_seq_2": zigzag_seq_2, "zigzag_seq_3": zigzag_seq_3, "zigzag_seq_4": zigzag_seq_4, "zigzag_seq_5":zigzag_seq_5,
+        "zigzag_seq_6": zigzag_seq_6, "zigzag_seq_7": zigzag_seq_7, "zigzag_seq_8": zigzag_seq_8, "zigzag_seq_9": zigzag_seq_9, "zigzag_seq_10": zigzag_seq_10
+    }
+
+    #pdb.set_trace()
+
+    return seq_dict
 
 
 def generate_miniseq_4tone(cf,step,cf_ratio,interval,duration,ramp,volume,fs):  

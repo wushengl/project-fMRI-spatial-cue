@@ -4,18 +4,20 @@ import medussa as m
 import pandas as pd
 import os
 import pylink
-from functions import func_tonotopy
+from functions import func_zigzagtask
 from functions import func_eyetracker
 from functions import utils
+import numpy as np
+from gustav.forms import rt as theForm
 
 test_location = 'booth3'  # 'booth3' or 'scanner' to switch audio devices
-task_name = 'tonotopy'
+task_name = 'zigzagtask'
 task_mode = utils.ask_task_mode()
 subject = utils.ask_subject_id()
 ses_num = utils.ask_session_num()
-tone_type = utils.ask_tone_type()
 start_run_num = utils.ask_start_run_num() 
 
+# TODO: generate a run order and save it, so that when restart from middle, the whole study will still be balanced 
 
 #---------------------------------------
 #  load configurations
@@ -39,13 +41,9 @@ dev_ch = config['audiodev'][test_location]['dev_ch']
 fs = config['sound']['fs']
 ref_tone = config['sound']['ref_tone']
 
-frequency_cycle = config['tonotopy']['cycles'][tone_type]
-total_run_num = config['run-setting'][task_mode][task_name][tone_type]['run_num']
-cycle_per_run = config['run-setting'][task_mode][task_name][tone_type]['cycle_per_run']
-
-freq_step_direction = config['tonotopy']['freq_step_direction'] # this controls whether go from low to high or vice versa
-
 do_eyetracker = config[task_mode]['do_eyetracker']
+total_run_num = config['run-setting'][task_mode][task_name]['run_num']
+trial_per_run = config['run-setting'][task_mode][task_name]['trial_per_run']
 
 #---------------------------------------
 #  load soundtest and loudness match
@@ -80,28 +78,63 @@ if do_eyetracker:
     el_tracker.doTrackerSetup()
     pylink.closeGraphics()
 
+
 # initialize logger and open log in powershell
 
 logger = utils.init_logger(subject, task_name, save_folder)
 logger.info("--------------------------------------------------------------")
-logger.info("Now start tonotopy task...")
-logger.info("Tone type: %s"%tone_type)
-logger.info("Frequency cycle: %s"%str(frequency_cycle))
-logger.info("Cycles per run: %d"%cycle_per_run)
-logger.info("Total run number:%d"%total_run_num)
+logger.info("Now start zigzag task...")
 
-# run all tonotopy runs 
+
+# run all zigzag task runs 
+
+if start_run_num == 1:
+    # start from beginning, need to generate condition sequence 
+    cond_seq = utils.generate_cond_sequence(task_mode)
+else: 
+    # load existing sequence
+    cond_seq_path = save_folder + 'cond_sequence.csv'
+    cond_seq = np.loadtxt(cond_seq_path, delimiter=',')
+
+
+# generate all sequences needed 
+low_pitch_seqs, high_pitch_seqs = func_zigzagtask.create_miniseq(ref_rms, matched_levels_ave)
+low_pitch_seqs_ILD, low_pitch_seqs_ITD, high_pitch_seqs_ILD, high_pitch_seqs_ITD = func_zigzagtask.spatialize_miniseq(low_pitch_seqs, high_pitch_seqs)
+seqs = {
+    "low_pitch_seqs_ILD": low_pitch_seqs_ILD,
+    "low_pitch_seqs_ITD": low_pitch_seqs_ITD,
+    "high_pitch_seqs_ILD": high_pitch_seqs_ILD,
+    "high_pitch_seqs_ITD": high_pitch_seqs_ITD
+}
+
+
+# initialize interface and data file (pre exp)
+utils.init_logger(subject,task_name,save_folder)
+file_name = save_folder + subject + task_name + '.csv'
+if not os.path.isfile(file_name):
+    fid = open(file_name, 'a')
+    word_line = f"SubjectID,Trial,SpatialCond,isTargetLeft,isLowLeft,TargetNum,TargetTime,ResponseTime,TrialStartTime" 
+    fid.write(word_line + "\n")
+else:
+    fid = open(file_name, 'a')
+    fid.write("\n\n")
+
+
+# initialize interface 
+interface = theForm.Interface()
+interface.update_Title_Center(task_name)
+interface.update_Title_Right("S %s"%subject, redraw=False)
+interface.update_Prompt("Hit a key to begin", show=True, redraw=True)
+ret = interface.get_resp()
+
+# TODO: add pre exp log info 
 
 for current_run_num in range(start_run_num, total_run_num+1): 
 
     logger.info("---------------------------")
     logger.info("Now running run "+str(current_run_num))
 
-    this_cycle = frequency_cycle.copy()
-    do_switch_step = freq_step_direction[current_run_num-1]
-    if do_switch_step:
-        this_cycle.reverse()
+    this_cond = cond_seq[current_run_num-1]
+    func_zigzagtask.run_block(current_run_num, this_cond, ref_rms, matched_levels_ave, trial_per_run, save_folder, logger, task_mode, seqs, file_name, interface)
 
-    func_tonotopy.run_tonotopy_task(this_cycle, dev_id, ref_rms, probe_ild, matched_levels_ave, cycle_per_run, current_run_num, task_mode, save_folder, logger)
-
-
+    # TODO: how to pass in less parameters? 

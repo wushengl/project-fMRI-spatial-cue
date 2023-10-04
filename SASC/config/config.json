@@ -43,7 +43,8 @@
         "response_key_2": "y",
         "enter_key": "g",
         "quit_key_1": "q",
-        "quit_key_2": "/"
+        "quit_key_2": "/",
+        "trigger_key": "t"
     },
     "audiodev": {
         "booth3": {
@@ -77,7 +78,9 @@
         "ramp_duration": 0.04,
         "tone_interval": 0,
         "seq_interval": 0.24,
-        "seq_per_trial": 14
+        "seq_per_trial": 14,
+
+        "rt_good_delay": 1.5
     },
     "zigzagtask": {
         "f0": 220,
@@ -94,11 +97,16 @@
         "seq_per_trial": 10,
 
         "itd": 500e-6,
-        "ild": 10
+        "ild": 10,
+
+        "rt_good_delay": 1.5
     },
     "eyetracker": {
         "LEFT_EYE": 0,
         "RIGHT_EYE": 1,
-        "BINOCULAR": 2
+        "BINOCULAR": 2,
+
+        "area_proportion_x": 0.5,
+        "area_proportion_y": 0.5
     }
 }

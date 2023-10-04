@@ -79,7 +79,10 @@ def send_initial_info(el_tracker, SCN_WIDTH, SCN_HEIGHT):
 
     # Set the calibration target and background color
     pylink.setCalibrationColors((0, 0, 0), (128, 128, 128))
-    el_tracker.sendCommand("calibration_area_proportion = 0.5 0.5")
+
+    area_proportion_x = config['eyetracker']['area_proportion_x']
+    area_proportion_y = config['eyetracker']['area_proportion_x']
+    el_tracker.sendCommand("calibration_area_proportion = %s %s"%(str(area_proportion_x), str(area_proportion_y)))
 
     # select best size for calibration target
     pylink.setTargetSize(int(SCN_WIDTH/70.0), int(SCN_WIDTH/300.))

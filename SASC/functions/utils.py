@@ -175,7 +175,26 @@ def init_logger(subject,task_name,save_folder):
     return logger
 
 
+def generate_cond_sequence():
+    '''
+    This function generates a sequence of conditions, including
+    - cue: itd / ild
+    - isTargetLeft: True / False
+    - isLowLeft: True / False 
+
+    Given task mode, 
+    - if task mode: return 80 balanced trials 
+    - if debug mode: return random trials 
+
+    Returned sequences will be list of length trial_num, each element is list of 3, including value for 3 factors.
+    Also save the condition sequence.
+    '''
+    # TODO: finish this function
+    pass
+
+
 if __name__ == '__main__':
 
-    # test codes
+    # test popup window
     suggest_sys_volume()
+

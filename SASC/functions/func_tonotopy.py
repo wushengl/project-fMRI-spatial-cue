@@ -9,6 +9,7 @@ import random
 import psylab
 import pylink
 import func_eyetracker
+import os
 
 
 config_file = 'config/config.json'
@@ -101,7 +102,6 @@ def generate_trial_tonotopy_1back(params,seq_dict):
 
     cf = params["cf"]
     tone_duration = params["tone_duration"]
-    tone_interval = params["tone_interval"]
     seq_interval = params["seq_interval"]
     seq_per_trial = params["seq_per_trial"]
     tarN_T = params["target_number_T"]
@@ -171,14 +171,14 @@ def generate_trial_tonotopy_1back(params,seq_dict):
     return trial, trial_info
 
 
-def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle_per_run, round_idx, task_mode, save_path):
+def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle_per_run, round_idx, task_mode, save_path, logger):
 
     do_eyetracker = config[task_mode]['do_eyetracker']
     tone_duration = config['tonotopy']['tone_duration']
-    ramp_duration = config['tonotopy']['ramp_duration']
     tone_interval = config['tonotopy']['tone_interval']
     seq_interval = config['tonotopy']['seq_interval']
     seq_per_trial = config['tonotopy']['seq_per_trial']
+    rt_good_delay = config['tonotopy']['rt_good_delay']
     fs = config['sound']['fs']
     subject = save_path.split('/')[-2]
     
@@ -186,7 +186,20 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
     LEFT_EYE = config['eyetracker']['LEFT_EYE'] 
     RIGHT_EYE = config['eyetracker']['RIGHT_EYE'] 
     BINOCULAR = config['eyetracker']['BINOCULAR'] 
-    el_trial = 1 + (round_idx-1)*cycle_per_run*len(freq_cycle)
+    el_trial = 1 # + (round_idx-1)*cycle_per_run*len(freq_cycle)
+
+    if do_eyetracker:
+        tonetype_str = 'pt' if len(freq_cycle) == 5 else 'ct'
+        edf_file_name = subject + tonetype_str + str(round_idx) + '.EDF'
+
+        if os.path.exists(edf_file_name):
+            edf_file_name = edf_file_name.split('.')[0] + 'd.EDF'
+
+        el_tracker = func_eyetracker.get_eyetracker()
+        el_tracker.openDataFile(edf_file_name) 
+        # TODO: not sure if it works to have file opened later than sending those commands
+
+        logger.info("Eye tracker file opened!")
 
 
     # -------------------- initialization --------------------------
@@ -204,7 +217,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
     interface.update_Title_Center("Tonotopy scan task")
     utils.wait_for_subject(interface)
 
-    interface.update_Prompt("Waiting for trigger (t)\nto start new trial...", show=True,
+    interface.update_Prompt("Waiting for trigger (t) to start...", show=True,
                             redraw=True)  # Hit a key to start this trial
     wait = True
     while wait:
@@ -213,16 +226,22 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
             trial_start_time = datetime.now()
             wait = False
 
+    logger.info("Trigger received at %s"%trial_start_time.strftime("%H:%M:%S.%f"))
+
     # -------------------- start the experiment --------------------------
 
     for c in range(cycle_per_run): # e.g. 5 frequencies/cycle, 8 cycles/run, 4 runs
 
+        logger.info("------------------------")
+        logger.info("Now starting cycle %d..."%(c+1)) 
         interface.update_Prompt("Now starting cycle " + str(c + 1) + "...", show=True,redraw=True)
         time.sleep(2)
 
         seqs_keys = all_seqs.keys()
 
         for i_f, cf_key in enumerate(seqs_keys):
+
+            logger.info("*** Starting frequency %s..."%cf_key)
 
             if do_eyetracker:
 
@@ -289,7 +308,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
             interface.update_Prompt("   ██   \n   ██   \n████████\n   ██   \n   ██   ", show=True, redraw=True)
 
             target_times = trial_info['target_time']
-            target_times_end = target_times.copy() + exp.stim.rt_good_delay
+            target_times_end = target_times.copy() + rt_good_delay
 
             audiodev = m.open_device(*dev_id)
             s = audiodev.open_array(trial, fs)
@@ -328,7 +347,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
                 ret = interface.get_resp(timeout=this_wait_ms / 1000)
                 this_current_ms = interface.timestamp_ms()
                 this_elapsed_ms = this_current_ms - start_ms
-                if ret in ['b','y']:
+                if ret in ['b','y']:  # TODO: remove all buttons that are not controlled by config 
                     resp = np.round(this_elapsed_ms / 1000, 3)
                     responses.append(str(resp))
 
@@ -338,7 +357,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
                     bool_valid = bool_1 * bool_2  # same as "AND"
 
                     if bool_valid.any():
-                        valid_responses.append(str(resp))
+                        valid_responses.append(str(resp)) # why this is not being saved to file? 
                         valid_response_count += 1
                         this_tar_idx = np.where(bool_valid)[0][0]  # index of first valid target
                         target_times = np.delete(target_times, this_tar_idx)
@@ -350,6 +369,11 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
 
             interface.update_Prompt("Waiting...", show=True, redraw=True)
             time.sleep(0.8)
+
+            logger.info("Target num: %d"%params['target_number_T'])
+            logger.info("Responses received: %s"%(','.join(responses)))
+            logger.info("Valid responses: %s"%(','.join(valid_responses)))
+            logger.info("***")
 
             if do_eyetracker:
                 el_active = pylink.getEYELINK()
@@ -369,6 +393,32 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
                 ret_value = el_active.getRecordingStatus()
                 if (ret_value == pylink.TRIAL_OK):
                     el_active.sendMessage("TRIAL OK")
+
+        logger.info("Finished cycle %d!"%(c+1)) 
+
+    logger.info("==============")
+    logger.info("Run finished!")
+    logger.info("==============")
+
+    if do_eyetracker:
+
+        logger.info("Now closing and receiving eyetracker file...")
+        logger.info("File name: %s"%edf_file_name)
+
+        # send back file after each run
+        el_active = pylink.getEYELINK()
+        el_active.setOfflineMode()
+        
+        # Close the edf data file on the Host
+        el_active.closeDataFile()
+
+        local_file_name = os.path.join(save_path, edf_file_name)
+        try:
+            el_active.receiveDataFile(edf_file_name, local_file_name)
+        except RuntimeError as error:
+            print('ERROR:', error)
+
+        logger.info("Done!")
 
     #interface.destroy()
 
