@@ -13,7 +13,7 @@
                 }
             },
             "zigzagtask":{
-                "run_num": 2,
+                "run_num": 1,
                 "trial_per_run": 2
             }
         },

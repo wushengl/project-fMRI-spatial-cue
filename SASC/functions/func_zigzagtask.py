@@ -1,5 +1,5 @@
-import utils
-import func_toneseq
+from . import utils
+from . import func_toneseq
 import medussa as m
 from gustav.forms import rt as theForm
 from datetime import datetime
@@ -8,8 +8,8 @@ import numpy as np
 import random
 import psylab
 import pylink
-import func_eyetracker
-import func_toneseq
+from . import func_eyetracker
+from . import func_toneseq
 import os
 
 
@@ -331,7 +331,7 @@ def play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, pr
     target_times = trial_info['target_time']
     target_times_end = target_times.copy() + rt_good_delay
 
-    s = audiodev.open_array(stim_out,fs)
+    s = audiodev.open_array(stim_out,fs) # TODO: shit, this is not audio dev :)
 
     # TODO: check if this is working correctly
     mix_mat = np.zeros((2, 2))
@@ -403,7 +403,7 @@ def play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, pr
     fid.write(word_line+"\n")
 
 
-def run_trial(seqs, this_cond, file_name, subject, task_mode):
+def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interface, ref_rms, probe_ild):
     '''
     mostly pre trial stuff and post trial stuff:
     - parameters 
@@ -473,7 +473,7 @@ def run_trial(seqs, this_cond, file_name, subject, task_mode):
     fid.write(word_line+',')
 
     stim_out = test_trial
-    play_trial(stim_out)
+    play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, probe_ild, task_mode, file_name)
     
         
     # TODO: add post trial log info 
@@ -495,7 +495,7 @@ def run_block(current_run_num,this_cond, ref_rms, matched_levels_ave, trial_per_
 
     # -------------------- eyetracker --------------------------
 
-    do_eyetracker = config[task_mode]['do_eyetracker']
+    do_eyetracker = config['run-setting'][task_mode]['do_eyetracker']
     
 
     if do_eyetracker:
@@ -506,7 +506,10 @@ def run_block(current_run_num,this_cond, ref_rms, matched_levels_ave, trial_per_
 
         el_tracker = func_eyetracker.get_eyetracker()
         el_tracker.openDataFile(edf_file_name) 
-        # TODO: not sure if it works to have file opened later than sending those commands
+
+        # add a preamble text (data file header)
+        preamble_text = 'RECORDED BY %s' % os.path.basename(__file__)
+        el_tracker.sendCommand("add_file_preamble_text '%s'" % preamble_text)
 
         logger.info("Eye tracker file opened!")
 
@@ -562,7 +565,7 @@ def run_block(current_run_num,this_cond, ref_rms, matched_levels_ave, trial_per_
             # log a message to mark the time at which the initial display came on
             el_tracker.sendMessage("SYNCTIME")
 
-        run_trial()
+        run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interface, ref_rms, probe_ild)
 
         logger.info("Trial finished!")
 

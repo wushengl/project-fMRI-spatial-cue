@@ -1,21 +1,18 @@
-import utils
-import func_toneseq
+import os
 import medussa as m
 from gustav.forms import rt as theForm
 from datetime import datetime
 import time
 import numpy as np
 import random
-import psylab
 import pylink
-import func_eyetracker
-import os
+from . import func_eyetracker
+from . import func_toneseq
+from . import utils
 
 
 config_file = 'config/config.json'
 config = utils.get_config(config_file)
-
-
 
 def generate_all_seqs(freq_cycle, matched_levels, ref_rms):
 
@@ -173,7 +170,7 @@ def generate_trial_tonotopy_1back(params,seq_dict):
 
 def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle_per_run, round_idx, task_mode, save_path, logger):
 
-    do_eyetracker = config[task_mode]['do_eyetracker']
+    do_eyetracker = config['run-setting'][task_mode]['do_eyetracker']
     tone_duration = config['tonotopy']['tone_duration']
     tone_interval = config['tonotopy']['tone_interval']
     seq_interval = config['tonotopy']['seq_interval']
@@ -181,6 +178,10 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
     rt_good_delay = config['tonotopy']['rt_good_delay']
     fs = config['sound']['fs']
     subject = save_path.split('/')[-2]
+
+    response_key_1 = config['keys']['response_key_1']
+    response_key_2 = config['keys']['response_key_2']
+    trigger_key = config['keys']['trigger_key']
     
     
     LEFT_EYE = config['eyetracker']['LEFT_EYE'] 
@@ -195,9 +196,12 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
         if os.path.exists(edf_file_name):
             edf_file_name = edf_file_name.split('.')[0] + 'd.EDF'
 
-        el_tracker = func_eyetracker.get_eyetracker()
+        el_tracker = func_eyetracker.get_eyetracker() 
         el_tracker.openDataFile(edf_file_name) 
-        # TODO: not sure if it works to have file opened later than sending those commands
+
+        # add a preamble text (data file header)
+        preamble_text = 'RECORDED BY %s' % os.path.basename(__file__)
+        el_tracker.sendCommand("add_file_preamble_text '%s'" % preamble_text)
 
         logger.info("Eye tracker file opened!")
 
@@ -222,7 +226,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
     wait = True
     while wait:
         ret = interface.get_resp()
-        if ret in ['t']:
+        if ret in [trigger_key]:
             trial_start_time = datetime.now()
             wait = False
 
@@ -254,7 +258,6 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
 
                 # log a TRIALID message to mark trial start, before starting to record.
                 # EyeLink Data Viewer defines the start of a trial by the TRIALID message.
-                print("exp.user.el_trial = %d" % el_trial)
                 el_tracker.sendMessage("TRIALID %d" % el_trial)
                 el_trial += 1
 
@@ -313,13 +316,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
             audiodev = m.open_device(*dev_id)
             s = audiodev.open_array(trial, fs)
 
-            mix_mat = np.zeros((2, 2)) # TODO: check if this is correct 
-            if probe_ild > 0:
-                mix_mat[0, 0] = psylab.signal.atten(1, probe_ild)
-                mix_mat[1, 1] = 1
-            else:
-                mix_mat[1, 1] = psylab.signal.atten(1, -probe_ild)
-                mix_mat[0, 0] = 1
+            mix_mat = utils.apply_probe_ild(np.zeros((2, 2)),probe_ild)
             s.mix_mat = mix_mat
 
             if do_eyetracker:
@@ -340,14 +337,13 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
             dur_ms = len(trial) / fs * 1000
             this_wait_ms = 500
             s.play()
-            #time.sleep(1)
 
             start_ms = interface.timestamp_ms()
             while s.is_playing:
                 ret = interface.get_resp(timeout=this_wait_ms / 1000)
                 this_current_ms = interface.timestamp_ms()
                 this_elapsed_ms = this_current_ms - start_ms
-                if ret in ['b','y']:  # TODO: remove all buttons that are not controlled by config 
+                if ret in [response_key_1,response_key_2]:  
                     resp = np.round(this_elapsed_ms / 1000, 3)
                     responses.append(str(resp))
 

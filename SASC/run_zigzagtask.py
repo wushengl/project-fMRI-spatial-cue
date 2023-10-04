@@ -12,10 +12,10 @@ from gustav.forms import rt as theForm
 
 test_location = 'booth3'  # 'booth3' or 'scanner' to switch audio devices
 task_name = 'zigzagtask'
-task_mode = utils.ask_task_mode()
-subject = utils.ask_subject_id()
-ses_num = utils.ask_session_num()
-start_run_num = utils.ask_start_run_num() 
+task_mode = 'debug' # utils.ask_task_mode()
+subject = 'test' # utils.ask_subject_id()
+ses_num = '1' # utils.ask_session_num()
+start_run_num = 1 # int(utils.ask_start_run_num())
 
 # TODO: generate a run order and save it, so that when restart from middle, the whole study will still be balanced 
 
@@ -41,7 +41,7 @@ dev_ch = config['audiodev'][test_location]['dev_ch']
 fs = config['sound']['fs']
 ref_tone = config['sound']['ref_tone']
 
-do_eyetracker = config[task_mode]['do_eyetracker']
+do_eyetracker = config['run-setting'][task_mode]['do_eyetracker']
 total_run_num = config['run-setting'][task_mode][task_name]['run_num']
 trial_per_run = config['run-setting'][task_mode][task_name]['trial_per_run']
 
@@ -72,7 +72,6 @@ else:
 if do_eyetracker:
     el_tracker = func_eyetracker.init_eyetracker()
     SCN_WIDTH, SCN_HEIGHT = func_eyetracker.init_eyetracker_graphics()
-
     func_eyetracker.send_initial_info(el_tracker, SCN_WIDTH, SCN_HEIGHT)
 
     el_tracker.doTrackerSetup()

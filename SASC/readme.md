@@ -37,3 +37,7 @@ The tasks will be arranged as
 
 ### To run a subject
 - For each session, MUST run soundtest first, which will save a ref_rms and a probe_ild for adjusting the sound level and get centered image. 
+
+
+### Other notes
+1. The reason why Chris used both ord() and curses for keyboard inputs is that, gustav interface cannot recognize enter key input, so he's using another keyboard listener for those keys not covered by gustav interface.get_resp().

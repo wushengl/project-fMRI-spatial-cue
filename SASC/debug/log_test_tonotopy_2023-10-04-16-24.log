@@ -1,0 +1,44 @@
+--------------------------------------------------------------
+Now start tonotopy task...
+Tone type: pure
+Frequency cycle: [300, 566, 1068, 2016, 3805]
+Cycles per run: 1
+Total run number:1
+---------------------------
+Now running run 1
+Eye tracker file opened!
+Trigger received at 16:34:02.063019
+------------------------
+Now starting cycle 1...
+*** Starting frequency 300...
+Target num: 3
+Responses received: 10.136,10.58,10.797,10.96
+Valid responses: 10.96
+***
+*** Starting frequency 566...
+Target num: 3
+Responses received: 1.004,1.503,1.722,2.284,2.447,3.002,3.165,3.614,3.776,5.734,5.896,6.956,7.12,8.345,8.565,8.951,9.169,11.185,11.629
+Valid responses: 3.002,8.565,11.185
+***
+*** Starting frequency 1068...
+Target num: 3
+Responses received: 8.552,9.277,9.496,9.714,10.159,10.378,10.54
+Valid responses: 8.552
+***
+*** Starting frequency 2016...
+Target num: 2
+Responses received: 0.385,0.996,1.438
+Valid responses: 1.438
+***
+*** Starting frequency 3805...
+Target num: 1
+Responses received: 1.287,1.847,2.684,4.264,10.025,10.302,10.799,11.073
+Valid responses: 
+***
+Finished cycle 1!
+==============
+Run finished!
+==============
+Now closing and receiving eyetracker file...
+File name: testpt1.EDF
+Done!

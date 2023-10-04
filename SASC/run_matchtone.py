@@ -1,18 +1,12 @@
-import json
-import psylab
-import medussa as m
-import pandas as pd
-import os
+import numpy as np
 from functions import func_matchtone
 from functions import utils
-import numpy as np
+
 
 test_location = 'booth3'  # 'booth3' or 'scanner' to switch audio devices
 task_name = 'matchtone'
 subject = utils.ask_subject_id()
 ses_num = utils.ask_session_num()
-
-# TODO: need to test this script
 
 #---------------------------------------
 #  load configurations
@@ -25,8 +19,8 @@ data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 
 # related parameters
-key_down = config['keys']['response_key_1'] # TODO: make sure these keys are correctly matched
-key_up = config['keys']['response_key_2'] 
+key_down = config['keys']['response_key_1']   # b down
+key_up = config['keys']['response_key_2']     # y up
 key_enter = config['keys']['enter_key'] 
 accept_keys = [key_down, key_up, key_enter]
 
@@ -72,6 +66,7 @@ logger.info("Now start loudness matching...")
 logger.info("Matching pool: "+str(matching_pool))
 
 
+# --------------------------------------
 # First, run 2 baseline match 
 
 all_matched_levels = np.empty((0,len(matching_pool)))
@@ -81,7 +76,7 @@ for i in range(minimum_match_time):
 
     # matched_levels is a list of matched level difference, without 2016Hz
 
-    matched_levels = func_matchtone.get_loudness_match(ref_tone,matching_pool,dev_id[0],tone_level_start=ref_rms,round_idx=i, key_up=ord(key_up), key_dn=ord(key_down), key_enter=key_enter)
+    matched_levels = func_matchtone.get_loudness_match(ref_tone,matching_pool,dev_id,tone_level_start=ref_rms,round_idx=i, key_up=key_up, key_dn=key_down, key_enter=key_enter)
     all_matched_levels = np.concatenate((all_matched_levels,np.array(matched_levels).reshape(1,-1)),axis=0)
     logger.info(matched_levels)
 
@@ -92,10 +87,11 @@ all_matched_levels[abs(all_matched_levels) >= extreme_threshold] = np.nan
 lower_bound, upper_bound, last_mean = func_matchtone.find_convergence_bounds(all_matched_levels)
 
 
+# --------------------------------------
 # Then, start adaptive matching process
 
 logger.info("Finished baseline matching, now start adaptive matching...")
-conv_check = np.zeros(all_matched_levels.shape(1)).astype(int)
+conv_check = np.zeros(all_matched_levels.shape[1]).astype(int)
 this_matching_pool = np.array(matching_pool.copy(),dtype=object)
 
 
@@ -106,11 +102,11 @@ while np.sum(conv_check)<len(conv_check): # stop when conv_check = len(conv_chec
     logger.info("This matching pool: " + str(this_matching_pool))
 
     # update matching pool, only leave those haven't converged yet
-    this_matching_pool = np.array(matching_pool)[(1-conv_check).astype(bool)]
+    this_matching_pool = np.array(matching_pool,dtype=object)[(1-conv_check).astype(bool)]
 
     # get new matching
     i+=1
-    this_matched_levels = func_matchtone.get_loudness_match(ref_tone, list(this_matching_pool), dev_id[0],tone_level_start=ref_rms, round_idx=i,key_up=ord(key_up), key_dn=ord(key_down), key_enter=key_enter)
+    this_matched_levels = func_matchtone.get_loudness_match(ref_tone, list(this_matching_pool), dev_id,tone_level_start=ref_rms, round_idx=i,key_up=key_up, key_dn=key_down, key_enter=key_enter)
 
     # add new matching to all matched levels
     matched_levels = func_matchtone.fill_matched_levels(this_matched_levels,conv_check,last_mean)

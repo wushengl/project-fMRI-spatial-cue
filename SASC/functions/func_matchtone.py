@@ -1,22 +1,8 @@
 import numpy as np
-import os
-import soundfile as sf
-import sounddevice as sd
-import random
-import time
-from scipy.signal import windows
-
-import matplotlib.pylab as plt
-import pdb
-import itertools
-
-import curses
 import medussa as m
 import psylab
 from gustav.forms import rt as theForm
-from datetime import datetime
-import utils
-
+from . import utils
 
 def find_convergence_bounds(all_matched_levels):
     '''
@@ -35,12 +21,18 @@ def find_convergence_bounds(all_matched_levels):
 
 
 def fill_matched_levels(this_matched_levels, conv_check, last_mean):
+    '''
+    Given new matched levels for part of the matching pool, this function create an array with same size as 
+    matching pool, fill in new matched levels for those frequencies having new matches, and fill in past average 
+    matched values for those frequencies that the matching has already converged.
+    '''
     matched_levels = np.zeros(len(conv_check))
     matched_levels[conv_check.astype(bool)] = last_mean[conv_check.astype(bool)] # set matched values to last mean if already converges
     matched_levels[(1-conv_check).astype(bool)] = this_matched_levels              # add this matched values to this sample
 
+    return matched_levels
 
-def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_level_start=.5, isi_s=.2, do_addnoise=False, step=0.5, round_idx=0, key_up=curses.KEY_UP, key_dn=curses.KEY_DOWN, key_enter=''):
+def get_loudness_match(ref, probe, dev_id, fs=44100, tone_dur_s=.5, tone_level_start=.5, isi_s=.2, do_addnoise=False, step=0.5, round_idx=0, key_up='', key_dn='', key_enter=''):
     """A loudness matching task
 
         Parameters
@@ -57,18 +49,8 @@ def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_leve
             audio_dev should be an index to an audio device, as specified by
             medussa.print_available_devices()
 
-        fs : int
-            The sampling frequency to use
-
-        tone_dur_s : float
-            If tones are being used, the tone duration, in seconds
-
         tone_level_start : float
             If tones are being used, the tone level to start with
-
-        isi_s : float
-            The signals are presented 1 after the other in a looped fashion. isi_s is the amount
-            of time, in seconds, to wait before playing each signal again.
 
         Returns
         -------
@@ -79,7 +61,7 @@ def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_leve
 
     """
 
-    d = m.open_device(audio_dev, audio_dev, 2) 
+    d = m.open_device(*dev_id) 
 
     if not isinstance(probe, list):
         probes = [probe]
@@ -87,102 +69,83 @@ def get_loudness_match(ref, probe, audio_dev, fs=44100, tone_dur_s=.5, tone_leve
         probes = probe.copy()
 
     isi_sig = np.zeros(psylab.signal.ms2samp(isi_s * 1000, fs))
+    
     interface = theForm.Interface()
-
-    interface.update_Prompt("Now starting loudness matching round "+str(round_idx+1)+"\n\nHit a key to continue",show=True, redraw=True)
-    ret = interface.get_resp()
-
-    interface.update_Title_Center("Loudness Matching")
-    interface.update_Prompt("Now you will match the loudness of 2 tones\n\nPress your button to continue\n(q or / to quit)",
-                            show=True, redraw=True)
-    ret = interface.get_resp()
+    interface.update_Prompt("Now starting loudness matching round "+str(round_idx+1)+"\n\nPress your button to continue",show=True, redraw=True)
+    utils.wait_for_subject(interface)
 
     responses = []
 
-    if ret not in ['q', '/']:
+    for probe in probes:
+        interface.update_Prompt(
+            "Use up (button which?) & down (button which?) to match\nthe loudness of tone 2 to tone 1,\nuntil they sound samely loud to you\n\nPress (button which?) when finished",
+            show=True, redraw=True)
+        if isinstance(probe, (int, float, complex, list)):
+            if isinstance(probe,list): # complex tone
+                probe_sig_1 = psylab.signal.tone(probe[0], fs, tone_dur_s*1000, amp=0.5)
+                probe_sig_2 = psylab.signal.tone(probe[1], fs, tone_dur_s*1000, amp=0.5)
 
-        utils.wait_for_subject(interface)
+                probe_sig_1 = probe_sig_1*tone_level_start/utils.computeRMS(probe_sig_1)
+                probe_sig_2 = probe_sig_2*tone_level_start/utils.computeRMS(probe_sig_2)
 
-        for probe in probes:
-            interface.update_Prompt(
-                "Use up (button which?) & down (button which?) to match\nthe loudness of tone 2 to tone 1,\nuntil they sound samely loud to you\n\nPress (button which?) when finished\n(q or / to quit)",
-                show=True, redraw=True)
-            if isinstance(probe, (int, float, complex, list)):
-                if isinstance(probe,list): # complex tone
-                    probe_sig_1 = psylab.signal.tone(probe[0], fs, tone_dur_s*1000, amp=0.5)
-                    probe_sig_2 = psylab.signal.tone(probe[1], fs, tone_dur_s*1000, amp=0.5)
+                probe_sig = probe_sig_1 + probe_sig_2
+                probe_sig = probe_sig*tone_level_start/utils.computeRMS(probe_sig)
+            else: # pure tone
+                probe_sig = psylab.signal.tone(probe, fs, tone_dur_s * 1000, amp=0.5)
+                probe_sig = probe_sig * tone_level_start/utils.computeRMS(probe_sig)
+            probe_sig = psylab.signal.ramps(probe_sig, fs)
+        else:
+            # Assume signal
+            probe_sig = probe
 
-                    probe_sig_1 = probe_sig_1*tone_level_start/utils.computeRMS(probe_sig_1)
-                    probe_sig_2 = probe_sig_2*tone_level_start/utils.computeRMS(probe_sig_2)
+        if isinstance(ref, (int, float, complex)):
+            # Rebuild ref_sig each time, otherwise it will leak
+            ref_sig = psylab.signal.tone(ref, fs, tone_dur_s * 1000, amp=0.5)
+            ref_sig = ref_sig * tone_level_start/utils.computeRMS(ref_sig)
+            ref_sig = psylab.signal.ramps(ref_sig, fs)
+        else:
+            ref_sig = ref
 
-                    probe_sig = probe_sig_1 + probe_sig_2
-                    probe_sig = probe_sig*tone_level_start/utils.computeRMS(probe_sig)
-                else: # pure tone
-                    probe_sig = psylab.signal.tone(probe, fs, tone_dur_s * 1000, amp=0.5)
-                    probe_sig = probe_sig * tone_level_start/utils.computeRMS(probe_sig)
-                probe_sig = psylab.signal.ramps(probe_sig, fs)
-            else:
-                # Assume signal
-                probe_sig = probe
+        pad_ref = np.zeros(ref_sig.size)
+        pad_probe = np.zeros(probe_sig.size)
 
-            if isinstance(ref, (int, float, complex)):
-                # Rebuild ref_sig each time, otherwise it will leak
-                ref_sig = psylab.signal.tone(ref, fs, tone_dur_s * 1000, amp=0.5)
-                ref_sig = ref_sig * tone_level_start/utils.computeRMS(ref_sig)
-                ref_sig = psylab.signal.ramps(ref_sig, fs)
-            else:
-                ref_sig = ref
+        ref_sig_build = np.concatenate((ref_sig, pad_probe, isi_sig))
+        probe_sig_build = np.concatenate((pad_ref, probe_sig, isi_sig))
+        while ref_sig_build.size < fs * 5:
+            ref_sig_build = np.concatenate((ref_sig_build, ref_sig, pad_probe, isi_sig))
+            probe_sig_build = np.concatenate((probe_sig_build, pad_ref, probe_sig, isi_sig))
 
-            pad_ref = np.zeros(ref_sig.size)
-            pad_probe = np.zeros(probe_sig.size)
+        sig = np.vstack((ref_sig_build, probe_sig_build)).T  # (264600, 2)
 
-            ref_sig_build = np.concatenate((ref_sig, pad_probe, isi_sig))
-            probe_sig_build = np.concatenate((pad_ref, probe_sig, isi_sig))
-            while ref_sig_build.size < fs * 5:
-                ref_sig_build = np.concatenate((ref_sig_build, ref_sig, pad_probe, isi_sig))
-                probe_sig_build = np.concatenate((probe_sig_build, pad_ref, probe_sig, isi_sig))
+        stream = d.open_array(sig, fs)
+        stream.loop(True)
 
-            sig = np.vstack((ref_sig_build, probe_sig_build)).T  # (264600, 2)
+        mix_mat = stream.mix_mat
+        mix_mat[:] = 1
+        stream.mix_mat = mix_mat
 
-            #print(sig.shape)
+        stream.play()
 
-            stream = d.open_array(sig, fs)
-            stream.loop(True)
-            mix_mat = stream.mix_mat
+        quit = False
+        probe_level = 1
+        while not quit:
+            ret = interface.get_resp()
+            interface.update_Status_Left(f'Entered: {ret}', redraw=True)
 
-            mix_mat[:] = 1
-
+            if ret == key_enter:
+                interface.update_Status_Right('Enter', redraw=True)
+                quit = True
+            elif ret == key_dn:  # Down
+                interface.update_Status_Right('Down', redraw=True)
+                probe_level = psylab.signal.atten(probe_level, step)
+            elif ret == key_up:  # Up
+                interface.update_Status_Right('Up', redraw=True)
+                probe_level = psylab.signal.atten(probe_level, -step)
+            mix_mat[:, 1] = probe_level
             stream.mix_mat = mix_mat
 
-            stream.play()
+        responses.append(20 * np.log10(probe_level / 1))
+        stream.stop()
+    interface.destroy()
 
-            quit = False
-            quit_request = False
-            probe_level = 1
-            while not quit:
-                ret = interface.get_resp()
-                interface.update_Status_Left(f'Enter: {ord(ret)}; {curses.KEY_ENTER}', redraw=True)
-                if ret == 'q' or ret == '/':
-                    quit = True
-                    quit_request = True
-                elif ord(ret) in (curses.KEY_ENTER, 10, 13, ord(key_enter)):
-                    interface.update_Status_Right('Enter', redraw=True)
-                    quit = True
-                elif ord(ret) == key_dn:  # Down
-                    interface.update_Status_Right('Down', redraw=True)
-                    probe_level = psylab.signal.atten(probe_level, step)
-                elif ord(ret) == key_up:  # Up
-                    interface.update_Status_Right('Up', redraw=True)
-                    probe_level = psylab.signal.atten(probe_level, -step)
-                mix_mat[:, 1] = probe_level
-                stream.mix_mat = mix_mat
-            if quit_request:
-                break
-            else:
-                responses.append(20 * np.log10(probe_level / 1))
-            stream.stop()
-        interface.destroy()
-        if len(responses) == 1:
-            return responses[0]
-        else:
-            return responses
+    return responses

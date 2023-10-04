@@ -1,8 +1,8 @@
 import pylink
 import os
 from screeninfo import get_monitors
-import utils
 import sys
+from . import utils
 
 config_file = 'config/config.json'
 config = utils.get_config(config_file)
@@ -37,10 +37,6 @@ def init_eyetracker_graphics():
 
 
 def send_initial_info(el_tracker, SCN_WIDTH, SCN_HEIGHT):
-
-    # add a preamble text (data file header)
-    preamble_text = 'RECORDED BY %s' % os.path.basename(__file__)
-    el_tracker.sendCommand("add_file_preamble_text '%s'" % preamble_text)
 
     # Step 4: setting up tracking, recording and calibration options
     pylink.flushGetkeyQueue()
@@ -92,7 +88,6 @@ def send_initial_info(el_tracker, SCN_WIDTH, SCN_HEIGHT):
     pylink.setDriftCorrectSounds("", "", "")
 
 
-
 def get_eyetracker():
     el_tracker = pylink.getEYELINK()
 
@@ -100,3 +95,7 @@ def get_eyetracker():
         raise RuntimeError("Eye tracker is not connected!")
     
     return el_tracker
+
+if __name__ == '__main__':
+    
+    init_eyetracker()

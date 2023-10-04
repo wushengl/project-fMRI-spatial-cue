@@ -4,7 +4,7 @@ import json
 from tkinter import messagebox
 from tkinter import simpledialog
 import pandas as pd
-import datetime
+from datetime import datetime
 import os
 import logging
 import subprocess
@@ -22,6 +22,16 @@ def attenuate_db(sig,db):
     out = sig * np.exp(np.float32(-db)/8.6860)
     return out
 
+def apply_probe_ild(mix_mat,probe_ild):
+    if probe_ild > 0:
+        # move right by attenuating left
+        mix_mat[0,0] = psylab.signal.atten(1, probe_ild)
+        mix_mat[1,1] = 1
+    else:
+        # move left by attenuating right 
+        mix_mat[1,1] = psylab.signal.atten(1, -probe_ild)
+        mix_mat[0,0] = 1
+    return mix_mat
 
 def ask_task_mode():
     task_mode = simpledialog.askstring("SASC-fMRI", "Enter task mode (task / debug): ")
@@ -53,6 +63,14 @@ def get_config(config_file):
     return config
 
 def find_dev_id(dev_name, dev_ch):
+    '''
+    For medussa, to open an audio device, you need the device id, which is the index of the device in 
+    all available devices. And then you can open the device with 
+    
+    audiodev = m.open_device(id, id, ch)
+
+    Sometimes he has dev_id = id, id, ch. So note which is actually being passed. 
+    '''
     devs = m.get_available_devices()
     dev_id = None
     for i,di in enumerate(devs):
@@ -158,12 +176,15 @@ def init_logger(subject,task_name,save_folder):
     '''
     This function will initialize a logger and return the logger.
     '''
+    log_folder = save_folder + 'logs/'
+    if not os.path.exists(log_folder):
+        os.makedirs(log_folder)
 
     now = datetime.now()
     time_str = now.strftime("%Y-%m-%d-%H-%M")
 
     log_file_name = 'log_'+subject+'_'+task_name+'_'+time_str+'.log'
-    log_file_path = os.path.join(save_folder,log_file_name)
+    log_file_path = os.path.join(log_folder,log_file_name)
     logger = logging.getLogger('logger_'+task_name)
     logger.setLevel(logging.INFO)
     file_handler = logging.FileHandler(log_file_path)
@@ -175,7 +196,7 @@ def init_logger(subject,task_name,save_folder):
     return logger
 
 
-def generate_cond_sequence():
+def generate_cond_sequence(task_mode):
     '''
     This function generates a sequence of conditions, including
     - cue: itd / ild
@@ -190,11 +211,15 @@ def generate_cond_sequence():
     Also save the condition sequence.
     '''
     # TODO: finish this function
-    pass
+
+    return [['ild',True,True],['itd',False,False]]
 
 
 if __name__ == '__main__':
 
     # test popup window
-    suggest_sys_volume()
+    # suggest_sys_volume()
+
+    # test init logger
+    init_logger('test','testtask','../data/test')
 

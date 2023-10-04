@@ -1,8 +1,3 @@
-import json
-import psylab
-import medussa as m
-import pandas as pd
-import os
 import pylink
 from functions import func_tonotopy
 from functions import func_eyetracker
@@ -14,8 +9,11 @@ task_mode = utils.ask_task_mode()
 subject = utils.ask_subject_id()
 ses_num = utils.ask_session_num()
 tone_type = utils.ask_tone_type()
-start_run_num = utils.ask_start_run_num() 
+start_run_num = int(utils.ask_start_run_num())
 
+# FIXME: 
+# when testing in booth3 without an eye present at the eyetracker, the saved file cannot be opened,
+# error message saying it's corrupted 
 
 #---------------------------------------
 #  load configurations
@@ -28,7 +26,7 @@ data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 
 # related parameters
-key_1 = config['keys']['response_key_1'] # TODO: make sure these keys are correctly matched
+key_1 = config['keys']['response_key_1'] 
 key_2 = config['keys']['response_key_2'] 
 key_enter = config['keys']['enter_key'] 
 accept_keys = [key_1, key_2, key_enter]
@@ -45,7 +43,7 @@ cycle_per_run = config['run-setting'][task_mode][task_name][tone_type]['cycle_pe
 
 freq_step_direction = config['tonotopy']['freq_step_direction'] # this controls whether go from low to high or vice versa
 
-do_eyetracker = config[task_mode]['do_eyetracker']
+do_eyetracker = config['run-setting'][task_mode]['do_eyetracker']
 
 #---------------------------------------
 #  load soundtest and loudness match
@@ -74,7 +72,6 @@ else:
 if do_eyetracker:
     el_tracker = func_eyetracker.init_eyetracker()
     SCN_WIDTH, SCN_HEIGHT = func_eyetracker.init_eyetracker_graphics()
-
     func_eyetracker.send_initial_info(el_tracker, SCN_WIDTH, SCN_HEIGHT)
 
     el_tracker.doTrackerSetup()

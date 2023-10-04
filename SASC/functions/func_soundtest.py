@@ -7,10 +7,8 @@ import numpy as np
 
 from functions import utils
 
-# TODO: make sure sound is playing correctly
 
-
-def get_comfortable_level(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_start=1, atten_start=50, ear='both', key_up=curses.KEY_UP, key_dn=curses.KEY_DOWN, key_enter=''):
+def get_comfortable_level(sig, dev_id, fs=44100, tone_dur_s=1, tone_level_start=1, atten_start=50, key_up='', key_dn='', key_enter=''):
     """A task to allow a participant to adjust the signal to a comfortable level
 
         Parameters
@@ -19,29 +17,14 @@ def get_comfortable_level(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_sta
             If sig is a number, the signal will be a tone of that frequency. If sig is
             an array, it is taken as the signal
 
-        audio_dev : int
-            audio_dev should be an index to an audio device, as specified by 
+        dev_id : tuple
+            dev_id is tuple for (id, id, ch) 
             medussa.print_available_devices()
-
-        fs : int
-            The sampling frequency to use
-
-        tone_dur_s : float
-            If a tone is being used, the tone duration, in seconds
 
         atten_start : float
             The amount of attenuation, in dB, to start with. Be careful with
             this parameter, make it a large number since you don't want to 
             start too loud.
-
-        ear : str
-            The ear to present to. Should be one of: 'left', 'right', 'both'
-
-        key_up : int
-            The key to accept to increase signal level. Default is the up key
-
-        key_dn : int
-            The key to accept to decrease signal level. Default is the down key
 
         Returns
         -------
@@ -50,13 +33,13 @@ def get_comfortable_level(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_sta
             level to be comfortable to the subject. 
     """
 
-    d = m.open_device(audio_dev, audio_dev, 2)
+    d = m.open_device(*dev_id)
 
     # Initialize window and show instruction
     interface = theForm.Interface()
     interface.update_Title_Center("MCL1")
     interface.update_Prompt("Now you will adjust the volume so that it's at a comfortable level\n\nPress your button to continue", show=True, redraw=True)
-    utils.wait_for_subject(interface=interface)
+    utils.wait_for_subject(interface)
 
     # start the task
     interface.update_Prompt("Adjust the volume with your buttons to \nincrease (button which?) or decrease (button which?) the volume,\nuntil it's at a comfortable level.\n\nPress (button which?) when finished", show=True, redraw=True)
@@ -71,42 +54,30 @@ def get_comfortable_level(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_sta
 
     stream = d.open_array(probe_sig, fs)
     mix_mat = stream.mix_mat
-    if ear == 'left':
-        mix_mat[:,1] = 0
-    elif ear == 'right':
-        mix_mat[:,0] = 0            # Left channel off
-        if mix_mat.shape[1] == 2:   # If 2-channel sig
-            mix_mat[1,1] = 1        # then route sig channel 2 to right (stereo)
-        else:                       # otherwise
-            mix_mat[1] = 1          # route sig channel 1 to right (diotic)
-    else:
-        if mix_mat.shape[1] == 1:   # route to both ears, so if 1 channel
-            mix_mat[1] = 1          # then diotic. 2-channel should be done already
+
+    if mix_mat.shape[1] == 1:   # route to both ears, so if 1 channel
+        mix_mat[1] = 1          # then diotic. 2-channel should be done already
 
     probe_atten = atten_start
     stream.mix_mat = psylab.signal.atten(mix_mat, probe_atten)
     stream.loop(True)
     stream.play()
 
-    response = False
     quit = False
     while not quit:
         ret = interface.get_resp()
-        interface.update_Status_Left(f'Enter: {ord(ret)}; {curses.KEY_ENTER}', redraw=True)
-        if ret == 'q' or ret == '/':
-            quit = True
-        elif ord(ret) in (curses.KEY_ENTER, 10, 13, ord(key_enter)):
+        interface.update_Status_Left(f'Entered: {ret}', redraw=True)
+
+        if ret == key_enter:
             interface.update_Status_Right('Enter', redraw=True)
             quit = True
-        elif ord(ret) == key_up:                               # Volume up
-            response = True
+        elif ret == key_up:                               # Volume up
             interface.update_Status_Right('Up', redraw=True)
             probe_atten -= 1
             if probe_atten <= 0:
                 probe_atten = 0
                 interface.update_Status_Center(f'0 Attenuation!', redraw=True)
-        elif ord(ret) == key_dn:                               # Volume down
-            response = True
+        elif ret == key_dn:                               # Volume down
             interface.update_Status_Right('Down', redraw=True)
             probe_atten += 1
         stream.mix_mat = psylab.signal.atten(mix_mat, probe_atten)
@@ -118,7 +89,7 @@ def get_comfortable_level(sig, audio_dev, fs=44100, tone_dur_s=1, tone_level_sta
 
 
 
-def get_centered_image(sig, audio_dev, adj_step, fs=44100, tone_dur_s=1, tone_level_start=1, key_l=curses.KEY_LEFT, key_r=curses.KEY_RIGHT, key_enter=''):
+def get_centered_image(sig, dev_id, adj_step, fs=44100, tone_dur_s=1, tone_level_start=1, key_l='', key_r='', key_enter=''):
     """A task to allow a participant to center a stereo image in their head (using ILDs)
 
         Parameters
@@ -131,9 +102,6 @@ def get_centered_image(sig, audio_dev, adj_step, fs=44100, tone_dur_s=1, tone_le
             audio_dev should be an index to an audio device, as specified by 
             medussa.print_available_devices()
 
-        fs : int
-            The sampling frequency to use
-
         tone_dur_s : float
             If a tone is being used, the tone duration, in seconds
 
@@ -141,12 +109,6 @@ def get_centered_image(sig, audio_dev, adj_step, fs=44100, tone_dur_s=1, tone_le
             If a tone is being used, the tone level to start with. Values 0 > 1 are
             treated as peak voltages. Values <=0 are treated as dB values relative
             to peak (+/-1).
-
-        key_l : int
-            The key to accept to move the image to the left. Default is the left key
-
-        key_r : int
-            The key to accept to move the image to the right. Default is the right key
 
         Returns
         -------
@@ -156,7 +118,7 @@ def get_centered_image(sig, audio_dev, adj_step, fs=44100, tone_dur_s=1, tone_le
             original image was to the left, thus the left ear 
             should be attenuated by that amount). 
     """
-    d = m.open_device(audio_dev, audio_dev, 2)
+    d = m.open_device(*dev_id)
 
     # initialize window and instructions 
 
@@ -172,47 +134,47 @@ def get_centered_image(sig, audio_dev, adj_step, fs=44100, tone_dur_s=1, tone_le
         # Assume tone
         probe_sig = psylab.signal.tone(sig, fs, tone_dur_s*1000, amp=tone_level_start)
         probe_sig = psylab.signal.ramps(probe_sig, fs)
+        # probe_sig is (n_sample,) signal
     else:
         # Assume signal
         probe_sig = sig
 
     sig_out = np.vstack((probe_sig, probe_sig)).T
+    # sig_out is (n_sample, 2) signal
 
     stream = d.open_array(sig_out, fs)
     stream.loop(True)
     stream.play()
 
-    response = False
+    logger = utils.init_logger('test','soundtest','./debug/')
+
     quit = False
     probe_ild = 0
     while not quit:
         ret = interface.get_resp()
-        interface.update_Status_Left(f'Enter: {ord(ret)}; {curses.KEY_ENTER}', redraw=True)
-        if ret == 'q' or ret == '/':
-            quit = True
-        elif ord(ret) in (curses.KEY_ENTER, 10, 13, ord(key_enter)):
+        interface.update_Status_Left(f'Enter: {ret}', redraw=True)
+
+        if ret == key_enter:
             interface.update_Status_Right('Enter', redraw=True)
             quit = True
-        elif ord(ret) == key_l:                               # Left
-            response = True
+        elif ret == key_l:                               # Left
             interface.update_Status_Right('Left', redraw=True)
             probe_ild -= adj_step
-        elif ord(ret) == key_r:                               # Right
-            response = True
+            # probe_ild goes negative when moving left
+        elif ret == key_r:                               # Right
             interface.update_Status_Right('Right', redraw=True)
             probe_ild += adj_step
+            # probe_ild goes positive when moving right
 
-        mix_mat = np.zeros((2,2))
-        if probe_ild > 0:
-            mix_mat[0,0] = psylab.signal.atten(1, probe_ild)
-            mix_mat[1,1] = 1
-        else:
-            mix_mat[1,1] = psylab.signal.atten(1, -probe_ild)
-            mix_mat[0,0] = 1
+        logger.info("Key pressed: %s, probe_ild: %f"%(ret, probe_ild))
+
+        # mix_mat is 2*2 array when the sound stream opened is stereo
+        mix_mat = utils.apply_probe_ild(np.zeros((2,2)), probe_ild)
         stream.mix_mat = mix_mat
+
+        logger.info("Updated mix_mat: %s"%str(mix_mat))
+
     stream.stop()
     interface.destroy()
-    if response:
-        return probe_ild
-    else:
-        return None
+
+    return probe_ild
