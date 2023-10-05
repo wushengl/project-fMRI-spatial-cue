@@ -90,6 +90,7 @@ logger.info("Now start zigzag task...")
 if start_run_num == 1:
     # start from beginning, need to generate condition sequence 
     cond_seq = utils.generate_cond_sequence(task_mode, save_folder)
+
 else: 
     # load existing sequence
     cond_seq_path = save_folder + 'cond_sequence.csv'
@@ -108,7 +109,6 @@ seqs = {
 
 
 # initialize interface and data file (pre exp)
-utils.init_logger(subject,task_name,save_folder)
 file_name = save_folder + subject + task_name + '.csv'
 if not os.path.isfile(file_name):
     fid = open(file_name, 'a')

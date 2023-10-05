@@ -1,0 +1,14 @@
+--------------------------------------------------------------
+Now start zigzag task...
+---------------------------
+Now running run 01
+Eye tracker file opened!
+Trigger received at 11:27:28.256310
+*** Now running trial 1 ***
+cue: ild
+isTargetLeft: True
+isLowLeft: True
+Target times: 12.5,17.349999999999998,19.4
+Responses: 13.264,14.88,15.545,16.266
+Valid responses: 13.264
+*** Now running trial 2 ***

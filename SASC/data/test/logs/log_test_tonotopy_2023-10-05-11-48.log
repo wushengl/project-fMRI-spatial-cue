@@ -1,0 +1,29 @@
+--------------------------------------------------------------
+Now start tonotopy task...
+Tone type: complex
+Frequency cycle: [[220, 660], [440, 1320]]
+Cycles per run: 1
+Total run number:1
+---------------------------
+Now running run 1
+Eye tracker file opened!
+Trigger received at 11:48:17.202908
+------------------------
+Now starting cycle 1...
+*** Starting frequency 220c...
+Target num: 1
+Responses received: 1.061,1.672,2.172,2.614,2.945,3.387
+Valid responses: 
+***
+*** Starting frequency 440c...
+Target num: 1
+Responses received: 
+Valid responses: 
+***
+Finished cycle 1!
+==============
+Run finished!
+==============
+Now closing and receiving eyetracker file...
+File name: testct1.EDF
+Done!

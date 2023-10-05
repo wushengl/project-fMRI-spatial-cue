@@ -15,7 +15,7 @@ def get_config():
     '''
     This function loads config file into dictionary. 
     '''
-    config_file = 'config/config.json'
+    config_file = './config/config.json'
     with open(config_file, 'r') as file:
         config = json.load(file)
     return config
@@ -127,7 +127,6 @@ def load_soundtest(soundtest_file_path):
         ses_num = soundtest_file_path.split('ses0')[1][0]
 
         # if no soundtest file for session 1, ask to do soundtest first 
-        # TODO: is there any possibility that we run session 2 first then session 1? 
         if ses_num == 1:
             messagebox.showinfo("SASC-fMRI", "Soundtest data not exist for this subject.\nDo run_soundtest first.")
             raise ValueError("No soundtest data saved for session 1!")
@@ -220,18 +219,18 @@ def generate_cond_sequence(task_mode, save_folder):
     isLowLefts = [True, False]
 
     # create a pandas frame with balanced trials
-    col_block = np.repeat(np.arange(1,run_num+1),trial_per_run).reshape(-1,1)
-    col_trial = np.tile(np.arange(1,trial_per_run+1),run_num).reshape(-1,1)
+    col_block = np.repeat(np.arange(1,run_num+1),trial_per_run)
+    col_trial = np.tile(np.arange(1,trial_per_run+1),run_num)
 
     if task_mode == 'task':
-        col_spaCond = np.tile(np.repeat(spaConds, int(trial_per_run/2)),run_num).reshape(-1,1)
-        col_isTargetLeft = np.tile(np.repeat(isTargetLefts, int(trial_per_run/4)),2*run_num).reshape(-1,1)
-        col_isLowLeft = np.tile(np.repeat(isLowLefts, int(trial_per_run/8)),4*run_num).reshape(-1,1)
+        col_spaCond = np.tile(np.repeat(spaConds, int(trial_per_run/2)),run_num)
+        col_isTargetLeft = np.tile(np.repeat(isTargetLefts, int(trial_per_run/4)),2*run_num)
+        col_isLowLeft = np.tile(np.repeat(isLowLefts, int(trial_per_run/8)),4*run_num)
     else:
-        col_spaCond = np.random.choice(spaConds, size=trial_per_run*run_num).reshape(-1,1)
-        col_isTargetLeft = np.random.choice(isTargetLefts, size=trial_per_run*run_num).reshape(-1,1)
-        col_isLowLeft = np.random.choice(isLowLefts, size=trial_per_run*run_num).reshape(-1,1)
-    
+        col_spaCond = np.random.choice(spaConds, size=trial_per_run*run_num)
+        col_isTargetLeft = np.random.choice(isTargetLefts, size=trial_per_run*run_num)
+        col_isLowLeft = np.random.choice(isLowLefts, size=trial_per_run*run_num)
+
     cond_seqs = pd.DataFrame({
         'Block': col_block,
         'Trial': col_trial,
@@ -245,9 +244,37 @@ def generate_cond_sequence(task_mode, save_folder):
 
     # save dataframe 
     save_path = save_folder + 'cond_sequence.csv'
+    save_path = check_dup_file(save_path)
     cond_seqs.to_csv(save_path, index=False)
 
     return cond_seqs
+
+
+def check_dup_file(file_path):
+    '''
+    Check if a file already exists, if exists, ask if overwrite or use a different name.
+    if overwirte, do nothing, if use different name, return a updated file_path / name.
+    '''
+
+    if os.path.exists(file_path):
+
+        update_name = messagebox.askyesno("SASC-fMRI", "File already exists! Do you want to use a different name? ")
+
+        if update_name:
+            file_name = file_path.split('/')[-1]
+
+            file_name_content = file_name.split('.')[0]
+            file_name_suffix = file_name.split('.')[1]
+
+            now = datetime.now()
+            time_str = now.strftime("%Y-%m-%d-%H-%M")
+            new_name = file_name_content + '_' + time_str + '.' + file_name_suffix
+
+            file_path = file_path.replace(file_name,new_name)
+    
+    print(file_path)
+
+    return file_path
 
 
 if __name__ == '__main__':
@@ -259,5 +286,8 @@ if __name__ == '__main__':
     # init_logger('test','testtask','../data/test')
 
     # test condition sequenc
-    cond_seqs = generate_cond_sequence('task')
+    # cond_seqs = generate_cond_sequence('task','../data/test/')
+
+    file_path = '../data/test/cond_sequence.csv'
+    check_dup_file(file_path)
 

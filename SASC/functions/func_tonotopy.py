@@ -35,6 +35,7 @@ def generate_all_seqs(freq_cycle, matched_levels, ref_rms):
             cf_low = cf[0]
             cf_ratio = cf[1]/cf[0]
             cf_key = str(cf_low)+'c'
+            cf = cf[0]
         else:
             cf_ratio = None
             cf_key = str(cf)
@@ -205,6 +206,13 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
 
         logger.info("Eye tracker file opened!")
 
+        # switch tracker to idle mode
+        el_tracker.setOfflineMode()
+
+        error = el_tracker.startRecording(1, 1, 1, 1)
+        if error:
+            return error
+
 
     # -------------------- initialization --------------------------
 
@@ -221,7 +229,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
     interface.update_Title_Center("Tonotopy scan task")
     utils.wait_for_subject(interface)
 
-    interface.update_Prompt("Waiting for trigger (t) to start...", show=True,
+    interface.update_Prompt("Waiting for trigger (%s) to start..."%trigger_key, show=True,
                             redraw=True)  # Hit a key to start this trial
     wait = True
     while wait:
@@ -264,13 +272,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
                 # clear tracker display to black
                 el_tracker.sendCommand("clear_screen 0")
 
-                # switch tracker to idle mode
-                el_tracker.setOfflineMode()
-
-                error = el_tracker.startRecording(1, 1, 1, 1)
-                if error:
-                    return error
-
+                
             if 'c' in cf_key:
                 cf = int(cf_key[:-1])
             else:
@@ -373,7 +375,6 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
 
             if do_eyetracker:
                 el_active = pylink.getEYELINK()
-                el_active.stopRecording()
 
                 el_active.sendMessage("!V TRIAL_VAR el_trial %d" % el_trial)
                 el_active.sendMessage("!V TRIAL_VAR task tonotopy") 
@@ -403,6 +404,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
 
         # send back file after each run
         el_active = pylink.getEYELINK()
+        el_active.stopRecording()
         el_active.setOfflineMode()
         
         # Close the edf data file on the Host

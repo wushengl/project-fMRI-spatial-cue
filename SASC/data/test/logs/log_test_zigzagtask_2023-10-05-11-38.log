@@ -1,0 +1,27 @@
+--------------------------------------------------------------
+Now start zigzag task...
+---------------------------
+Now running run 01
+Eye tracker file opened!
+Trigger received at 11:38:05.125078
+*** Now running trial 1 ***
+eyetracker synctime
+cue: itd
+isTargetLeft: False
+isLowLeft: True
+Target times: 3.55,21.95
+Responses: 1.787,2.454,3.292,4.075,4.965,5.741,6.409,6.908
+Valid responses: 4.075
+*** Now running trial 2 ***
+eyetracker synctime
+cue: itd
+isTargetLeft: False
+isLowLeft: False
+Target times: 5.85,19.4,21.95
+Responses: 3.643,4.532,5.253,5.92,6.417,6.97,7.47,7.966,8.362,8.808,9.25,9.529,9.866,10.14,10.469,10.689,11.022,11.296,11.627,11.9,12.235,12.512,12.844,13.12,13.452,13.785,14.114,14.445,14.777,15.001,15.332,15.613,16.056,16.502,16.945,17.672,18.392,19.112,19.61,20.274,20.718,21.385,21.94,22.494,22.994
+Valid responses: 5.92,19.61,22.494
+Run 01 finished at 11:39:00.892228
+---------------------------
+Now closing and receiving eyetracker file...
+File name: testzz1.EDF
+Done!

@@ -1,0 +1,3 @@
+Block,Trial,spaCond,isTargetLeft,isLowLeft
+1,1,itd,False,True
+1,2,itd,False,False

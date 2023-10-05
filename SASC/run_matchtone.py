@@ -141,6 +141,7 @@ logger.info("--------------------------------------------------------------")
 #---------------------------------------
 
 save_path = save_folder + subject + '_matchtone.csv'
+save_path = utils.check_dup_file(save_path)
 np.savetxt(save_path,all_matched_levels,delimiter=',')
    
 

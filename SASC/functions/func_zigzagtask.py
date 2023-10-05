@@ -299,7 +299,7 @@ def generate_trial_findzigzag_clean(params,low_pitch_seq_dict,high_pitch_seq_dic
     
     return trial, trial_info
 
-def play_trial(stim_out, audiodev, this_cond, interface, trial_info, probe_ild, task_mode, file_name):
+def play_trial(stim_out, audiodev, isTargetLeft, interface, trial_info, probe_ild, task_mode, file_name):
     '''
     present trial stuff: 
     - interface 
@@ -312,11 +312,10 @@ def play_trial(stim_out, audiodev, this_cond, interface, trial_info, probe_ild, 
     key_2 = config['keys']['response_key_2'] 
     key_enter = config['keys']['enter_key'] 
 
-    isTargetLeft = this_cond[1]
     rt_good_delay = config['zigzagtask']['rt_good_delay']
     fs = config['sound']['fs']
 
-    do_eyetracker = config[task_mode]['do_eyetracker']
+    do_eyetracker = config['run-setting'][task_mode]['do_eyetracker']
     LEFT_EYE = config['eyetracker']['LEFT_EYE'] 
     RIGHT_EYE = config['eyetracker']['RIGHT_EYE'] 
     BINOCULAR = config['eyetracker']['BINOCULAR'] 
@@ -373,6 +372,7 @@ def play_trial(stim_out, audiodev, this_cond, interface, trial_info, probe_ild, 
             if error != pylink.TRIAL_OK:
                 el_active = pylink.getEYELINK()
                 el_active.stopRecording()
+                print(error)
                 raise RuntimeError("Recording stopped!")
 
         ret = interface.get_resp(timeout=this_wait_ms/1000)
@@ -411,23 +411,13 @@ def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interfac
     - eyetracker related stuff 
     '''
 
-    spaCond = this_cond['spaCond']
-    isTargetLeft = this_cond['isTargetLeft']
-    isLowLeft = this_cond['isLowLeft']
+    spaCond = this_cond['spaCond'].values[0]
+    isTargetLeft = this_cond['isTargetLeft'].values[0]
+    isLowLeft = this_cond['isLowLeft'].values[0]
 
     ### Begin generate trial, code from mri_tones.py
     target_number_T = np.random.choice(np.arange(3)+1) # random embed 1~3 targets for target stream 
     target_number_D = np.random.choice(np.arange(3)+1) # random embed 1~3 targets for distractor stream
-
-    if isTargetLeft == 'True':
-        current_isTargetLeft = True
-    else:
-        current_isTargetLeft = False
-
-    if isLowLeft == 'True':
-        current_isLowLeft = True
-    else:
-        current_isLowLeft = False
 
     params = {
         "spatial_condition": spaCond, # "ILD10" or "ITD500"
@@ -438,8 +428,8 @@ def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interfac
         "target_number_T": target_number_T,
         "target_number_D": target_number_D,
         "fs": config['sound']['fs'],
-        "isLowLeft":current_isTargetLeft,   # np.random.choice([True,False]),
-        "isTargetLeft": current_isLowLeft,   # np.random.choice([True,False]),
+        "isLowLeft":isTargetLeft,   # np.random.choice([True,False]),
+        "isTargetLeft": isLowLeft,   # np.random.choice([True,False]),
         "isTargetPresent": True,
         "cue2stim_interval": config['zigzagtask']['cue2stim_interval']
     }
@@ -463,16 +453,15 @@ def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interfac
     fid.write(word_line+',')
 
     stim_out = test_trial
-    responses, valid_responses = play_trial(stim_out, audiodev, this_cond, interface, trial_info, probe_ild, task_mode, file_name)
+    responses, valid_responses = play_trial(stim_out, audiodev, isTargetLeft, interface, trial_info, probe_ild, task_mode, file_name)
 
 
     logger.info("cue: %s"%spaCond)
     logger.info("isTargetLeft: %s"%str(isTargetLeft))
     logger.info("isLowLeft: %s"%str(isLowLeft))
-    logger.info('Target times: %s'%(','.join(trial_info['target_time'])))
+    logger.info('Target times: %s'%(','.join(trial_info['target_time'].astype(str))))
     logger.info('Responses: %s'%(','.join(responses)))
     logger.info('Valid responses: %s'%(','.join(valid_responses)))
-    logger.info("Trial finished!")
 
     interface.update_Prompt("Waiting 2 sec...", show=True, redraw=True)
     time.sleep(2)
@@ -562,13 +551,13 @@ def run_block(current_run_num,this_run_seq, probe_ild, trial_per_run, save_folde
             # log a message to mark the time at which the initial display came on
             el_tracker.sendMessage("SYNCTIME")
 
+
         this_cond = this_run_seq[this_run_seq['Trial']==trial_i+1]
         run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interface, probe_ild,logger)
 
         if do_eyetracker:
 
             el_active = pylink.getEYELINK()
-            el_active.stopRecording()
 
             # record the trial variable in a message recognized by Data Viewer
             el_active.sendMessage("!V TRIAL_VAR trial %d" % (trial_i+1))
@@ -591,6 +580,8 @@ def run_block(current_run_num,this_run_seq, probe_ild, trial_per_run, save_folde
 
         # send back file after each run
         el_active = pylink.getEYELINK()
+
+        el_active.stopRecording()
         el_active.setOfflineMode()
         
         # Close the edf data file on the Host
