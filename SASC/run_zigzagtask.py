@@ -24,7 +24,7 @@ start_run_num = 1 # int(utils.ask_start_run_num())
 #---------------------------------------
 
 config_file = 'config/config.json'
-config = utils.get_config(config_file)
+config = utils.get_config()
 
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
@@ -89,7 +89,7 @@ logger.info("Now start zigzag task...")
 
 if start_run_num == 1:
     # start from beginning, need to generate condition sequence 
-    cond_seq = utils.generate_cond_sequence(task_mode)
+    cond_seq = utils.generate_cond_sequence(task_mode, save_folder)
 else: 
     # load existing sequence
     cond_seq_path = save_folder + 'cond_sequence.csv'
@@ -126,14 +126,12 @@ interface.update_Title_Right("S %s"%subject, redraw=False)
 interface.update_Prompt("Hit a key to begin", show=True, redraw=True)
 ret = interface.get_resp()
 
-# TODO: add pre exp log info 
 
 for current_run_num in range(start_run_num, total_run_num+1): 
 
     logger.info("---------------------------")
-    logger.info("Now running run "+str(current_run_num))
+    logger.info("Now running run 0"+str(current_run_num))
 
-    this_cond = cond_seq[current_run_num-1]
-    func_zigzagtask.run_block(current_run_num, this_cond, ref_rms, matched_levels_ave, trial_per_run, save_folder, logger, task_mode, seqs, file_name, interface)
+    this_run_seq = cond_seq[cond_seq['Block']==current_run_num] 
+    func_zigzagtask.run_block(current_run_num, this_run_seq, probe_ild, trial_per_run, save_folder, logger, task_mode, seqs, file_name, interface, dev_id)
 
-    # TODO: how to pass in less parameters? 

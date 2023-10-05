@@ -12,7 +12,7 @@ from . import utils
 
 
 config_file = 'config/config.json'
-config = utils.get_config(config_file)
+config = utils.get_config()
 
 def generate_all_seqs(freq_cycle, matched_levels, ref_rms):
 

@@ -14,7 +14,7 @@ import os
 
 
 config_file = 'config/config.json'
-config = utils.get_config(config_file)
+config = utils.get_config()
 
 
 def create_miniseq(ref_rms, matched_levels_ave): # gustav line 707
@@ -299,13 +299,18 @@ def generate_trial_findzigzag_clean(params,low_pitch_seq_dict,high_pitch_seq_dic
     
     return trial, trial_info
 
-def play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, probe_ild, task_mode, file_name):
+def play_trial(stim_out, audiodev, this_cond, interface, trial_info, probe_ild, task_mode, file_name):
     '''
     present trial stuff: 
     - interface 
     - sound 
     - response collection 
     '''
+
+    config = utils.get_config()
+    key_1 = config['keys']['response_key_1'] 
+    key_2 = config['keys']['response_key_2'] 
+    key_enter = config['keys']['enter_key'] 
 
     isTargetLeft = this_cond[1]
     rt_good_delay = config['zigzagtask']['rt_good_delay']
@@ -316,7 +321,7 @@ def play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, pr
     RIGHT_EYE = config['eyetracker']['RIGHT_EYE'] 
     BINOCULAR = config['eyetracker']['BINOCULAR'] 
 
-    if isTargetLeft: # TODO: check if this is string or boolean
+    if isTargetLeft:
         interface.update_Prompt('<- Listen Left', show=True, redraw=True)
     else:
         interface.update_Prompt('Listen Right ->', show=True, redraw=True)
@@ -331,16 +336,9 @@ def play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, pr
     target_times = trial_info['target_time']
     target_times_end = target_times.copy() + rt_good_delay
 
-    s = audiodev.open_array(stim_out,fs) # TODO: shit, this is not audio dev :)
+    s = audiodev.open_array(stim_out,fs) 
 
-    # TODO: check if this is working correctly
-    mix_mat = np.zeros((2, 2))
-    if probe_ild > 0:
-        mix_mat[0, 0] = psylab.signal.atten(1, probe_ild)
-        mix_mat[1, 1] = 1
-    else:
-        mix_mat[1, 1] = psylab.signal.atten(1, -probe_ild)
-        mix_mat[0, 0] = 1
+    mix_mat = utils.apply_probe_ild(np.zeros((2,2)), probe_ild)
     s.mix_mat = mix_mat
 
     if do_eyetracker:
@@ -381,7 +379,7 @@ def play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, pr
         this_current_ms = interface.timestamp_ms()
         this_elapsed_ms = this_current_ms - start_ms
         this_elapsed_percent = this_elapsed_ms / dur_ms * 100
-        if ret in ['b','y']: # TODO: keys
+        if ret in [key_1, key_2, key_enter]: 
             resp = np.round(this_elapsed_ms/1000, 3)
             responses.append(str(resp))
             resp_percent.append(this_elapsed_ms / dur_ms * 100)
@@ -402,8 +400,10 @@ def play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, pr
     word_line = f"{','.join(responses)}"
     fid.write(word_line+"\n")
 
+    return responses, valid_responses
 
-def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interface, ref_rms, probe_ild):
+
+def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interface, probe_ild,logger):
     '''
     mostly pre trial stuff and post trial stuff:
     - parameters 
@@ -411,12 +411,9 @@ def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interfac
     - eyetracker related stuff 
     '''
 
-    # TODO: add pre trial log info 
-    # TODO: clean up target time those shits and duplicate variables 
-
-    cue = this_cond[0]
-    isTargetLeft = this_cond[1]
-    isLowLeft = this_cond[2]
+    spaCond = this_cond['spaCond']
+    isTargetLeft = this_cond['isTargetLeft']
+    isLowLeft = this_cond['isLowLeft']
 
     ### Begin generate trial, code from mri_tones.py
     target_number_T = np.random.choice(np.arange(3)+1) # random embed 1~3 targets for target stream 
@@ -432,12 +429,8 @@ def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interfac
     else:
         current_isLowLeft = False
 
-    f0 = config['zigzagtask']['f0']
-    do_eyetracker = config[task_mode]['do_eyetracker']
-
-
     params = {
-        "spatial_condition": cue, # "ILD10" or "ITD500"
+        "spatial_condition": spaCond, # "ILD10" or "ITD500"
         "tone_duration": config['zigzagtask']['tone_duration'],
         "tone_interval": config['zigzagtask']['tone_interval'],
         "seq_interval": config['zigzagtask']['seq_interval'],
@@ -451,9 +444,6 @@ def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interfac
         "cue2stim_interval": config['zigzagtask']['cue2stim_interval']
     }
 
-    direction = current_isTargetLeft # TODO: why so many duplicates????????
-    tar_num = target_number_T
-    target_number_count += target_number_T
 
     if params["spatial_condition"] == 'ILD10': # can use better structure, e.g. seqs_dict[tone_pitch] = seqs[tone_pitch][spaCond]
         low_pitch_seqs_dict = seqs['low_pitch_seqs_ILD'] 
@@ -473,13 +463,24 @@ def run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interfac
     fid.write(word_line+',')
 
     stim_out = test_trial
-    play_trial(stim_out, audiodev, this_cond, interface, trial_info, ref_rms, probe_ild, task_mode, file_name)
-    
-        
-    # TODO: add post trial log info 
+    responses, valid_responses = play_trial(stim_out, audiodev, this_cond, interface, trial_info, probe_ild, task_mode, file_name)
+
+
+    logger.info("cue: %s"%spaCond)
+    logger.info("isTargetLeft: %s"%str(isTargetLeft))
+    logger.info("isLowLeft: %s"%str(isLowLeft))
+    logger.info('Target times: %s'%(','.join(trial_info['target_time'])))
+    logger.info('Responses: %s'%(','.join(responses)))
+    logger.info('Valid responses: %s'%(','.join(valid_responses)))
+    logger.info("Trial finished!")
+
+    interface.update_Prompt("Waiting 2 sec...", show=True, redraw=True)
+    time.sleep(2)
+    interface.update_Prompt("", show=False, redraw=True)
+
     pass
 
-def run_block(current_run_num,this_cond, ref_rms, matched_levels_ave, trial_per_run, save_folder, logger, task_mode, seqs, file_name, interface):
+def run_block(current_run_num,this_run_seq, probe_ild, trial_per_run, save_folder, logger, task_mode, seqs, file_name, interface, dev_id):
     '''
     - loop through run_trials
     - should start eyetracker recording in this function 
@@ -488,10 +489,9 @@ def run_block(current_run_num,this_cond, ref_rms, matched_levels_ave, trial_per_
     trigger_key = config['keys']['trigger_key']
     total_run_num = config['run-setting'][task_mode]['zigzagtask']['run_num']
 
-    cue = this_cond[0]
-    isTargetLeft = this_cond[1]
-    isLowLeft = this_cond[2]
     subject = save_folder.split('/')[-2]
+
+    audiodev = m.open_device(*dev_id)
 
     # -------------------- eyetracker --------------------------
 
@@ -533,7 +533,7 @@ def run_block(current_run_num,this_cond, ref_rms, matched_levels_ave, trial_per_
     while wait:
         ret = interface.get_resp()
         if ret in [trigger_key]:
-            trial_start_time = datetime.now() # TODO: log this time 
+            block_start_time = datetime.now() 
             wait = False
 
     if do_eyetracker:
@@ -541,16 +541,13 @@ def run_block(current_run_num,this_cond, ref_rms, matched_levels_ave, trial_per_
         # log a message to mark the time at which the initial display came on
         el_tracker.sendMessage("SYNCTIME")
 
-    logger.info("Trigger received at %s"%trial_start_time.strftime("%H:%M:%S.%f"))
+    logger.info("Trigger received at %s"%block_start_time.strftime("%H:%M:%S.%f"))
 
     # -------------------- task loop --------------------------
 
     for trial_i in range(trial_per_run):
 
-        logger.info("*** Now running trial %d"%(trial_i+1))
-        logger.info("cue: %s"%cue)
-        logger.info("isTargetLeft: %s"%str(isTargetLeft))
-        logger.info("isLowLeft: %s"%str(isLowLeft))
+        logger.info("*** Now running trial %d ***"%(trial_i+1))
 
         if do_eyetracker:
             # show some info about the current trial on the Host PC screen
@@ -565,10 +562,46 @@ def run_block(current_run_num,this_cond, ref_rms, matched_levels_ave, trial_per_
             # log a message to mark the time at which the initial display came on
             el_tracker.sendMessage("SYNCTIME")
 
-        run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interface, ref_rms, probe_ild)
+        this_cond = this_run_seq[this_run_seq['Trial']==trial_i+1]
+        run_trial(seqs, this_cond, file_name, subject, task_mode, audiodev, interface, probe_ild,logger)
 
-        logger.info("Trial finished!")
+        if do_eyetracker:
 
-    # TODO: end block close eyetracker 
+            el_active = pylink.getEYELINK()
+            el_active.stopRecording()
+
+            # record the trial variable in a message recognized by Data Viewer
+            el_active.sendMessage("!V TRIAL_VAR trial %d" % (trial_i+1))
+            el_active.sendMessage("!V TRIAL_VAR task zigzagtask") 
+            el_active.sendMessage('TRIAL_RESULT %d' % pylink.TRIAL_OK)
+
+            ret_value = el_active.getRecordingStatus()
+            if (ret_value == pylink.TRIAL_OK):
+                    el_active.sendMessage("TRIAL OK")
+
+    block_end_time = datetime.now() 
+    logger.info("Run 0%d finished at %s"%(current_run_num, block_end_time.strftime("%H:%M:%S.%f")))
+    logger.info("---------------------------")
+
+
+    if do_eyetracker:
+
+        logger.info("Now closing and receiving eyetracker file...")
+        logger.info("File name: %s"%edf_file_name)
+
+        # send back file after each run
+        el_active = pylink.getEYELINK()
+        el_active.setOfflineMode()
+        
+        # Close the edf data file on the Host
+        el_active.closeDataFile()
+
+        local_file_name = os.path.join(save_folder, edf_file_name)
+        try:
+            el_active.receiveDataFile(edf_file_name, local_file_name)
+        except RuntimeError as error:
+            print('ERROR:', error)
+
+        logger.info("Done!")
 
     pass

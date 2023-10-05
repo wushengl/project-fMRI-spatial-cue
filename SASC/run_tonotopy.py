@@ -20,7 +20,7 @@ start_run_num = int(utils.ask_start_run_num())
 #---------------------------------------
 
 config_file = 'config/config.json'
-config = utils.get_config(config_file)
+config = utils.get_config()
 
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'

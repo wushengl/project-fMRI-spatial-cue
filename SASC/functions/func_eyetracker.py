@@ -5,7 +5,7 @@ import sys
 from . import utils
 
 config_file = 'config/config.json'
-config = utils.get_config(config_file)
+config = utils.get_config()
 
 def init_eyetracker():
     
