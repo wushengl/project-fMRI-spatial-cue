@@ -14,7 +14,7 @@ ses_num = utils.ask_session_num()
 config_file = 'config/config.json'
 config = utils.get_config()
 
-test_location = config['location'] # 'booth3' or 'scanner' to switch audio devices
+test_location = config['run-setting']['location'] # 'booth3' or 'scanner' to switch audio devices
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 

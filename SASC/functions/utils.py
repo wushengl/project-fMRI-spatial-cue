@@ -9,6 +9,7 @@ import os
 import logging
 import subprocess
 import numpy as np
+import time
 
 
 def get_config():
@@ -258,7 +259,7 @@ def check_dup_file(file_path):
 
     if os.path.exists(file_path):
 
-        update_name = messagebox.askyesno("SASC-fMRI", "File already exists! Do you want to use a different name? ")
+        update_name = messagebox.askyesno("SASC-fMRI", "File \"%s\" already exists!\nDo you want to use a different name?"%file_path)
 
         if update_name:
             file_name = file_path.split('/')[-1]
@@ -276,6 +277,17 @@ def check_dup_file(file_path):
 
     return file_path
 
+def insert_nonactive_time(interface, nonactive_time):
+
+    interface.update_Prompt("Nonactive time...", show=True, redraw=True)
+    time.sleep(nonactive_time)
+    interface.update_Prompt("", show=False, redraw=True)
+
+
+def ending_behaviors():
+    
+    messagebox.askokcancel("Quiting!")
+
 
 if __name__ == '__main__':
 
@@ -288,6 +300,11 @@ if __name__ == '__main__':
     # test condition sequenc
     # cond_seqs = generate_cond_sequence('task','../data/test/')
 
-    file_path = '../data/test/cond_sequence.csv'
-    check_dup_file(file_path)
+    #file_path = '../data/test/cond_sequence.csv'
+    #check_dup_file(file_path)
 
+    # test ending behaviors
+    import signal
+    print('now start waiting')
+    time.sleep(20)
+    signal.signal(signal.SIGBREAK, ending_behaviors) # this is not working 

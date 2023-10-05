@@ -477,6 +477,7 @@ def run_block(current_run_num,this_run_seq, probe_ild, trial_per_run, save_folde
 
     trigger_key = config['keys']['trigger_key']
     total_run_num = config['run-setting'][task_mode]['zigzagtask']['run_num']
+    nonactive_time = config['run-setting'][task_mode]['nonactive_time']
 
     subject = save_folder.split('/')[-2]
 
@@ -535,6 +536,11 @@ def run_block(current_run_num,this_run_seq, probe_ild, trial_per_run, save_folde
     # -------------------- task loop --------------------------
 
     for trial_i in range(trial_per_run):
+
+        if trial_i in [0, round(trial_per_run/2), trial_per_run-1]:
+            utils.insert_nonactive_time(interface, nonactive_time)
+            this_time = datetime.now()
+            logger.info("NONACTIVE TIME (%s) STARTED: %s"%(nonactive_time, this_time.strftime("%H:%M:%S.%f")))
 
         logger.info("*** Now running trial %d ***"%(trial_i+1))
 

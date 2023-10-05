@@ -1,8 +1,9 @@
 {
-    "location:": "booth3",
     "run-setting":{
+        "location": "booth3",
         "debug":{
             "do_eyetracker": 1,
+            "nonactive_time":2,
             "tonotopy":{
                 "pure":{
                     "run_num": 1,
@@ -20,6 +21,7 @@
         },
         "task":{
             "do_eyetracker": 1,
+            "nonactive_time":2,
             "tonotopy":{
                 "pure":{
                     "run_num": 4,

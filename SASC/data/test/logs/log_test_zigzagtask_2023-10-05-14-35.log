@@ -1,0 +1,73 @@
+--------------------------------------------------------------
+Now start zigzag task...
+---------------------------
+Now running run 05
+Eye tracker file opened!
+Trigger received at 14:35:36.344604
+NONACTIVE TIME (2) STARTED: 14:35:38.354604
+*** Now running trial 1 ***
+cue: ild
+isTargetLeft: True
+isLowLeft: True
+Target times: 8.149999999999999,17.099999999999998,19.65
+Responses: 14.726,14.888,15.217,15.38,15.822,15.984,16.372,16.535,16.92,17.084,17.413,17.52
+Valid responses: 17.413
+*** Now running trial 2 ***
+cue: ild
+isTargetLeft: True
+isLowLeft: False
+Target times: 10.2
+Responses: 
+Valid responses: 
+*** Now running trial 3 ***
+cue: ild
+isTargetLeft: False
+isLowLeft: True
+Target times: 1.25,7.8999999999999995,10.45
+Responses: 
+Valid responses: 
+*** Now running trial 4 ***
+cue: ild
+isTargetLeft: False
+isLowLeft: False
+Target times: 10.45
+Responses: 
+Valid responses: 
+NONACTIVE TIME (2) STARTED: 14:37:32.756121
+*** Now running trial 5 ***
+cue: itd
+isTargetLeft: True
+isLowLeft: True
+Target times: 14.799999999999999
+Responses: 
+Valid responses: 
+*** Now running trial 6 ***
+cue: itd
+isTargetLeft: True
+isLowLeft: False
+Target times: 5.85,19.65
+Responses: 
+Valid responses: 
+*** Now running trial 7 ***
+cue: itd
+isTargetLeft: False
+isLowLeft: True
+Target times: 5.85
+Responses: 
+Valid responses: 
+NONACTIVE TIME (2) STARTED: 14:38:58.887273
+*** Now running trial 8 ***
+cue: itd
+isTargetLeft: False
+isLowLeft: False
+Target times: 1.0,10.2,19.65
+Responses: 
+Valid responses: 
+Run 05 finished at 14:39:26.971369
+---------------------------
+Now closing and receiving eyetracker file...
+File name: testzz5.EDF
+Done!
+---------------------------
+Now running run 06
+Eye tracker file opened!

@@ -22,7 +22,7 @@ ses_num = utils.ask_session_num()
 config_file = 'config/config.json'
 config = utils.get_config()
 
-test_location = config['location']
+test_location = config['run-setting']['location']
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 

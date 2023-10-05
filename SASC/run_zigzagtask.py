@@ -16,7 +16,6 @@ subject = utils.ask_subject_id()
 ses_num = utils.ask_session_num()
 start_run_num = int(utils.ask_start_run_num())
 
-# TODO: generate a run order and save it, so that when restart from middle, the whole study will still be balanced 
 
 #---------------------------------------
 #  load configurations
@@ -25,12 +24,12 @@ start_run_num = int(utils.ask_start_run_num())
 config_file = 'config/config.json'
 config = utils.get_config()
 
-test_location = config['location']
+test_location = config['run-setting']['location']
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 
 # related parameters
-key_1 = config['keys']['response_key_1'] # TODO: make sure these keys are correctly matched
+key_1 = config['keys']['response_key_1'] 
 key_2 = config['keys']['response_key_2'] 
 key_enter = config['keys']['enter_key'] 
 accept_keys = [key_1, key_2, key_enter]
@@ -87,15 +86,17 @@ logger.info("Now start zigzag task...")
 
 # run all zigzag task runs 
 
-if start_run_num == 1:
-    # start from beginning, need to generate condition sequence 
-    cond_seq = utils.generate_cond_sequence(task_mode, save_folder)
+if task_mode == 'task':
+    if start_run_num == 1:
+        # start from beginning, need to generate condition sequence 
+        cond_seq = utils.generate_cond_sequence(task_mode, save_folder)
 
+    else: 
+        # load existing sequence
+        cond_seq_path = save_folder + 'cond_sequence.csv'
+        cond_seq = pd.read_csv(cond_seq_path)
 else: 
-    # load existing sequence
-    cond_seq_path = save_folder + 'cond_sequence.csv'
-    cond_seq = np.loadtxt(cond_seq_path, delimiter=',')
-
+    cond_seq = utils.generate_cond_sequence(task_mode, save_folder)
 
 # generate all sequences needed 
 low_pitch_seqs, high_pitch_seqs = func_zigzagtask.create_miniseq(ref_rms, matched_levels_ave)

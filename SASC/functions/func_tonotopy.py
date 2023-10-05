@@ -171,7 +171,8 @@ def generate_trial_tonotopy_1back(params,seq_dict):
 
 def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle_per_run, round_idx, task_mode, save_path, logger):
 
-    do_eyetracker = config['run-setting'][task_mode]['do_eyetracker']
+    nonactive_time = config['run-setting'][task_mode]['nonactive_time']
+    
     tone_duration = config['tonotopy']['tone_duration']
     tone_interval = config['tonotopy']['tone_interval']
     seq_interval = config['tonotopy']['seq_interval']
@@ -184,7 +185,7 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
     response_key_2 = config['keys']['response_key_2']
     trigger_key = config['keys']['trigger_key']
     
-    
+    do_eyetracker = config['run-setting'][task_mode]['do_eyetracker']
     LEFT_EYE = config['eyetracker']['LEFT_EYE'] 
     RIGHT_EYE = config['eyetracker']['RIGHT_EYE'] 
     BINOCULAR = config['eyetracker']['BINOCULAR'] 
@@ -243,6 +244,11 @@ def run_tonotopy_task(freq_cycle, dev_id, ref_rms, probe_ild, matched_dbs, cycle
     # -------------------- start the experiment --------------------------
 
     for c in range(cycle_per_run): # e.g. 5 frequencies/cycle, 8 cycles/run, 4 runs
+
+        if c in [0, round(cycle_per_run/2), cycle_per_run]:
+            utils.insert_nonactive_time(interface, nonactive_time)
+            this_time = datetime.now()
+            logger.info("NONACTIVE TIME (%s) STARTED: %s"%(nonactive_time, this_time.strftime("%H:%M:%S.%f")))
 
         logger.info("------------------------")
         logger.info("Now starting cycle %d..."%(c+1)) 

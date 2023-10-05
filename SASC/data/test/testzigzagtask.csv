@@ -16,3 +16,14 @@ test,zigzagtask,ild,True,True,3,    12.5,17.349999999999998,19.4,test,zigzagtask
 test,zigzagtask,itd,True,False,2,    3.55,21.95,3.643,4.532,5.253,5.92,6.417,6.97,7.47,7.966,8.362,8.808,9.25,9.529,9.866,10.14,10.469,10.689,11.022,11.296,11.627,11.9,12.235,12.512,12.844,13.12,13.452,13.785,14.114,14.445,14.777,15.001,15.332,15.613,16.056,16.502,16.945,17.672,18.392,19.112,19.61,20.274,20.718,21.385,21.94,22.494,22.994
 test,zigzagtask,itd,False,False,3,    5.85,19.4,21.95,
 
+
+
+14.726,14.888,15.217,15.38,15.822,15.984,16.372,16.535,16.92,17.084,17.413,17.52
+test,zigzagtask,ild,True,True,3,    8.149999999999999,17.099999999999998,19.65,
+test,zigzagtask,ild,False,True,1,    10.2,
+test,zigzagtask,ild,True,False,3,    1.25,7.8999999999999995,10.45,
+test,zigzagtask,ild,False,False,1,    10.45,
+test,zigzagtask,itd,True,True,1,    14.799999999999999,
+test,zigzagtask,itd,False,True,2,    5.85,19.65,
+test,zigzagtask,itd,True,False,1,    5.85,
+test,zigzagtask,itd,False,False,3,    1.0,10.2,19.65,
