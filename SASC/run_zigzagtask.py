@@ -10,12 +10,11 @@ from functions import utils
 import numpy as np
 from gustav.forms import rt as theForm
 
-test_location = 'booth3'  # 'booth3' or 'scanner' to switch audio devices
 task_name = 'zigzagtask'
-task_mode = 'debug' # utils.ask_task_mode()
-subject = 'test' # utils.ask_subject_id()
-ses_num = '1' # utils.ask_session_num()
-start_run_num = 1 # int(utils.ask_start_run_num())
+task_mode = utils.ask_task_mode()
+subject = utils.ask_subject_id()
+ses_num = utils.ask_session_num()
+start_run_num = int(utils.ask_start_run_num())
 
 # TODO: generate a run order and save it, so that when restart from middle, the whole study will still be balanced 
 
@@ -26,6 +25,7 @@ start_run_num = 1 # int(utils.ask_start_run_num())
 config_file = 'config/config.json'
 config = utils.get_config()
 
+test_location = config['location']
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 

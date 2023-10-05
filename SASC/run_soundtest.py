@@ -12,7 +12,6 @@ from functions import utils
 # but the sound came from headphone only presenting left channel
 # (both channels increases when press left, decreases when press right)
 
-test_location = 'booth3'  # 'booth3' or 'scanner' to switch audio devices
 subject = utils.ask_subject_id()
 ses_num = utils.ask_session_num()
 
@@ -23,6 +22,7 @@ ses_num = utils.ask_session_num()
 config_file = 'config/config.json'
 config = utils.get_config()
 
+test_location = config['location']
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 

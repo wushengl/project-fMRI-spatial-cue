@@ -3,7 +3,7 @@ from functions import func_tonotopy
 from functions import func_eyetracker
 from functions import utils
 
-test_location = 'booth3'  # 'booth3' or 'scanner' to switch audio devices
+
 task_name = 'tonotopy'
 task_mode = utils.ask_task_mode()
 subject = utils.ask_subject_id()
@@ -22,6 +22,7 @@ start_run_num = int(utils.ask_start_run_num())
 config_file = 'config/config.json'
 config = utils.get_config()
 
+test_location = config['location']
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 

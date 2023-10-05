@@ -1,4 +1,5 @@
 {
+    "location:": "booth3",
     "run-setting":{
         "debug":{
             "do_eyetracker": 1,

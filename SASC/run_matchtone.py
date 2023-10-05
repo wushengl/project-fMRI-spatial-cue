@@ -3,7 +3,6 @@ from functions import func_matchtone
 from functions import utils
 
 
-test_location = 'booth3'  # 'booth3' or 'scanner' to switch audio devices
 task_name = 'matchtone'
 subject = utils.ask_subject_id()
 ses_num = utils.ask_session_num()
@@ -15,6 +14,7 @@ ses_num = utils.ask_session_num()
 config_file = 'config/config.json'
 config = utils.get_config()
 
+test_location = config['location'] # 'booth3' or 'scanner' to switch audio devices
 data_folder = config['path']['data_folder']
 save_folder = data_folder + subject + '/'
 
